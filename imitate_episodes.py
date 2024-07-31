@@ -144,8 +144,10 @@ def main(args):
         os.makedirs(ckpt_dir)
     config_path = os.path.join(ckpt_dir, 'config.pkl')
     expr_name = ckpt_dir.split('/')[-1]
+    print(expr_name)
+    # expr_name = "cbrnt1210"
     if not is_eval:
-        wandb.init(project="mobile-aloha2", reinit=True, entity="mobile-aloha2", name=expr_name)
+        wandb.init(project="mobile-aloha2", reinit=True, entity="cbrnt1210", name=expr_name)
         wandb.config.update(config)
     with open(config_path, 'wb') as f:
         pickle.dump(config, f)

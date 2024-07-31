@@ -1,0 +1,8 @@
+{
+  "OutputFoldersPerTargetSystem": {
+    "\uB85C\uCEEC \uCEF4\uD4E8\uD130": [
+      "src\\egl-probe\\egl_probe\\out\\build\\x64-Debug",
+      "src\\egl-probe\\egl_probe\\out\\install\\x64-Debug"
+    ]
+  }
+}

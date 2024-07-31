@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\egl-probe",
+    "\\src\\egl-probe\\egl_probe"
+  ],
+  "SelectedNode": "\\src\\egl-probe\\egl_probe\\CMakeLists.txt",
+  "PreviewInSolutionExplorer": false
+}

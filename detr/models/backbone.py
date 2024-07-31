@@ -11,6 +11,13 @@ from torch import nn
 from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
 
+import sys
+project_dir = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\detr'
+sys.path.append(project_dir)
+project_dir = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\detr\models'
+sys.path.append(project_dir)
+print(sys.path)
+
 from util.misc import NestedTensor, is_main_process
 
 from .position_encoding import build_position_encoding
