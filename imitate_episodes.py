@@ -185,7 +185,7 @@ def main(args):
     with open(stats_path, 'wb') as f:
         pickle.dump(stats, f)
 
-    #trian_bc ?를 함
+    #trian_bc : 모델을 학습시키고 (평가로 중간 결과도 보며) 가장 좋은 모델 정보를 반환 함
     best_ckpt_info = train_bc(train_dataloader, val_dataloader, config)
     best_step, min_val_loss, best_state_dict = best_ckpt_info
 
@@ -578,7 +578,7 @@ def forward_pass(data, policy):
     image_data, qpos_data, action_data, is_pad = image_data.cuda(), qpos_data.cuda(), action_data.cuda(), is_pad.cuda()
     return policy(qpos_data, image_data, action_data, is_pad) # TODO remove None
 
-
+#모델을 학습시키며 (중간 평가도 함) 가장 좋은 결과를 반환함
 def train_bc(train_dataloader, val_dataloader, config):
     num_steps = config['num_steps']
     ckpt_dir = config['ckpt_dir']
@@ -590,8 +590,9 @@ def train_bc(train_dataloader, val_dataloader, config):
     save_every = config['save_every']
 
     set_seed(seed)
-
+    #make_policy ?를 함
     policy = make_policy(policy_class, policy_config)
+    #쓰지 않는 듯, 모델을 로드해서 상태를 가져옴
     if config['load_pretrain']:
         loading_status = policy.deserialize(torch.load(os.path.join('/home/zfu/interbotix_ws/src/act/ckpts/pretrain_all', 'policy_step_50000_seed_0.ckpt')))
         print(f'loaded! {loading_status}')
@@ -599,32 +600,40 @@ def train_bc(train_dataloader, val_dataloader, config):
         loading_status = policy.deserialize(torch.load(config['resume_ckpt_path']))
         print(f'Resume policy from: {config["resume_ckpt_path"]}, Status: {loading_status}')
     policy.cuda()
+    #옵티마이저 설정
     optimizer = make_optimizer(policy_class, policy)
-
+    #초기값은 무한대
     min_val_loss = np.inf
     best_ckpt_info = None
-    
+    #계속 값을 가져올 이터레이터 생성
     train_dataloader = repeater(train_dataloader)
+    #num_step만큼 반복하며 진행 상황을 표시
     for step in tqdm(range(num_steps+1)):
+        #validate_every마다 검증함
         # validation
         if step % validate_every == 0:
             print('validating')
 
-            with torch.inference_mode():
-                policy.eval()
+            with torch.inference_mode(): #연산을 추론 모드 설정
+                policy.eval() #모델을 평가모드로
                 validation_dicts = []
                 for batch_idx, data in enumerate(val_dataloader):
                     forward_dict = forward_pass(data, policy)
                     validation_dicts.append(forward_dict)
+                    #50개 넘어가면 멈춤, 너무 많이 다 돌리지 않음!
                     if batch_idx > 50:
                         break
-
+                #compute_dict_mean ?를 함
                 validation_summary = compute_dict_mean(validation_dicts)
 
+                #epoch_val_loss값이 min_val_loss값보다 작아질 때마다 갱신하고 모델 정보 기록
                 epoch_val_loss = validation_summary['loss']
                 if epoch_val_loss < min_val_loss:
                     min_val_loss = epoch_val_loss
                     best_ckpt_info = (step, min_val_loss, deepcopy(policy.serialize())) #모델 상태를 직렬화? 함
+            
+            #계산되어 모든 값 저장하는 듯?
+            print("\n\nvalidation_summary.keys() :",validation_summary.keys())
             for k in list(validation_summary.keys()):
                 validation_summary[f'val_{k}'] = validation_summary.pop(k)            
             wandb.log(validation_summary, step=step)
@@ -633,7 +642,9 @@ def train_bc(train_dataloader, val_dataloader, config):
             for k, v in validation_summary.items():
                 summary_string += f'{k}: {v.item():.3f} '
             print(summary_string)
-                
+            #
+
+        #모델을 저장하고, 평가시켜 성공률을 출력
         # evaluation
         if (step > 0) and (step % eval_every == 0):
             # first save then eval
@@ -644,23 +655,26 @@ def train_bc(train_dataloader, val_dataloader, config):
             wandb.log({'success': success}, step=step)
 
         # training
-        policy.train()
-        optimizer.zero_grad()
-        data = next(train_dataloader)
-        forward_dict = forward_pass(data, policy)
+        policy.train() #모델 학습 모드 설정
+        optimizer.zero_grad() #모든 파라미터의 그래디언트를 0으로 초기화
+        data = next(train_dataloader) #데이터 가져옴
+        forward_dict = forward_pass(data, policy) #ACT의 __call__ ?를 실행
         # backward
-        loss = forward_dict['loss']
-        loss.backward()
-        optimizer.step()
+        loss = forward_dict['loss'] #loss만 가져와
+        loss.backward() #역전파
+        optimizer.step() #optimizer로 모델 업데이트
         wandb.log(forward_dict, step=step) # not great, make training 1-2% slower
 
+        #save_every마다 모델 저장
         if step % save_every == 0:
             ckpt_path = os.path.join(ckpt_dir, f'policy_step_{step}_seed_{seed}.ckpt')
             torch.save(policy.serialize(), ckpt_path)
 
+    #마지막 모델 저장
     ckpt_path = os.path.join(ckpt_dir, f'policy_last.ckpt')
     torch.save(policy.serialize(), ckpt_path)
 
+    #가장 loss가 낮은 상태, 저장
     best_step, min_val_loss, best_state_dict = best_ckpt_info
     ckpt_path = os.path.join(ckpt_dir, f'policy_step_{best_step}_seed_{seed}.ckpt')
     torch.save(best_state_dict, ckpt_path)
@@ -677,10 +691,11 @@ def repeater(data_loader):
         print(f'Epoch {epoch} done') #모든 데이터를 다 전달해서 epoch정보 출력함
         epoch += 1
 
-
+#명령줄의 인자를 파싱해서 main함수에 전달
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     #action='store_true'는 --eval 옵션이 명령줄에 포함되지 않으면 args['eval']을 False로 설정
+    #action='store'은 저장
     parser.add_argument('--eval', action='store_true')
     parser.add_argument('--onscreen_render', action='store_true')
     parser.add_argument('--ckpt_dir', action='store', type=str, help='ckpt_dir', required=True)
@@ -712,4 +727,4 @@ if __name__ == '__main__':
     parser.add_argument('--vq_dim', action='store', type=int, help='vq_dim')
     parser.add_argument('--no_encoder', action='store_true')
     
-    main(vars(parser.parse_args()))
+    main(vars(parser.parse_args())) #명령줄의 인자를 파싱해서 main함수에 전달
