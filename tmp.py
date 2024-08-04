@@ -1,14 +1,23 @@
-import pickle
+import torch
+mu = torch.randn(16, 8, 4,4)
+print(mu.size(0), mu.size(1))
+print(mu.shape)
+print(mu.data.ndimension())
+if mu.data.ndimension() == 4:
+    mu = mu.view(mu.size(0), 8)#mu.size(1))
+print(mu.size)
+print(mu.shape)
+# import pickle
 
-# 파일 열기
-with open('test_tmp\config.pkl', 'rb') as file:
-    data = pickle.load(file)
+# # 파일 열기
+# with open('test_tmp\config.pkl', 'rb') as file:
+#     data = pickle.load(file)
 
-# 데이터 출력
-print(data.keys())
+# # 데이터 출력
+# print(data.keys())
 
-for elem_key in data.keys():
-    print(data[elem_key])
+# for elem_key in data.keys():
+#     print(data[elem_key])
 
 #---
 

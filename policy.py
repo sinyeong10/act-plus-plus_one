@@ -199,6 +199,7 @@ class DiffusionPolicy(nn.Module):
 class ACTPolicy(nn.Module):
     def __init__(self, args_override):
         super().__init__()
+        #build_ACT_model_and_optimizer ?를 통해 모델과 옵티마이저를 가져옴
         model, optimizer = build_ACT_model_and_optimizer(args_override)
         self.model = model # CVAE decoder
         self.optimizer = optimizer
@@ -208,31 +209,41 @@ class ACTPolicy(nn.Module):
 
     def __call__(self, qpos, image, actions=None, is_pad=None, vq_sample=None):
         env_state = None
+        #이미지 정규화함
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                          std=[0.229, 0.224, 0.225])
         image = normalize(image)
+
+        #학습동안만 실행?
         if actions is not None: # training time
+            #num_queries만큼만 사용, actions, is_pad 관련 정보는 utils를 참고?
             actions = actions[:, :self.model.num_queries]
             is_pad = is_pad[:, :self.model.num_queries]
 
             loss_dict = dict()
+            ##nn.Module까지 가야하며 DETRVAE.forward? 가 결과적으로 실행됨
             a_hat, is_pad_hat, (mu, logvar), probs, binaries = self.model(qpos, image, env_state, actions, is_pad, vq_sample)
             if self.vq or self.model.encoder is None:
                 total_kld = [torch.tensor(0.0)]
-            else:
+            else:#kl_divergence로 kl발산을 통해 정규 분포의 차이를 봄
                 total_kld, dim_wise_kld, mean_kld = kl_divergence(mu, logvar)
             if self.vq:
                 loss_dict['vq_discrepancy'] = F.l1_loss(probs, binaries, reduction='mean')
+            #모델의 예측이 실제 행동과 얼마나 가까운지를 측정?
             all_l1 = F.l1_loss(actions, a_hat, reduction='none')
+            #is_pad 텐서는 패딩된 시퀀스 부분을 나타내므로, 이를 사용하여 실제 데이터 포인트에 대해서만 손실을 계산?
             l1 = (all_l1 * ~is_pad.unsqueeze(-1)).mean()
             loss_dict['l1'] = l1
+            #전체 데이터 배치에 대한 평균 KL 발산 값?
             loss_dict['kl'] = total_kld[0]
+            #재구성 손실과 정규화 손실 간의 균형을 조절하여 최종 손실을 계산
             loss_dict['loss'] = loss_dict['l1'] + loss_dict['kl'] * self.kl_weight
             return loss_dict
         else: # inference time
+            ##학습과 인자가 다름!, nn.Module까지 가야하며 DETRVAE.forward? 가 결과적으로 실행됨
             a_hat, _, (_, _), _, _ = self.model(qpos, image, env_state, vq_sample=vq_sample) # no action, sample from prior
             return a_hat
-
+    #optimizer반환
     def configure_optimizers(self):
         return self.optimizer
 
@@ -244,10 +255,10 @@ class ACTPolicy(nn.Module):
         _, _, binaries, _, _ = self.model.encode(qpos, actions, is_pad)
 
         return binaries
-        
+    #모델 저장
     def serialize(self):
         return self.state_dict()
-
+    #모델 복원
     def deserialize(self, model_dict):
         return self.load_state_dict(model_dict)
 
@@ -279,17 +290,22 @@ class CNNMLPPolicy(nn.Module):
     def configure_optimizers(self):
         return self.optimizer
 
+#평균과 로그 분산을 받아 KL 발산을 계산
+#VAE와 같은 생성적 모델에서 잠재 변수의 정규 분포를 정규화하는 데 사용?
+#각 요소의 분포 간 차이를 측정
 def kl_divergence(mu, logvar):
-    batch_size = mu.size(0)
+    batch_size = mu.size(0) #텐서에서 첫번째 차원의 크기
     assert batch_size != 0
+
+    #1,2차원에만 값이 있고 3,4 차원에는 값이 없어야 이게 가능, 왜 하는 지 아직 이해 못함?
     if mu.data.ndimension() == 4:
         mu = mu.view(mu.size(0), mu.size(1))
     if logvar.data.ndimension() == 4:
         logvar = logvar.view(logvar.size(0), logvar.size(1))
-
+    #정규 분포 간의 KL 발산을 계산
     klds = -0.5 * (1 + logvar - mu.pow(2) - logvar.exp())
-    total_kld = klds.sum(1).mean(0, True)
-    dimension_wise_kld = klds.mean(0)
-    mean_kld = klds.mean(1).mean(0, True)
+    total_kld = klds.sum(1).mean(0, True) #총 KL 발산
+    dimension_wise_kld = klds.mean(0) #차원별 KL 발산
+    mean_kld = klds.mean(1).mean(0, True) #평균 KL 발산
 
-    return total_kld, dimension_wise_kld, mean_kld
+    return total_kld, dimension_wise_kld, mean_kld #여기서 total_kld만 사용됨
