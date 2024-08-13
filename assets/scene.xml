@@ -2,7 +2,7 @@
 <!--    <option timestep='0.0025' iterations="50" tolerance="1e-10" solver="Newton" jacobian="dense" cone="elliptic"/>-->
 
     <asset>
-        <mesh file="tabletop.stl" name="tabletop" scale="0.001 0.001 0.001"/>
+        <mesh file="tabletop2.stl" name="tabletop" scale="0.001 0.001 0.001"/>
     </asset>
 
     <visual>
