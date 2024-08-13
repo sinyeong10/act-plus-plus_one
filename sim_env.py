@@ -240,7 +240,9 @@ class InsertionTask(BimanualViperXTask):
 class MoveTask(BimanualViperXTask):
     def __init__(self, random=None):
         super().__init__(random=random)
-        self.max_reward = 4
+        self.max_reward = 3
+        self.lefted = False
+        # print("\n\nMoveTask 정의됨\n")
 
     def initialize_episode(self, physics):
         """Sets the state of the environment at the start of each episode."""
@@ -274,6 +276,10 @@ class MoveTask(BimanualViperXTask):
         touch_right_gripper = ("red_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs
         touch_table = ("red_box", "table") in all_contact_pairs
 
+        if not touch_table:
+            self.lefted = True
+            
+
         reward = 0
         if touch_right_gripper:
             reward = 1
@@ -281,10 +287,8 @@ class MoveTask(BimanualViperXTask):
             reward = 2
 
         target_pos = [0.2, 0.8, 0.15]
-        if touch_left_gripper: # attempted transfer
+        if self.lefted and touch_table:
             reward = 3
-        if touch_left_gripper and not touch_table: # successful transfer
-            reward = 4
         return reward
 
 

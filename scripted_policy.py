@@ -184,7 +184,7 @@ class PickAndMovePolicy(BasePolicy):
             {"t": 240, "xyz": meet_xyz + np.array([0, 0, 0.1]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
             {"t": 260, "xyz": meet_xyz, "quat": gripper_pick_quat.elements, "gripper": 0}, # move to meet position
             {"t": 270, "xyz": meet_xyz, "quat": gripper_pick_quat.elements, "gripper": 1}, # open gripper
-            {"t": 360, "xyz": init_mocap_pose_right[:3]+np.array([-0.2,0.2,0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
+            {"t": 350, "xyz": init_mocap_pose_right[:3]+np.array([-0.02,0.02,0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
             {"t": 400, "xyz": init_mocap_pose_right[:3], "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
         ]
 

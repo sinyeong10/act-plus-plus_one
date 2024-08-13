@@ -353,7 +353,8 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50):
             BOX_POSE[0] = sample_box_pose() # used in sim reset
         elif 'sim_insertion' in task_name:
             BOX_POSE[0] = np.concatenate(sample_insertion_pose()) # used in sim reset
-
+        elif 'sim_move' in task_name:
+            BOX_POSE[0] = sample_box_pose(fixed=True) # used in sim reset
         #환경 초기화
         ts = env.reset()
 

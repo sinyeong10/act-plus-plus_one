@@ -280,7 +280,9 @@ class InsertionEETask(BimanualViperXEETask):
 class MoveEETask(BimanualViperXEETask):
     def __init__(self, random=None):
         super().__init__(random=random)
-        self.max_reward = 4
+        self.max_reward = 3
+        self.lefted = False
+        # print("정의 됨")
 
     def initialize_episode(self, physics):
         """Sets the state of the environment at the start of each episode."""
@@ -314,6 +316,10 @@ class MoveEETask(BimanualViperXEETask):
         touch_right_gripper = ("red_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs
         touch_table = ("red_box", "table") in all_contact_pairs
 
+        if not touch_table:
+            self.lefted = True
+            # print("지금 공중임")
+
         reward = 0
         if touch_right_gripper:
             reward = 1
@@ -321,8 +327,6 @@ class MoveEETask(BimanualViperXEETask):
             reward = 2
         
         target_pos = [0.2, 0.8, 0.15]
-        if touch_left_gripper: # attempted transfer
+        if self.lefted and touch_table:
             reward = 3
-        if touch_left_gripper and not touch_table: # successful transfer
-            reward = 4
         return reward
