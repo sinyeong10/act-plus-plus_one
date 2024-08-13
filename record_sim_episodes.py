@@ -8,7 +8,7 @@ import h5py
 from constants import PUPPET_GRIPPER_POSITION_NORMALIZE_FN, SIM_TASK_CONFIGS
 from ee_sim_env import make_ee_sim_env
 from sim_env import make_sim_env, BOX_POSE
-from scripted_policy import PickAndTransferPolicy, InsertionPolicy
+from scripted_policy import PickAndTransferPolicy, InsertionPolicy, PickAndMovePolicy
 
 import IPython
 e = IPython.embed
@@ -41,6 +41,9 @@ def main(args):
         policy_cls = InsertionPolicy
     elif task_name == 'sim_transfer_cube_scripted_mirror':
         policy_cls = PickAndTransferPolicy
+
+    elif task_name == 'sim_move_cube_scripted':
+        policy_cls = PickAndMovePolicy
     else:
         raise NotImplementedError
 
@@ -52,7 +55,7 @@ def main(args):
         env = make_ee_sim_env(task_name)
         ts = env.reset()
         episode = [ts]
-        policy = policy_cls(inject_noise)
+        policy = policy_cls(inject_noise) #False면 노이즈 없음
         # setup plotting
         if onscreen_render:
             ax = plt.subplot()
@@ -61,6 +64,16 @@ def main(args):
         for step in range(episode_len):
             action = policy(ts)
             ts = env.step(action)
+                # self._task.before_step(action, self._physics)
+                # self._physics.step(self._n_sub_steps)
+                # self._task.after_step(self._physics)
+            # # 속성에 접근
+            # print(ts.step_type)   # dm_env.StepType.FIRST
+            # print(ts.reward)      # None
+            # print(ts.discount)    # None    
+            # print(ts.observation.keys()) # observation 값
+            # odict_keys(['qpos', 'qvel', 'env_state', 'images', 'mocap_pose_left', 'mocap_pose_right', 'gripper_ctrl'])
+
             episode.append(ts)
             if onscreen_render:
                 plt_img.set_data(ts.observation['images'][render_cam_name])

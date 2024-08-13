@@ -299,14 +299,17 @@ def postprocess_base_action(base_action):
 
 ### env utils
 
-def sample_box_pose():
+def sample_box_pose(fixed=False):
     x_range = [0.0, 0.2]
     y_range = [0.4, 0.6]
     z_range = [0.05, 0.05]
 
     ranges = np.vstack([x_range, y_range, z_range])
     cube_position = np.random.uniform(ranges[:, 0], ranges[:, 1])
-
+    if fixed:
+        cube_position = np.array([0.0, 0.6, 0.05])
+        # print(cube_position) [0.04616712 0.41313132 0.05      ]
+        # print(type(cube_position)) <class 'numpy.ndarray'>
     cube_quat = np.array([1, 0, 0, 0])
     return np.concatenate([cube_position, cube_quat])
 

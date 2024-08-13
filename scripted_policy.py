@@ -85,15 +85,15 @@ class PickAndTransferPolicy(BasePolicy):
         self.left_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_left[:3], "quat": init_mocap_pose_left[3:], "gripper": 0}, # sleep
             {"t": 100, "xyz": meet_xyz + np.array([-0.1, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 1}, # approach meet position
-            {"t": 260, "xyz": meet_xyz + np.array([0.02, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 1}, # move to meet position
-            {"t": 310, "xyz": meet_xyz + np.array([0.02, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 0}, # close gripper
-            {"t": 360, "xyz": meet_xyz + np.array([-0.1, 0, -0.02]), "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # move left
-            {"t": 400, "xyz": meet_xyz + np.array([-0.1, 0, -0.02]), "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # stay
+            {"t": 260, "xyz": meet_xyz + np.array([0.02, 0, -0.01]), "quat": meet_left_quat.elements, "gripper": 1}, # move to meet position
+            {"t": 310, "xyz": meet_xyz + np.array([0.02, 0, -0.01]), "quat": meet_left_quat.elements, "gripper": 0}, # close gripper
+            {"t": 360, "xyz": meet_xyz + np.array([-0.1, 0, -0.01]), "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # move left
+            {"t": 400, "xyz": meet_xyz + np.array([-0.1, 0, -0.01]), "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # stay
         ]
 
         self.right_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
-            {"t": 90, "xyz": box_xyz + np.array([0, 0, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube
+            {"t": 90, "xyz": box_xyz + np.array([-0.1, -0.0025, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube
             {"t": 130, "xyz": box_xyz + np.array([0, 0, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 1}, # go down
             {"t": 170, "xyz": box_xyz + np.array([0, 0, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 0}, # close gripper
             {"t": 200, "xyz": meet_xyz + np.array([0.05, 0, 0]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
@@ -102,7 +102,6 @@ class PickAndTransferPolicy(BasePolicy):
             {"t": 360, "xyz": meet_xyz + np.array([0.1, 0, 0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # move to right
             {"t": 400, "xyz": meet_xyz + np.array([0.1, 0, 0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
         ]
-
 
 class InsertionPolicy(BasePolicy):
 
@@ -149,9 +148,49 @@ class InsertionPolicy(BasePolicy):
         ]
 
 
+class PickAndMovePolicy(BasePolicy):
+    def generate_trajectory(self, ts_first):
+        init_mocap_pose_right = ts_first.observation['mocap_pose_right'] #이걸 안씀
+        init_mocap_pose_left = ts_first.observation['mocap_pose_left']
+
+        box_info = np.array(ts_first.observation['env_state'])
+        box_xyz = box_info[:3]
+        box_quat = box_info[3:]
+        # print(f"Generate trajectory for {box_xyz=}")
+
+        gripper_pick_quat = Quaternion(init_mocap_pose_right[3:])
+        gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-60)
+
+        # meet_left_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=90)
+
+        print("box_xyz", box_xyz)
+        meet_xyz = np.array([0.2, 0.8, 0.15])
+
+
+        self.left_trajectory = [
+            {"t": 0, "xyz": init_mocap_pose_left[:3], "quat": init_mocap_pose_left[3:], "gripper": 0}, # sleep
+            # {"t": 100, "xyz": meet_xyz + np.array([-0.1, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 1}, # approach meet position
+            # {"t": 260, "xyz": meet_xyz + np.array([0.02, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 1}, # move to meet position
+            # {"t": 310, "xyz": meet_xyz + np.array([0.02, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 0}, # close gripper
+            # {"t": 360, "xyz": meet_xyz + np.array([-0.1, 0, -0.02]), "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # move left
+            {"t": 400, "xyz": init_mocap_pose_left[:3], "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # stay
+        ]
+
+        self.right_trajectory = [
+            {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
+            {"t": 90, "xyz": box_xyz + np.array([-0.08, 0.05, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube 0, 0, 0.08
+            {"t": 120, "xyz": box_xyz + np.array([-0.03, 0.01, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 1}, # go down
+            {"t": 150, "xyz": box_xyz + np.array([0.03, 0, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 0}, # close gripper
+            {"t": 240, "xyz": meet_xyz + np.array([0, 0, 0.1]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
+            {"t": 260, "xyz": meet_xyz, "quat": gripper_pick_quat.elements, "gripper": 0}, # move to meet position
+            {"t": 270, "xyz": meet_xyz, "quat": gripper_pick_quat.elements, "gripper": 1}, # open gripper
+            {"t": 360, "xyz": init_mocap_pose_right[:3]+np.array([-0.2,0.2,0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
+            {"t": 400, "xyz": init_mocap_pose_right[:3], "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
+        ]
+
 def test_policy(task_name):
     # example rolling out pick_and_transfer policy
-    onscreen_render = True
+    onscreen_render = True#False #True
     inject_noise = False
 
     # setup the environment
@@ -166,9 +205,11 @@ def test_policy(task_name):
     for episode_idx in range(2):
         ts = env.reset()
         episode = [ts]
+        print(ts.observation.keys())
+        print(ts.observation["images"]['top'].shape)
         if onscreen_render:
             ax = plt.subplot()
-            plt_img = ax.imshow(ts.observation['images']['angle'])
+            plt_img = ax.imshow(ts.observation['images']['top'])#['angle'])
             plt.ion()
 
         policy = PickAndTransferPolicy(inject_noise)
@@ -177,7 +218,7 @@ def test_policy(task_name):
             ts = env.step(action)
             episode.append(ts)
             if onscreen_render:
-                plt_img.set_data(ts.observation['images']['angle'])
+                plt_img.set_data(ts.observation['images']['top'])#['angle'])
                 plt.pause(0.02)
         plt.close()
 

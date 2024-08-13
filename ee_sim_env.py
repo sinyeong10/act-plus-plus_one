@@ -47,6 +47,13 @@ def make_ee_sim_env(task_name):
         task = InsertionEETask(random=False)
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
                                   n_sub_steps=None, flat_observation=False)
+    
+    elif 'sim_move' in task_name:
+        xml_path = os.path.join(XML_DIR, f'bimanual_viperx_ee_transfer_cube.xml')
+        physics = mujoco.Physics.from_xml_path(xml_path)
+        task = MoveEETask(random=False)
+        env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
+                                  n_sub_steps=None, flat_observation=False)
     else:
         raise NotImplementedError
     return env
@@ -159,11 +166,13 @@ class TransferCubeEETask(BimanualViperXEETask):
         """Sets the state of the environment at the start of each episode."""
         self.initialize_robots(physics)
         # randomize box position
+        # 무작위 박스 위치 + 쿼터니언 상태 반환
         cube_pose = sample_box_pose()
         box_start_idx = physics.model.name2id('red_box_joint', 'joint')
         np.copyto(physics.data.qpos[box_start_idx : box_start_idx + 7], cube_pose)
         # print(f"randomized cube position to {cube_position}")
-
+        
+        #after_step 실행되는 듯?
         super().initialize_episode(physics)
 
     @staticmethod
@@ -263,5 +272,57 @@ class InsertionEETask(BimanualViperXEETask):
         if peg_touch_socket and (not peg_touch_table) and (not socket_touch_table): # peg and socket touching
             reward = 3
         if pin_touched: # successful insertion
+            reward = 4
+        return reward
+
+
+
+class MoveEETask(BimanualViperXEETask):
+    def __init__(self, random=None):
+        super().__init__(random=random)
+        self.max_reward = 4
+
+    def initialize_episode(self, physics):
+        """Sets the state of the environment at the start of each episode."""
+        self.initialize_robots(physics)
+        # randomize box position
+        # 무작위 박스 위치 + 쿼터니언 상태 반환
+        cube_pose = sample_box_pose(fixed = True) #고정으로 함
+        box_start_idx = physics.model.name2id('red_box_joint', 'joint')
+        np.copyto(physics.data.qpos[box_start_idx : box_start_idx + 7], cube_pose)
+        # print(f"randomized cube position to {cube_position}")
+
+        super().initialize_episode(physics)
+
+    @staticmethod
+    def get_env_state(physics):
+        env_state = physics.data.qpos.copy()[16:]
+        return env_state
+
+    def get_reward(self, physics):
+        # return whether left gripper is holding the box
+        all_contact_pairs = []
+        for i_contact in range(physics.data.ncon):
+            id_geom_1 = physics.data.contact[i_contact].geom1
+            id_geom_2 = physics.data.contact[i_contact].geom2
+            name_geom_1 = physics.model.id2name(id_geom_1, 'geom')
+            name_geom_2 = physics.model.id2name(id_geom_2, 'geom')
+            contact_pair = (name_geom_1, name_geom_2)
+            all_contact_pairs.append(contact_pair)
+
+        touch_left_gripper = ("red_box", "vx300s_left/10_left_gripper_finger") in all_contact_pairs
+        touch_right_gripper = ("red_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs
+        touch_table = ("red_box", "table") in all_contact_pairs
+
+        reward = 0
+        if touch_right_gripper:
+            reward = 1
+        if touch_right_gripper and not touch_table: # lifted
+            reward = 2
+        
+        target_pos = [0.2, 0.8, 0.15]
+        if touch_left_gripper: # attempted transfer
+            reward = 3
+        if touch_left_gripper and not touch_table: # successful transfer
             reward = 4
         return reward

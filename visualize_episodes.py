@@ -13,6 +13,7 @@ e = IPython.embed
 JOINT_NAMES = ["waist", "shoulder", "elbow", "forearm_roll", "wrist_angle", "wrist_rotate"]
 STATE_NAMES = JOINT_NAMES + ["gripper"]
 
+#qpos, qvel, action, image_dict[카메라 별로 이미지 저장]한 값 반환
 def load_hdf5(dataset_dir, dataset_name):
     dataset_path = os.path.join(dataset_dir, dataset_name + '.hdf5')
     if not os.path.isfile(dataset_path):
@@ -26,23 +27,27 @@ def load_hdf5(dataset_dir, dataset_name):
         action = root['/action'][()]
         image_dict = dict()
         for cam_name in root[f'/observations/images/'].keys():
+            # print("image_dict의 cam_name", cam_name) #예비 데이터는 top만 씀
             image_dict[cam_name] = root[f'/observations/images/{cam_name}'][()]
 
     return qpos, qvel, action, image_dict
 
 def main(args):
     dataset_dir = args['dataset_dir']
-    episode_idx = args['episode_idx']
+    # episode_idx = args['episode_idx']
+    all_num = args['episode_idx']
     ismirror = args['ismirror']
-    if ismirror:
-        dataset_name = f'mirror_episode_{episode_idx}'
-    else:
-        dataset_name = f'episode_{episode_idx}'
 
-    qpos, qvel, action, image_dict = load_hdf5(dataset_dir, dataset_name)
-    save_videos(image_dict, DT, video_path=os.path.join(dataset_dir, dataset_name + '_video.mp4'))
-    visualize_joints(qpos, action, plot_path=os.path.join(dataset_dir, dataset_name + '_qpos.png'))
-    # visualize_timestamp(t_list, dataset_path) # TODO addn timestamp back
+    for episode_idx in range(all_num):
+        if ismirror:
+            dataset_name = f'mirror_episode_{episode_idx}'
+        else:
+            dataset_name = f'episode_{episode_idx}'
+
+        qpos, qvel, action, image_dict = load_hdf5(dataset_dir, dataset_name)
+        save_videos(image_dict, DT, video_path=os.path.join(dataset_dir, dataset_name + '_video.mp4'))
+        visualize_joints(qpos, action, plot_path=os.path.join(dataset_dir, dataset_name + '_qpos.png'))
+        # visualize_timestamp(t_list, dataset_path) # TODO addn timestamp back
 
 
 def save_videos(video, dt, video_path=None):
@@ -81,7 +86,7 @@ def save_videos(video, dt, video_path=None):
         out.release()
         print(f'Saved video to: {video_path}')
 
-
+#qpos_list, command_list으로 plot 그리는 듯
 def visualize_joints(qpos_list, command_list, plot_path=None, ylim=None, label_overwrite=None):
     if label_overwrite:
         label1, label2 = label_overwrite

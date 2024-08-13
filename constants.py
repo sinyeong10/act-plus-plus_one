@@ -19,19 +19,19 @@ SIM_TASK_CONFIGS = {
         'camera_names': ['top']
     },
 
-    # 'sim_insertion_scripted': {
-    #     'dataset_dir': DATA_DIR + '/sim_insertion_scripted',
-    #     'num_episodes': 50,
-    #     'episode_len': 400,
-    #     'camera_names': ['top', 'left_wrist', 'right_wrist']
-    # },
+    'sim_insertion_scripted': {
+        'dataset_dir': DATA_DIR + '/sim_insertion_scripted',
+        'num_episodes': 50,
+        'episode_len': 400,
+        'camera_names': ['top', 'left_wrist', 'right_wrist']
+    },
 
-    # 'sim_insertion_human': {
-    #     'dataset_dir': DATA_DIR + '/sim_insertion_human',
-    #     'num_episodes': 50,
-    #     'episode_len': 500,
-    #     'camera_names': ['top']
-    # },
+    'sim_insertion_human': {
+        'dataset_dir': DATA_DIR + '/sim_insertion_human',
+        'num_episodes': 50,
+        'episode_len': 500,
+        'camera_names': ['top']
+    },
     'all': {
         'dataset_dir': DATA_DIR + '/',
         'num_episodes': None,
@@ -54,6 +54,21 @@ SIM_TASK_CONFIGS = {
         'camera_names': ['top', 'left_wrist', 'right_wrist']
     },
 
+
+    
+    'sim_move_cube_scripted':{
+        'dataset_dir': DATA_DIR + '/sim_move_cube_scripted',
+        'num_episodes': 50,
+        'episode_len': 400,
+        'camera_names': ['top']#, 'left_wrist', 'right_wrist']
+    },
+
+    'sim_move_cube_human':{
+        'dataset_dir': DATA_DIR + '/sim_move_cube_human',
+        'num_episodes': 50,
+        'episode_len': 400,
+        'camera_names': ['top']
+    },
 }
 
 ### Simulation envs fixed constants
