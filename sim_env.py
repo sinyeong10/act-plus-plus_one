@@ -75,6 +75,7 @@ class BimanualViperXTask(base.Task):
         full_right_gripper_action = [right_gripper_action, -right_gripper_action]
 
         env_action = np.concatenate([left_arm_action, full_left_gripper_action, right_arm_action, full_right_gripper_action])
+        env_action = np.concatenate([right_arm_action, full_right_gripper_action])
         super().before_step(env_action, physics)
         return
 
@@ -115,7 +116,78 @@ class BimanualViperXTask(base.Task):
         obs['env_state'] = self.get_env_state(physics)
         obs['images'] = dict()
         obs['images']['top'] = physics.render(height=480, width=640, camera_id='top')
-        obs['images']['left_wrist'] = physics.render(height=480, width=640, camera_id='left_wrist')
+        ## obs['images']['left_wrist'] = physics.render(height=480, width=640, camera_id='left_wrist')
+        obs['images']['right_wrist'] = physics.render(height=480, width=640, camera_id='right_wrist')
+        # obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
+        # obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
+
+        return obs
+
+    def get_reward(self, physics):
+        # return whether left gripper is holding the box
+        raise NotImplementedError
+
+class BimanualViperXOneTask(base.Task):
+    def __init__(self, random=None):
+        super().__init__(random=random)
+
+    def before_step(self, action, physics):
+        # left_arm_action = action[:6]
+        # right_arm_action = action[7:7+6]
+        right_arm_action = action[:6]
+        # normalized_left_gripper_action = action[6]
+        # normalized_right_gripper_action = action[7+6]
+        normalized_right_gripper_action = action[6]
+
+        # left_gripper_action = PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN(normalized_left_gripper_action)
+        right_gripper_action = PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN(normalized_right_gripper_action)
+
+        # full_left_gripper_action = [left_gripper_action, -left_gripper_action]
+        full_right_gripper_action = [right_gripper_action, -right_gripper_action]
+
+        # env_action = np.concatenate([left_arm_action, full_left_gripper_action, right_arm_action, full_right_gripper_action])
+        env_action = np.concatenate([right_arm_action, full_right_gripper_action])
+        super().before_step(env_action, physics)
+        return
+
+    def initialize_episode(self, physics):
+        """Sets the state of the environment at the start of each episode."""
+        super().initialize_episode(physics)
+
+    @staticmethod
+    def get_qpos(physics):
+        qpos_raw = physics.data.qpos.copy()
+        left_qpos_raw = qpos_raw[:8]
+        right_qpos_raw = qpos_raw[8:16]
+        left_arm_qpos = left_qpos_raw[:6]
+        right_arm_qpos = right_qpos_raw[:6]
+        left_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(left_qpos_raw[6])]
+        right_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(right_qpos_raw[6])]
+        return np.concatenate([left_arm_qpos, left_gripper_qpos, right_arm_qpos, right_gripper_qpos])
+
+    @staticmethod
+    def get_qvel(physics):
+        qvel_raw = physics.data.qvel.copy()
+        left_qvel_raw = qvel_raw[:8]
+        right_qvel_raw = qvel_raw[8:16]
+        left_arm_qvel = left_qvel_raw[:6]
+        right_arm_qvel = right_qvel_raw[:6]
+        left_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(left_qvel_raw[6])]
+        right_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(right_qvel_raw[6])]
+        return np.concatenate([left_arm_qvel, left_gripper_qvel, right_arm_qvel, right_gripper_qvel])
+
+    @staticmethod
+    def get_env_state(physics):
+        raise NotImplementedError
+
+    def get_observation(self, physics):
+        obs = collections.OrderedDict()
+        obs['qpos'] = self.get_qpos(physics)
+        obs['qvel'] = self.get_qvel(physics)
+        obs['env_state'] = self.get_env_state(physics)
+        obs['images'] = dict()
+        obs['images']['top'] = physics.render(height=480, width=640, camera_id='top')
+        ## obs['images']['left_wrist'] = physics.render(height=480, width=640, camera_id='left_wrist')
         obs['images']['right_wrist'] = physics.render(height=480, width=640, camera_id='right_wrist')
         # obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
         # obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
@@ -239,7 +311,7 @@ class InsertionTask(BimanualViperXTask):
             reward = 4
         return reward
 
-class MoveTask(BimanualViperXTask):
+class MoveTask(BimanualViperXOneTask):
     def __init__(self, random=None):
         super().__init__(random=random)
         self.max_reward = 3
@@ -251,18 +323,19 @@ class MoveTask(BimanualViperXTask):
         # TODO Notice: this function does not randomize the env configuration. Instead, set BOX_POSE from outside
         # reset qpos, control and box position
         with physics.reset_context():
-            physics.named.data.qpos[:16] = START_ARM_POSE
-            np.copyto(physics.data.ctrl, START_ARM_POSE)
+            # print("physics.named.data.qpos", physics.named.data.qpos)
+            physics.named.data.qpos[:8] = START_ARM_POSE[:8] #한팔로
+            # print("physics.data.ctrl", physics.data.ctrl) # [0. 0. 0. 0. 0. 0. 0. 0.]
+            np.copyto(physics.data.ctrl, START_ARM_POSE[:8])
             assert BOX_POSE[0] is not None
             print("BOX_POSE[0]", BOX_POSE[0])
             physics.named.data.qpos[-14:-7] = BOX_POSE[0] #yellow_box들어가서 더 환경이 추가됨
-            # print("physics.named.data.qpos", physics.named.data.qpos)
             # print(f"{BOX_POSE=}")
         super().initialize_episode(physics)
 
     @staticmethod
     def get_env_state(physics):
-        env_state = physics.data.qpos.copy()[16:]
+        env_state = physics.data.qpos.copy()[16:] #한팔로
         return env_state
 
     def get_reward(self, physics):

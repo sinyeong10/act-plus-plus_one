@@ -91,14 +91,17 @@ def main(args):
         else:
             print(f"{episode_idx=} Failed")
             # clear unused variables
-            del env
-            del episode
-            del policy
-            continue
+            # del env
+            # del episode
+            # del policy
+            # continue
 
-        joint_traj = [ts.observation['qpos'] for ts in episode]
+        joint_traj = [ts.observation['qpos'] for ts in episode] # 401 14
         # replace gripper pose with gripper control
-        gripper_ctrl_traj = [ts.observation['gripper_ctrl'] for ts in episode]
+        gripper_ctrl_traj = [ts.observation['gripper_ctrl'] for ts in episode] #401 4
+        # print("joint_traj",joint_traj[0], type(joint_traj), type(joint_traj[0]))
+        # print("::", len(joint_traj),joint_traj[0].size)
+        # print("gripper_ctrl_traj", len(gripper_ctrl_traj), gripper_ctrl_traj[0].size, "::",gripper_ctrl_traj[0])
         for joint, ctrl in zip(joint_traj, gripper_ctrl_traj):
             left_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
             right_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])
@@ -127,7 +130,8 @@ def main(args):
             plt_img = ax.imshow(ts.observation['images'][render_cam_name])
             plt.ion()
         for t in range(len(joint_traj)): # note: this will increase episode length by 1
-            action = joint_traj[t]
+            # print(joint_traj[t], joint_traj[t][:7])
+            action = joint_traj[t][7:14] #뒤만 가져옴
             ts = env.step(action)
             episode_replay.append(ts)
             if onscreen_render:
