@@ -49,7 +49,7 @@ def make_ee_sim_env(task_name):
                                   n_sub_steps=None, flat_observation=False)
     
     elif 'sim_move' in task_name:
-        xml_path = os.path.join(XML_DIR, f'bimanual_viperx_ee_transfer_cube.xml')
+        xml_path = os.path.join(XML_DIR, f'bimanual_viperx_ee_move_cube_one_arm.xml')
         physics = mujoco.Physics.from_xml_path(xml_path)
         task = MoveEETask(random=False)
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
@@ -82,6 +82,7 @@ class BimanualViperXEETask(base.Task):
 
     def initialize_robots(self, physics):
         # reset joint position
+        # print("physics.named.data.qpos",physics.named.data.qpos)
         physics.named.data.qpos[:16] = START_ARM_POSE
 
         # reset mocap to align with end effector
@@ -90,6 +91,13 @@ class BimanualViperXEETask(base.Task):
         # (2) get env._physics.named.data.xpos['vx300s_left/gripper_link']
         #     get env._physics.named.data.xquat['vx300s_left/gripper_link']
         #     repeat the same for right side
+        #xml에서 정의하는 파일
+        # print("physics.data.mocap_pos", physics.data.mocap_pos)
+        # print("physics.data.mocap_quat", physics.data.mocap_quat)
+        # physics.data.mocap_pos [[ 0.095  0.5    0.425]
+        # [-0.095  0.5    0.425]]
+        # physics.data.mocap_quat [[1. 0. 0. 0.]
+        # [1. 0. 0. 0.]]
         np.copyto(physics.data.mocap_pos[0], [-0.31718881+0.1, 0.5, 0.29525084])
         np.copyto(physics.data.mocap_quat[0], [1, 0, 0, 0])
         # right
@@ -281,15 +289,14 @@ class MoveEETask(BimanualViperXEETask):
     def __init__(self, random=None):
         super().__init__(random=random)
         self.max_reward = 3
-        self.lefted = False
-        # print("정의 됨")
+        self.lefted = 0
 
     def initialize_episode(self, physics):
         """Sets the state of the environment at the start of each episode."""
         self.initialize_robots(physics)
         # randomize box position
         # 무작위 박스 위치 + 쿼터니언 상태 반환
-        cube_pose = sample_box_pose(fixed = True) #고정으로 함
+        cube_pose = sample_box_pose() #고정으로 함
         box_start_idx = physics.model.name2id('red_box_joint', 'joint')
         np.copyto(physics.data.qpos[box_start_idx : box_start_idx + 7], cube_pose)
         # print(f"randomized cube position to {cube_position}")
@@ -303,6 +310,7 @@ class MoveEETask(BimanualViperXEETask):
 
     def get_reward(self, physics):
         # return whether left gripper is holding the box
+        # print("physics.data.ncon", physics.data.ncon) #현재 접촉이 일어난 갯수
         all_contact_pairs = []
         for i_contact in range(physics.data.ncon):
             id_geom_1 = physics.data.contact[i_contact].geom1
@@ -316,9 +324,16 @@ class MoveEETask(BimanualViperXEETask):
         touch_right_gripper = ("red_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs
         touch_table = ("red_box", "table") in all_contact_pairs
 
+        broken_table = ("yellow_box", "table") in all_contact_pairs \
+            or ("yellow_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs \
+            or ("yellow_box", "vx300s_left/10_left_gripper_finger") in all_contact_pairs    
+        touch_box_to_target = ("red_box", "yellow_box") in all_contact_pairs
+
         if not touch_table:
-            self.lefted = True
-            # print("지금 공중임")
+            self.lefted += 1
+            # print("지금 공중임")        
+        # print(physics.data.ncon, all_contact_pairs)
+
 
         reward = 0
         if touch_right_gripper:
@@ -326,7 +341,9 @@ class MoveEETask(BimanualViperXEETask):
         if touch_right_gripper and not touch_table: # lifted
             reward = 2
         
-        target_pos = [0.2, 0.8, 0.15]
-        if self.lefted and touch_table:
+        if self.lefted >= 50 and touch_box_to_target and broken_table:
             reward = 3
+
+        if not broken_table:
+            print("\n환경 망가짐")
         return reward

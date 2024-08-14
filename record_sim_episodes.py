@@ -48,7 +48,11 @@ def main(args):
         raise NotImplementedError
 
     success = []
-    for episode_idx in range(num_episodes):
+    episode_idx = 0
+    cnt = 0
+    # for episode_idx in range(num_episodes):
+    while episode_idx < num_episodes:
+        cnt += 1
         print(f'{episode_idx=}')
         print('Rollout out EE space scripted policy')
         # setup the environment
@@ -86,6 +90,11 @@ def main(args):
             print(f"{episode_idx=} Successful, {episode_return=}")
         else:
             print(f"{episode_idx=} Failed")
+            # clear unused variables
+            del env
+            del episode
+            del policy
+            continue
 
         joint_traj = [ts.observation['qpos'] for ts in episode]
         # replace gripper pose with gripper control
@@ -106,6 +115,7 @@ def main(args):
         # setup the environment
         print('Replaying joint commands')
         env = make_sim_env(task_name)
+        # #모든 박스의 정보가 옴
         BOX_POSE[0] = subtask_info # make sure the sim_env has the same object configurations as ee_sim_env
         ts = env.reset()
 
@@ -189,9 +199,11 @@ def main(args):
             for name, array in data_dict.items():
                 root[name][...] = array
         print(f'Saving: {time.time() - t0:.1f} secs\n')
+        episode_idx += 1
 
     print(f'Saved to {dataset_dir}')
     print(f'Success: {np.sum(success)} / {len(success)}')
+    print(f"cnt : {cnt}")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -7,6 +7,7 @@ data_local
 .vscode
 _wandb
 
+
 **/.DS_Store
 
 fuse.cfg
@@ -147,4 +148,3 @@ ckpts/
 play.ipynb
 
 scr/
-test_tmp/

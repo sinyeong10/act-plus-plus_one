@@ -48,8 +48,8 @@ def make_sim_env(task_name):
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
                                   n_sub_steps=None, flat_observation=False)
         
-    if 'sim_move_cube' in task_name:
-        xml_path = os.path.join(XML_DIR, f'bimanual_viperx_transfer_cube.xml')
+    elif 'sim_move_cube' in task_name:
+        xml_path = os.path.join(XML_DIR, f'bimanual_viperx_move_cube_one_arm.xml')
         physics = mujoco.Physics.from_xml_path(xml_path)
         task = MoveTask(random=False)
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
@@ -140,7 +140,9 @@ class TransferCubeTask(BimanualViperXTask):
             physics.named.data.qpos[:16] = START_ARM_POSE
             np.copyto(physics.data.ctrl, START_ARM_POSE)
             assert BOX_POSE[0] is not None
+            print("physics.named.data.qpos", physics.named.data.qpos)
             physics.named.data.qpos[-7:] = BOX_POSE[0]
+
             # print(f"{BOX_POSE=}")
         super().initialize_episode(physics)
 
@@ -241,7 +243,7 @@ class MoveTask(BimanualViperXTask):
     def __init__(self, random=None):
         super().__init__(random=random)
         self.max_reward = 3
-        self.lefted = False
+        self.lefted = 0
         # print("\n\nMoveTask 정의됨\n")
 
     def initialize_episode(self, physics):
@@ -252,7 +254,9 @@ class MoveTask(BimanualViperXTask):
             physics.named.data.qpos[:16] = START_ARM_POSE
             np.copyto(physics.data.ctrl, START_ARM_POSE)
             assert BOX_POSE[0] is not None
-            physics.named.data.qpos[-7:] = BOX_POSE[0]
+            # print("BOX_POSE[0]", BOX_POSE[0])
+            physics.named.data.qpos[-14:] = BOX_POSE[0] #yellow_box들어가서 더 환경이 추가됨
+            # print("physics.named.data.qpos", physics.named.data.qpos)
             # print(f"{BOX_POSE=}")
         super().initialize_episode(physics)
 
@@ -276,8 +280,13 @@ class MoveTask(BimanualViperXTask):
         touch_right_gripper = ("red_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs
         touch_table = ("red_box", "table") in all_contact_pairs
 
+        broken_table = ("yellow_box", "table") in all_contact_pairs \
+            or ("yellow_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs \
+            or ("yellow_box", "vx300s_left/10_left_gripper_finger") in all_contact_pairs    
+        touch_box_to_target = ("red_box", "yellow_box") in all_contact_pairs
+
         if not touch_table:
-            self.lefted = True
+            self.lefted += 1
             
 
         reward = 0
@@ -286,9 +295,10 @@ class MoveTask(BimanualViperXTask):
         if touch_right_gripper and not touch_table: # lifted
             reward = 2
 
-        target_pos = [0.2, 0.8, 0.15]
-        if self.lefted and touch_table:
+        if self.lefted >= 50 and touch_box_to_target and broken_table:
             reward = 3
+        if not broken_table:
+            print("\n환경 망가짐")
         return reward
 
 
