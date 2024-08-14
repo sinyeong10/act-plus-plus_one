@@ -140,7 +140,7 @@ class TransferCubeTask(BimanualViperXTask):
             physics.named.data.qpos[:16] = START_ARM_POSE
             np.copyto(physics.data.ctrl, START_ARM_POSE)
             assert BOX_POSE[0] is not None
-            print("physics.named.data.qpos", physics.named.data.qpos)
+            # print("physics.named.data.qpos", physics.named.data.qpos)
             physics.named.data.qpos[-7:] = BOX_POSE[0]
 
             # print(f"{BOX_POSE=}")
@@ -254,8 +254,8 @@ class MoveTask(BimanualViperXTask):
             physics.named.data.qpos[:16] = START_ARM_POSE
             np.copyto(physics.data.ctrl, START_ARM_POSE)
             assert BOX_POSE[0] is not None
-            # print("BOX_POSE[0]", BOX_POSE[0])
-            physics.named.data.qpos[-14:] = BOX_POSE[0] #yellow_box들어가서 더 환경이 추가됨
+            print("BOX_POSE[0]", BOX_POSE[0])
+            physics.named.data.qpos[-14:-7] = BOX_POSE[0] #yellow_box들어가서 더 환경이 추가됨
             # print("physics.named.data.qpos", physics.named.data.qpos)
             # print(f"{BOX_POSE=}")
         super().initialize_episode(physics)
@@ -298,7 +298,7 @@ class MoveTask(BimanualViperXTask):
         if self.lefted >= 50 and touch_box_to_target and broken_table:
             reward = 3
         if not broken_table:
-            print("\n환경 망가짐")
+            print("\n환경 망가짐", all_contact_pairs)
         return reward
 
 

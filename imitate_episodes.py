@@ -248,7 +248,7 @@ def get_image(ts, camera_names, rand_crop_resize=False):
     return curr_image
 
 #가상환경 설정하고 지정한 모델(ACT)을 가져와서 돌려보고 성공확률과 평균보상을 반환
-def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50):
+def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0):
     set_seed(1000)
     ckpt_dir = config['ckpt_dir']
     state_dim = config['state_dim']
@@ -361,9 +361,18 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50):
         #물리엔진 render로 지정 각도에 따라 이미지 출력
         ### onscreen render
         if onscreen_render:
+            print("rendering", onscreen_render)
+            # ax = plt.subplot()
+            # plt_img = ax.imshow(env._physics.render(height=480, width=640, camera_id=onscreen_cam))
+            # plt.ion()
+            folder_name = f"scr/image/{dir_step}_{rollout_id}"
+            if not os.path.exists(folder_name):
+                os.makedirs(folder_name)
             ax = plt.subplot()
             plt_img = ax.imshow(env._physics.render(height=480, width=640, camera_id=onscreen_cam))
-            plt.ion()
+            plt.axis('off')  # 축을 보이지 않게 설정
+            plt.savefig(f'scr/image/{dir_step}_{rollout_id}/rendered_image.png', bbox_inches='tight', pad_inches=0)  # 파일로 저장
+            # plt.close()  # 그래프 닫기
 
         ### evaluation loop
         if temporal_agg: #모든 타임스텝에 대한 작업 데이터 저장?
@@ -386,9 +395,15 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50):
                 time1 = time.time()
                 ### update onscreen render and wait for DT
                 if onscreen_render:
+                    print("fps_rendering", onscreen_render)
                     image = env._physics.render(height=480, width=640, camera_id=onscreen_cam)
                     plt_img.set_data(image)
-                    plt.pause(DT)
+                    plt.draw()  # 화면 갱신 대신 draw 사용
+                    plt.savefig(f'scr/image/{dir_step}_{rollout_id}/rendered_image_{t}_{max_timesteps}.png')  # 파일로 저장
+                    
+                    # image = env._physics.render(height=480, width=640, camera_id=onscreen_cam)
+                    # plt_img.set_data(image)
+                    # plt.pause(DT)
 
                 ### process previous timestep to get qpos and image_list
                 time2 = time.time()
@@ -544,7 +559,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50):
         episode_returns.append(episode_return)
         episode_highest_reward = np.max(rewards)
         highest_rewards.append(episode_highest_reward)
-        print(f'Rollout {rollout_id}\n{episode_return=}, {episode_highest_reward=}, {env_max_reward=}, Success: {episode_highest_reward==env_max_reward}')
+        print(f'Rollout {rollout_id}\n{episode_return=}, {episode_highest_reward=}, {env_max_reward=}, Success: {episode_highest_reward==env_max_reward}, Max : {episode_highest_reward}')
 
         # if save_episode:
         #     save_videos(image_list, DT, video_path=os.path.join(ckpt_dir, f'video{rollout_id}.mp4'))
@@ -652,7 +667,7 @@ def train_bc(train_dataloader, val_dataloader, config):
             ckpt_name = f'policy_step_{step}_seed_{seed}.ckpt'
             ckpt_path = os.path.join(ckpt_dir, ckpt_name)
             torch.save(policy.serialize(), ckpt_path)
-            success, _ = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=10)
+            success, _ = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=10, dir_step=step)
             wandb.log({'success': success}, step=step)
 
         # training

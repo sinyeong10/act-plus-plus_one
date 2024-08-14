@@ -115,8 +115,9 @@ def main(args):
         # setup the environment
         print('Replaying joint commands')
         env = make_sim_env(task_name)
+        # print("subtask_info",subtask_info)
         # #모든 박스의 정보가 옴
-        BOX_POSE[0] = subtask_info # make sure the sim_env has the same object configurations as ee_sim_env
+        BOX_POSE[0] = subtask_info[:7] # make sure the sim_env has the same object configurations as ee_sim_env
         ts = env.reset()
 
         episode_replay = [ts]

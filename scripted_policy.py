@@ -178,6 +178,7 @@ class PickAndMovePolicy(BasePolicy):
             {"t": 400, "xyz": init_mocap_pose_left[:3], "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # stay
         ]
         
+        #0.75에서 떨궈도 될 듯 한데 박스마다 위치가 바뀜!
         self.right_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
             {"t": 90, "xyz": box_xyz + np.array([-0.05, 0.03, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube 0, 0, 0.08
