@@ -217,7 +217,9 @@ class ACTPolicy(nn.Module):
         #학습동안만 실행?
         if actions is not None: # training time
             #num_queries만큼만 사용, actions, is_pad 관련 정보는 utils를 참고?
+            # print("policy 220line actions.size() :", actions.size()) #torch.Size([8, 100, 8]
             actions = actions[:, :self.model.num_queries]
+            # print("policy 222line actions.size() :", actions.size()) #torch.Size([8, 100, 8]
             is_pad = is_pad[:, :self.model.num_queries]
 
             loss_dict = dict()

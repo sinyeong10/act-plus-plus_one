@@ -14,7 +14,7 @@ from torchvision import transforms
 
 from constants import FPS #50
 from constants import PUPPET_GRIPPER_JOINT_OPEN #그리퍼 한계 값
-from utils import load_data # data functions
+from utils import load_data, load_data_one # data functions
 from utils import sample_box_pose, sample_insertion_pose # robot functions
 from utils import compute_dict_mean, set_seed, detach_dict, calibrate_linear_vel, postprocess_base_action # helper functions
 from policy import ACTPolicy, CNNMLPPolicy, DiffusionPolicy
@@ -76,6 +76,8 @@ def main(args):
     #모델의 설정 값
     # fixed parameters
     state_dim = 14
+    if task_name == 'sim_move_cube_scripted': #one arm
+        state_dim = 7
     lr_backbone = 1e-5
     backbone = 'resnet18'
     if policy_class == 'ACT':
@@ -98,7 +100,27 @@ def main(args):
                          'vq_dim': args['vq_dim'],
                          'action_dim': 16,
                          'no_encoder': args['no_encoder'],
+                         'one_arm_policy_config' : False,
                          }
+        if task_name == 'sim_move_cube_scripted': #one arm
+            policy_config = {'lr': args['lr'],
+                        'num_queries': args['chunk_size'],
+                        'kl_weight': args['kl_weight'],
+                        'hidden_dim': args['hidden_dim'],
+                        'dim_feedforward': args['dim_feedforward'],
+                        'lr_backbone': lr_backbone,
+                        'backbone': backbone,
+                        'enc_layers': enc_layers,
+                        'dec_layers': dec_layers,
+                        'nheads': nheads,
+                        'camera_names': camera_names,
+                        'vq': args['use_vq'],
+                        'vq_class': args['vq_class'],
+                        'vq_dim': args['vq_dim'],
+                        'action_dim': 8,
+                        'no_encoder': args['no_encoder'],
+                        'one_arm_policy_config' : True,
+                        }
     elif policy_class == 'Diffusion':
         #Diffusion시 설정값
         policy_config = {'lr': args['lr'],
@@ -146,7 +168,31 @@ def main(args):
         'real_robot': not is_sim,
         'load_pretrain': args['load_pretrain'],
         'actuator_config': actuator_config,
+        'one_arm_config' : True,
     }
+    if task_name == 'sim_move_cube_scripted': #one arm
+        config = {
+            'num_steps': num_steps,
+            'eval_every': eval_every,
+            'validate_every': validate_every,
+            'save_every': save_every,
+            'ckpt_dir': ckpt_dir,
+            'resume_ckpt_path': resume_ckpt_path,
+            'episode_len': episode_len,
+            'state_dim': state_dim,
+            'lr': args['lr'],
+            'policy_class': policy_class,
+            'onscreen_render': onscreen_render,
+            'policy_config': policy_config,
+            'task_name': task_name,
+            'seed': args['seed'],
+            'temporal_agg': args['temporal_agg'],
+            'camera_names': camera_names,
+            'real_robot': not is_sim,
+            'load_pretrain': args['load_pretrain'],
+            'actuator_config': actuator_config,
+            'one_arm_config' : False,
+        }
     #ckpt_dir 폴더가 없으면 폴더 생성
     if not os.path.isdir(ckpt_dir):
         os.makedirs(ckpt_dir)
@@ -177,7 +223,10 @@ def main(args):
         exit() #종료
 
     #utils.load_data ?를 함
-    train_dataloader, val_dataloader, stats, _ = load_data(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
+    if "sim_move_cube" in task_name:
+        train_dataloader, val_dataloader, stats, _ = load_data_one(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
+    else:
+        train_dataloader, val_dataloader, stats, _ = load_data(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
 
     #['action_mean', 'action_std', 'action_min', 'action_max', 'qpos_mean', 'qpos_std', 'example_qpos']가 들어가 있는 stats변수를 저장함
     # save dataset stats
@@ -591,6 +640,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
 #data(image_data, qpos_data, action_data, is_pad)를 gpu로 올려서 policy.__call__정책 실행
 def forward_pass(data, policy):
     image_data, qpos_data, action_data, is_pad = data
+    # print("imitate_episodes 640line action_data.size() : ", action_data.size()) # torch.Size([8, 100, 8])
     image_data, qpos_data, action_data, is_pad = image_data.cuda(), qpos_data.cuda(), action_data.cuda(), is_pad.cuda()
     return policy(qpos_data, image_data, action_data, is_pad) # TODO remove None
 
@@ -634,6 +684,7 @@ def train_bc(train_dataloader, val_dataloader, config):
                 policy.eval() #모델을 평가모드로
                 validation_dicts = []
                 for batch_idx, data in enumerate(val_dataloader):
+                    # print("imitate_episodes 684line data : ", type(data), data[2].size()) #<class 'list'> torch.Size([8, 100, 8])
                     forward_dict = forward_pass(data, policy)
                     validation_dicts.append(forward_dict)
                     #50개 넘어가면 멈춤, 너무 많이 다 돌리지 않음!

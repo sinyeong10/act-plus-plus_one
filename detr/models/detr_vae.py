@@ -99,6 +99,7 @@ class DETRVAE(nn.Module):
             ### Obtain latent z from action sequence
             if is_training:
                 # project action sequence to embedding dim, and concat with a CLS token
+                # print("detr_vae 102line actions:", actions.size()) torch.Size([8, 100, 8])
                 action_embed = self.encoder_action_proj(actions) # (bs, seq, hidden_dim)
                 qpos_embed = self.encoder_joint_proj(qpos)  # (bs, hidden_dim)
                 qpos_embed = torch.unsqueeze(qpos_embed, axis=1)  # (bs, 1, hidden_dim)
@@ -151,6 +152,10 @@ class DETRVAE(nn.Module):
         env_state: None
         actions: batch, seq, action_dim
         """
+        # print("detr_vae 155line qpos, actions, is_pad, vq_sample :", qpos.size())
+        # print("detr_vae 155line qpos, actions, is_pad, vq_sample :", actions.size())
+        # print("detr_vae 155line qpos, actions, is_pad, vq_sample :", is_pad.size())
+        # print("detr_vae 155line qpos, actions, is_pad, vq_sample :", vq_sample)
         latent_input, probs, binaries, mu, logvar = self.encode(qpos, actions, is_pad, vq_sample)
 
         # cvae decoder
@@ -167,7 +172,7 @@ class DETRVAE(nn.Module):
             # proprioception features
             proprio_input = self.input_proj_robot_state(qpos)
             # fold camera dimension into width dimension
-            src = torch.cat(all_cam_features, axis=3)
+            src = torch.cat(all_cam_features, axis=3) #0부터 시작함, 4번째 의미의 값을 합침
             pos = torch.cat(all_cam_pos, axis=3)
             hs = self.transformer(src, None, self.query_embed.weight, pos, latent_input, proprio_input, self.additional_pos_embed.weight)[0]
         else:
@@ -269,6 +274,9 @@ def build_encoder(args):
 
 def build(args):
     state_dim = 14 # TODO hardcode
+    print(args)
+    if args.one_arm_policy_config:
+        state_dim = 7
 
     # From state
     # backbone = None # from state for now, no need for conv nets
@@ -305,6 +313,8 @@ def build(args):
 
 def build_cnnmlp(args):
     state_dim = 14 # TODO hardcode
+    if args.one_arm_policy_config:
+        state_dim = 7
 
     # From state
     # backbone = None # from state for now, no need for conv nets

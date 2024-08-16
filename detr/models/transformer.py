@@ -18,7 +18,8 @@ import IPython
 e = IPython.embed
 
 class Transformer(nn.Module):
-
+    #d_model = 임베딩 차원
+    #멀티 헤드 어텐션에서 사용할 헤드의 수
     def __init__(self, d_model=512, nhead=8, num_encoder_layers=6,
                  num_decoder_layers=6, dim_feedforward=2048, dropout=0.1,
                  activation="relu", normalize_before=False,

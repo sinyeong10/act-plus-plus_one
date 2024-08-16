@@ -85,8 +85,8 @@ def write_all_data(hdf5_object, file=None):
 
 # dataset_path = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\scr\tonyzhao\datasets\sim_transfer_cube_scripted\episode_5.hdf5'
 # output_file_path = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\scr\tonyzhao\datasets\sim_transfer_cube_scripted\structure5.txt'
-dataset_path = r"C:\Users\cbrnt\OneDrive\문서\act-plus-plus\base_trans\episode_0.hdf5"
-output_file_path = r"C:\Users\cbrnt\OneDrive\문서\act-plus-plus\base_trans\structure0.txt"
+dataset_path = r"C:\Users\cbrnt\OneDrive\문서\act-plus-plus\scr\tonyzhao\datasets\sim_transfer_cube_scripted\episode_0.hdf5"
+output_file_path = r"C:\Users\cbrnt\OneDrive\문서\act-plus-plus\structure1.txt"
 # 파일 열기 및 구조 출력
 try:
     with h5py.File(dataset_path, 'r') as file:
