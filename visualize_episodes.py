@@ -45,6 +45,7 @@ def main(args):
             dataset_name = f'episode_{episode_idx}'
 
         qpos, qvel, action, image_dict = load_hdf5(dataset_dir, dataset_name)
+        print(qpos[0], qvel[0], action[0], image_dict.keys()) #(14,14,7)
         save_videos(image_dict, DT, video_path=os.path.join(dataset_dir, dataset_name + '_video.mp4'))
         visualize_joints(qpos, action, plot_path=os.path.join(dataset_dir, dataset_name + '_qpos.png'))
         # visualize_timestamp(t_list, dataset_path) # TODO addn timestamp back
@@ -95,13 +96,15 @@ def visualize_joints(qpos_list, command_list, plot_path=None, ylim=None, label_o
 
     qpos = np.array(qpos_list) # ts, dim
     command = np.array(command_list)
+    # print("qpos.shape", qpos.shape)
     num_ts, num_dim = qpos.shape
+    # num_dim = num_dim//2 #박스정보까지 들어와서 임시처리 #해결함
     h, w = 2, num_dim
     num_figs = num_dim
     fig, axs = plt.subplots(num_figs, 1, figsize=(w, h * num_figs))
 
     # plot joint state
-    all_names = [name + '_left' for name in STATE_NAMES] + [name + '_right' for name in STATE_NAMES]
+    all_names = [name + '_right' for name in STATE_NAMES] #[name + '_left' for name in STATE_NAMES] + 제거
     for dim_idx in range(num_dim):
         ax = axs[dim_idx]
         ax.plot(qpos[:, dim_idx], label=label1)

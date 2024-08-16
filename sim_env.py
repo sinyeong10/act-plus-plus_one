@@ -132,6 +132,7 @@ class BimanualViperXOneTask(base.Task):
         super().__init__(random=random)
 
     def before_step(self, action, physics):
+        # print("action",action)
         # left_arm_action = action[:6]
         # right_arm_action = action[7:7+6]
         right_arm_action = action[:6]
@@ -156,25 +157,28 @@ class BimanualViperXOneTask(base.Task):
 
     @staticmethod
     def get_qpos(physics):
+        # print("physics.data.qpos", physics.data.qpos)
         qpos_raw = physics.data.qpos.copy()
-        left_qpos_raw = qpos_raw[:8]
-        right_qpos_raw = qpos_raw[8:16]
-        left_arm_qpos = left_qpos_raw[:6]
+        # left_qpos_raw = qpos_raw[:8]
+        # right_qpos_raw = qpos_raw[8:16]
+        right_qpos_raw = qpos_raw[:8]
+        # left_arm_qpos = left_qpos_raw[:6]
         right_arm_qpos = right_qpos_raw[:6]
-        left_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(left_qpos_raw[6])]
+        # left_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(left_qpos_raw[6])]
         right_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(right_qpos_raw[6])]
-        return np.concatenate([left_arm_qpos, left_gripper_qpos, right_arm_qpos, right_gripper_qpos])
+        return np.concatenate([right_arm_qpos, right_gripper_qpos]) #left_arm_qpos, left_gripper_qpos, 제거
 
     @staticmethod
     def get_qvel(physics):
         qvel_raw = physics.data.qvel.copy()
-        left_qvel_raw = qvel_raw[:8]
-        right_qvel_raw = qvel_raw[8:16]
-        left_arm_qvel = left_qvel_raw[:6]
+        # left_qvel_raw = qvel_raw[:8]
+        # right_qvel_raw = qvel_raw[8:16]
+        right_qvel_raw = qvel_raw[:8]
+        # left_arm_qvel = left_qvel_raw[:6]
         right_arm_qvel = right_qvel_raw[:6]
-        left_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(left_qvel_raw[6])]
+        # left_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(left_qvel_raw[6])]
         right_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(right_qvel_raw[6])]
-        return np.concatenate([left_arm_qvel, left_gripper_qvel, right_arm_qvel, right_gripper_qvel])
+        return np.concatenate([right_arm_qvel, right_gripper_qvel]) #left_arm_qvel, left_gripper_qvel, 제거
 
     @staticmethod
     def get_env_state(physics):
