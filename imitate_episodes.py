@@ -240,7 +240,7 @@ def main(args):
 
     #가장 좋았던 모델 저장하고 loss 출력하며 몇번 step이 가장 좋았는 지 출력
     # save best checkpoint
-    ckpt_path = os.path.join(ckpt_dir, f'policy_best.ckpt')
+    ckpt_path = os.path.join(ckpt_dir, f'last_{best_step}_policy_best.ckpt')
     torch.save(best_state_dict, ckpt_path)
     print(f'Best ckpt, val loss {min_val_loss:.6f} @ step{best_step}')
     wandb.finish()
@@ -439,7 +439,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
         with torch.inference_mode(): #모델을 추론모드로 설정 : 자동 미분 비활성화, 메모리 사용 최적화, 모델의 forward 동작만 실행
             time0 = time.time()
             DT = 1 / FPS
-            culmulated_delay = 0 
+            culmulated_delay = 0
             for t in range(max_timesteps):
                 time1 = time.time()
                 ### update onscreen render and wait for DT
@@ -555,6 +555,9 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
                 # base_action = calibrate_linear_vel(base_action, c=0.19)
                 # base_action = postprocess_base_action(base_action)
                 # print('post process: ', time.time() - time4)
+                if "sim_move_cube" in task_name: #수정
+                    target_qpos = action[:-1]
+                    base_action = action[-1:]
 
                 ### step the environment
                 time5 = time.time()
@@ -562,6 +565,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
                 if real_robot:
                     ts = env.step(target_qpos, base_action)
                 else:
+                    # print(target_qpos)
                     ts = env.step(target_qpos)
                 # print('step env: ', time.time() - time5)
 
@@ -655,16 +659,22 @@ def train_bc(train_dataloader, val_dataloader, config):
     validate_every = config['validate_every']
     save_every = config['save_every']
 
+    eval_every = 1000
+    validate_every = 1000
+    save_every = 1000
+
     set_seed(seed)
     #make_policy ?를 함
     policy = make_policy(policy_class, policy_config)
     #쓰지 않는 듯, 모델을 로드해서 상태를 가져옴
+    print(config['load_pretrain'], config['resume_ckpt_path'])
     if config['load_pretrain']:
         loading_status = policy.deserialize(torch.load(os.path.join('/home/zfu/interbotix_ws/src/act/ckpts/pretrain_all', 'policy_step_50000_seed_0.ckpt')))
         print(f'loaded! {loading_status}')
     if config['resume_ckpt_path'] is not None:
         loading_status = policy.deserialize(torch.load(config['resume_ckpt_path']))
         print(f'Resume policy from: {config["resume_ckpt_path"]}, Status: {loading_status}')
+    
     policy.cuda()
     #옵티마이저 설정
     optimizer = make_optimizer(policy_class, policy)
@@ -737,13 +747,17 @@ def train_bc(train_dataloader, val_dataloader, config):
             ckpt_path = os.path.join(ckpt_dir, f'policy_step_{step}_seed_{seed}.ckpt')
             torch.save(policy.serialize(), ckpt_path)
 
+            best_step, min_val_loss, best_state_dict = best_ckpt_info
+            ckpt_path = os.path.join(ckpt_dir, f'best_policy_step_{best_step}_seed_{seed}.ckpt')
+            torch.save(best_state_dict, ckpt_path)
+
     #마지막 모델 저장
     ckpt_path = os.path.join(ckpt_dir, f'policy_last.ckpt')
     torch.save(policy.serialize(), ckpt_path)
 
     #가장 loss가 낮은 상태, 저장
     best_step, min_val_loss, best_state_dict = best_ckpt_info
-    ckpt_path = os.path.join(ckpt_dir, f'policy_step_{best_step}_seed_{seed}.ckpt')
+    ckpt_path = os.path.join(ckpt_dir, f'best_policy_step_{best_step}_seed_{seed}.ckpt')
     torch.save(best_state_dict, ckpt_path)
     print(f'Training finished:\nSeed {seed}, val loss {min_val_loss:.6f} at step {best_step}')
 
