@@ -183,10 +183,13 @@ class BaseOnePolicy:
         #     self.curr_left_waypoint = self.left_trajectory.pop(0)
         # next_left_waypoint = self.left_trajectory[0]
 
-        if self.right_trajectory[0]['t'] == self.step_count:
+
+        # print("187line : self.right_trajectory",self.right_trajectory)
+        # print("188 line : self.step_count, self.right_trajectory[0]['t']\n", self.step_count, self.right_trajectory[0]['t'])
+        if self.right_trajectory[0]['t'] == self.step_count:  #scripted에 따른 모든 정보를 가짐, 거기서 첫번째의 시간에 도달할 때마다 처음 명령을 제거
             self.curr_right_waypoint = self.right_trajectory.pop(0)
         next_right_waypoint = self.right_trajectory[0]
-
+        # print("self.curr_right_waypoint, next_right_waypoint, self.step_count", self.curr_right_waypoint, next_right_waypoint, self.step_count)
         # interpolate between waypoints to obtain current pose and gripper command
         # left_xyz, left_quat, left_gripper = self.interpolate(self.curr_left_waypoint, next_left_waypoint, self.step_count)
         right_xyz, right_quat, right_gripper = self.interpolate(self.curr_right_waypoint, next_right_waypoint, self.step_count)
@@ -201,6 +204,7 @@ class BaseOnePolicy:
         action_right = np.concatenate([right_xyz, right_quat, [right_gripper]])
 
         self.step_count += 1
+        # print("action_right", action_right)
         return np.concatenate([action_right]) #action_left, 제거
 
 class PickAndMovePolicy(BaseOnePolicy):
@@ -232,20 +236,33 @@ class PickAndMovePolicy(BaseOnePolicy):
         #     {"t": 400, "xyz": init_mocap_pose_left[:3], "quat": np.array([1, 0, 0, 0]), "gripper": 0}, # stay
         # ]
         
-        #0.75에서 떨궈도 될 듯 한데 박스마다 위치가 바뀜!
+        #base안
         self.right_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
-            {"t": 90, "xyz": box_xyz + np.array([-0.05, 0.03, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube 0, 0, 0.08
-            {"t": 120, "xyz": box_xyz + np.array([-0.03, 0.01, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 1}, # go down
-            {"t": 150, "xyz": box_xyz + np.array([0.01, -0.01, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 0}, # close gripper
-            {"t": 170, "xyz": box_xyz + np.array([0, 0, 0.1]), "quat": gripper_pick_quat.elements, "gripper": 0},
-            {"t": 240, "xyz": meet_xyz + np.array([0, 0, 0.12]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
-            {"t": 260, "xyz": meet_xyz + np.array([0, 0, 0.075]), "quat": gripper_pick_quat.elements, "gripper": 0}, # move to meet position
-            {"t": 270, "xyz": meet_xyz + np.array([0, 0, 0.075]), "quat": gripper_pick_quat.elements, "gripper": 1}, # open gripper
-            {"t": 290, "xyz": meet_xyz + np.array([0, 0, 0.12]), "quat": gripper_pick_quat.elements, "gripper": 1},
-            {"t": 350, "xyz": init_mocap_pose_right[:3]+np.array([-0.02,0.02,0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
-            {"t": 400, "xyz": init_mocap_pose_right[:3], "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
+            {"t": 90, "xyz": box_xyz + np.array([-0.1, -0.0025, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube
+            {"t": 130, "xyz": box_xyz + np.array([0, 0, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 1}, # go down
+            {"t": 170, "xyz": box_xyz + np.array([0, 0, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 0}, # close gripper
+            {"t": 250, "xyz": meet_xyz + np.array([0, 0, 0.3]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
+            {"t": 290, "xyz": meet_xyz + np.array([0, 0, 0.1]), "quat": gripper_pick_quat.elements, "gripper": 0}, # move to meet position
+            {"t": 310, "xyz": meet_xyz + np.array([0, 0, 0.1]), "quat": gripper_pick_quat.elements, "gripper": 1}, # open gripper
+            {"t": 330, "xyz": meet_xyz + np.array([0, 0, 0.3]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach meet position
+            {"t": 400, "xyz": init_mocap_pose_right[:3], "quat": gripper_pick_quat.elements, "gripper": 1},
         ]
+
+        # #0.75에서 떨궈도 될 듯 한데 박스마다 위치가 바뀜! #이걸로 생성했음
+        # self.right_trajectory = [
+        #     {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
+        #     {"t": 90, "xyz": box_xyz + np.array([-0.05, 0.03, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube 0, 0, 0.08
+        #     {"t": 120, "xyz": box_xyz + np.array([-0.03, 0.01, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 1}, # go down
+        #     {"t": 150, "xyz": box_xyz + np.array([0.01, -0.01, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 0}, # close gripper
+        #     {"t": 170, "xyz": box_xyz + np.array([0, 0, 0.1]), "quat": gripper_pick_quat.elements, "gripper": 0},
+        #     {"t": 240, "xyz": meet_xyz + np.array([0, 0, 0.12]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
+        #     {"t": 260, "xyz": meet_xyz + np.array([0, 0, 0.075]), "quat": gripper_pick_quat.elements, "gripper": 0}, # move to meet position
+        #     {"t": 270, "xyz": meet_xyz + np.array([0, 0, 0.075]), "quat": gripper_pick_quat.elements, "gripper": 1}, # open gripper
+        #     {"t": 290, "xyz": meet_xyz + np.array([0, 0, 0.12]), "quat": gripper_pick_quat.elements, "gripper": 1},
+        #     {"t": 350, "xyz": init_mocap_pose_right[:3]+np.array([-0.02,0.02,0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
+        #     {"t": 400, "xyz": init_mocap_pose_right[:3], "quat": gripper_pick_quat.elements, "gripper": 1}, # stay
+        # ]
 
         # [0.0, 0.6, 0.05]시 잡음
         # self.right_trajectory = [

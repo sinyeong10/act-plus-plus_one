@@ -2,9 +2,9 @@ import numpy as np
 import os
 import collections
 import matplotlib.pyplot as plt
-from dm_control import mujoco
-from dm_control.rl import control
-from dm_control.suite import base
+# from dm_control import mujoco
+# from dm_control.rl import control
+# from dm_control.suite import base
 
 from constants import DT, XML_DIR, START_ARM_POSE
 from constants import PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN

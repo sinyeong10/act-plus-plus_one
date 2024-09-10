@@ -68,7 +68,9 @@ def main(args):
         for step in range(episode_len):
             # print("ts.observation", ts.observation)
             action = policy(ts)
-            ts = env.step(action)
+            # print("action", action) #여기 가려함 #[0.21718881 0.49999888 0.29525084 1 0. 0. 0. 0.]형태
+
+            ts = env.step(action) #환경에서 적용해 봄
             # print("72line : ts.observation", ts.observation) #(7,7,7,image,7,2)
                 # self._task.before_step(action, self._physics)
                 # self._physics.step(self._n_sub_steps)
@@ -107,14 +109,17 @@ def main(args):
         for joint, ctrl in zip(joint_traj, gripper_ctrl_traj):
             # left_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
             # right_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])
+            # print("joint, ctrl", joint, ctrl)
             right_crtl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
+            # print("right_crtl",right_crtl)
             # joint[6] = left_ctrl
             # joint[6+7] = right_ctrl
-            joint[6] = right_crtl
+            joint[6] = right_crtl #엄밀한 값이 아니라서 함수 처리해서 하는 듯?
+            # print("joint", joint)
 
         # print("subtask_info", episode[0].observation['env_state'])
         subtask_info = episode[0].observation['env_state'].copy() # box pose at step 0
-
+        print("subtask_info", subtask_info)
         # clear unused variables
         del env
         del episode
