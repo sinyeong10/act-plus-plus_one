@@ -76,7 +76,7 @@ def main(args):
     #모델의 설정 값
     # fixed parameters
     state_dim = 14
-    if task_name == 'sim_move_cube_scripted': #one arm
+    if task_name == 'sim_move_cube_scripted' or task_name == 'sim_mycobot320': #one arm
         state_dim = 7
     lr_backbone = 1e-5
     backbone = 'resnet18'
@@ -102,7 +102,7 @@ def main(args):
                          'no_encoder': args['no_encoder'],
                          'one_arm_policy_config' : False,
                          }
-        if task_name == 'sim_move_cube_scripted': #one arm
+        if task_name == 'sim_move_cube_scripted' or task_name == 'sim_mycobot320': #one arm
             policy_config = {'lr': args['lr'],
                         'num_queries': args['chunk_size'],
                         'kl_weight': args['kl_weight'],
@@ -170,7 +170,7 @@ def main(args):
         'actuator_config': actuator_config,
         'one_arm_config' : True,
     }
-    if task_name == 'sim_move_cube_scripted': #one arm
+    if task_name == 'sim_move_cube_scripted' or task_name == 'sim_mycobot320': #one arm
         config = {
             'num_steps': num_steps,
             'eval_every': eval_every,
@@ -223,7 +223,7 @@ def main(args):
         exit() #종료
 
     #utils.load_data ?를 함
-    if "sim_move_cube" in task_name:
+    if "sim_move_cube" in task_name or "sim_mycobot320" in task_name:
         train_dataloader, val_dataloader, stats, _ = load_data_one(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
     else:
         train_dataloader, val_dataloader, stats, _ = load_data(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
@@ -555,7 +555,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
                 # base_action = calibrate_linear_vel(base_action, c=0.19)
                 # base_action = postprocess_base_action(base_action)
                 # print('post process: ', time.time() - time4)
-                if "sim_move_cube" in task_name: #수정
+                if "sim_move_cube" in task_name or 'sim_mycobot320' in task_name: #수정
                     target_qpos = action[:-1]
                     base_action = action[-1:]
 

@@ -2,9 +2,10 @@ import numpy as np
 import os
 import collections
 import matplotlib.pyplot as plt
-# from dm_control import mujoco
-# from dm_control.rl import control
-# from dm_control.suite import base
+#복원필요
+from dm_control import mujoco
+from dm_control.rl import control
+from dm_control.suite import base
 
 from constants import DT, XML_DIR, START_ARM_POSE
 from constants import PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN
@@ -49,6 +50,15 @@ def make_sim_env(task_name):
                                   n_sub_steps=None, flat_observation=False)
         
     elif 'sim_move_cube' in task_name:
+        xml_path = os.path.join(XML_DIR, f'bimanual_viperx_move_cube_one_arm.xml')
+        physics = mujoco.Physics.from_xml_path(xml_path)
+        task = MoveTask(random=False)
+        env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
+                                  n_sub_steps=None, flat_observation=False)
+        
+    
+    #언젠가 만들어야함
+    elif 'sim_mycobot320' in task_name:
         xml_path = os.path.join(XML_DIR, f'bimanual_viperx_move_cube_one_arm.xml')
         physics = mujoco.Physics.from_xml_path(xml_path)
         task = MoveTask(random=False)

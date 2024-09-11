@@ -12,8 +12,8 @@ import wandb
 import time
 from torchvision import transforms
 
-from constants import FPS #50
-from constants import PUPPET_GRIPPER_JOINT_OPEN #그리퍼 한계 값
+# from constants import FPS #50
+# from constants import PUPPET_GRIPPER_JOINT_OPEN #그리퍼 한계 값
 from utils import load_data, load_data_one # data functions
 from utils import sample_box_pose, sample_insertion_pose # robot functions
 from utils import compute_dict_mean, set_seed, detach_dict, calibrate_linear_vel, postprocess_base_action # helper functions
@@ -26,6 +26,9 @@ from detr.models.latent_model import Latent_Model_Transformer
 
 import IPython
 e = IPython.embed
+
+FPS = 10
+PUPPET_GRIPPER_JOINT_OPEN = 100
 
 #dataset_dir 경로에서 함수내 max_idx 값까지 f"qpos_{i}.npy"파일이 있는 지 찾아보고 없으면 i를 반환함
 #인덱스를 순차적으로 생성하는 데 씀?
@@ -76,7 +79,7 @@ def main(args):
     #모델의 설정 값
     # fixed parameters
     state_dim = 14
-    if task_name == 'sim_move_cube_scripted': #one arm
+    if task_name == 'sim_move_cube_scripted' or task_name == 'sim_mycobot320': #one arm
         state_dim = 7
     lr_backbone = 1e-5
     backbone = 'resnet18'
@@ -102,7 +105,7 @@ def main(args):
                          'no_encoder': args['no_encoder'],
                          'one_arm_policy_config' : False,
                          }
-        if task_name == 'sim_move_cube_scripted': #one arm
+        if task_name == 'sim_move_cube_scripted' or task_name == 'sim_mycobot320': #one arm
             policy_config = {'lr': args['lr'],
                         'num_queries': args['chunk_size'],
                         'kl_weight': args['kl_weight'],
@@ -170,7 +173,7 @@ def main(args):
         'actuator_config': actuator_config,
         'one_arm_config' : True,
     }
-    if task_name == 'sim_move_cube_scripted': #one arm
+    if task_name == 'sim_move_cube_scripted' or task_name == 'sim_mycobot320': #one arm
         config = {
             'num_steps': num_steps,
             'eval_every': eval_every,
@@ -222,6 +225,31 @@ def main(args):
         print()
         exit() #종료
 
+
+    
+    #utils.load_data ?를 함
+    if "sim_move_cube" in task_name or 'sim_mycobot320' in task_name:
+        train_dataloader, val_dataloader, stats, _ = load_data_one(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
+    else:
+        train_dataloader, val_dataloader, stats, _ = load_data(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
+
+    #['action_mean', 'action_std', 'action_min', 'action_max', 'qpos_mean', 'qpos_std', 'example_qpos']가 들어가 있는 stats변수를 저장함
+    # save dataset stats
+    stats_path = os.path.join(ckpt_dir, f'dataset_stats.pkl')
+    with open(stats_path, 'wb') as f:
+        pickle.dump(stats, f)
+
+    #trian_bc : 모델을 학습시키고 (평가로 중간 결과도 보며) 가장 좋은 모델 정보를 반환 함
+    best_ckpt_info = train_bc(train_dataloader, val_dataloader, config)
+    best_step, min_val_loss, best_state_dict = best_ckpt_info
+
+    #가장 좋았던 모델 저장하고 loss 출력하며 몇번 step이 가장 좋았는 지 출력
+    # save best checkpoint
+    ckpt_path = os.path.join(ckpt_dir, f'last_{best_step}_policy_best.ckpt')
+    torch.save(best_state_dict, ckpt_path)
+    print(f'Best ckpt, val loss {min_val_loss:.6f} @ step{best_step}')
+    wandb.finish()
+
 #입력받는 값인 policy_class와 그에 따라 설정된 policy_config를 받아 모델을 가져옴
 def make_policy(policy_class, policy_config):
     #policy.ACTPolicy 클래스를 설정에 따라 생성하여 반환함
@@ -253,8 +281,8 @@ def get_image(ts, camera_names, rand_crop_resize=False):
     curr_images = []
     for cam_name in camera_names:
         #환경에서 카메라별 이미지를 가져옴 채널을 앞으로 가져옴
-        # print(len(ts.observation['images'][cam_name]))
-        curr_image = rearrange(ts.observation['images'], 'h w c -> c h w')#ts.observation['images'][cam_name], 'h w c -> c h w')
+        print(len(ts.observation['images'][cam_name]))
+        curr_image = rearrange(ts.observation['images'][cam_name], 'h w c -> c h w')#ts.observation['images'][cam_name], 'h w c -> c h w') #복원필요
         curr_images.append(curr_image)
     #리스트에 여러 값이 있는 걸 차원으로 쌓음 (2,2) 4개가 (4,2,2)로!
     curr_image = np.stack(curr_images, axis=0)
@@ -295,9 +323,9 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
     # load policy and stats
     ckpt_path = os.path.join(ckpt_dir, ckpt_name) #경로랑 파일이름을 결합
     policy = make_policy(policy_class, policy_config) #make_policy ?를 함
-    print(ckpt_path)
+    print("ckpt_path", ckpt_path)
     loading_status = policy.deserialize(torch.load(ckpt_path)) #ACT기준 ckpt_path 경로에서 상태 정보를 가져와 / 모델에 로드함
-    print(loading_status)
+    print("loading_status",loading_status)
     policy.cuda() #GPU로 옮김
     policy.eval() #평가모드 설정(학습과 다름!)
     if vq: #vq를 cmd에서 파일 실행시켰을 때 값을 준 경우 Latent_Model_Transformer ?을 로드함
@@ -315,6 +343,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
     stats_path = os.path.join(ckpt_dir, f'dataset_stats.pkl')
     with open(stats_path, 'rb') as f:
         stats = pickle.load(f)
+    print("stats", stats)
     # if use_actuator_net:
     #     prediction_len = actuator_config['prediction_len']
     #     future_len = actuator_config['future_len']
@@ -402,7 +431,6 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
         target_qpos_list = []
         rewards = []
 
-        FPS = 10
         # if use_actuator_net:
         #     norm_episode_all_base_actions = [actuator_norm(np.zeros(history_len, 2)).tolist()]
         with torch.inference_mode(): #모델을 추론모드로 설정 : 자동 미분 비활성화, 메모리 사용 최적화, 모델의 forward 동작만 실행
@@ -441,7 +469,6 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
                 qpos = pre_process(qpos_numpy) #qpos_numpy를 정규화 함
                 qpos = torch.from_numpy(qpos).float().cuda().unsqueeze(0) #첫번째 차원 추가
                 # qpos_history[:, t] = qpos
-                camera_names = ["images"]
                 if t % query_frequency == 0: #지정된 query_frequency마다 get_image ?를 함
                     curr_image = get_image(ts, camera_names, rand_crop_resize=(config['policy_class'] == 'Diffusion'))
                 # print('get image: ', time.time() - time2)
@@ -528,7 +555,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
                 # base_action = calibrate_linear_vel(base_action, c=0.19)
                 # base_action = postprocess_base_action(base_action)
                 # print('post process: ', time.time() - time4)
-                if "sim_move_cube" in task_name: #수정
+                if "sim_move_cube" in task_name or 'sim_mycobot320' in task_name: #수정
                     target_qpos = action[:-1]
                     base_action = action[-1:]
 
@@ -623,6 +650,125 @@ def forward_pass(data, policy):
     # print("imitate_episodes 640line action_data.size() : ", action_data.size()) # torch.Size([8, 100, 8])
     image_data, qpos_data, action_data, is_pad = image_data.cuda(), qpos_data.cuda(), action_data.cuda(), is_pad.cuda()
     return policy(qpos_data, image_data, action_data, is_pad) # TODO remove None
+
+#모델을 학습시키며 (중간 평가도 함) 가장 좋은 결과를 반환함
+def train_bc(train_dataloader, val_dataloader, config):
+    num_steps = config['num_steps']
+    ckpt_dir = config['ckpt_dir']
+    seed = config['seed']
+    policy_class = config['policy_class']
+    policy_config = config['policy_config']
+    eval_every = config['eval_every']
+    validate_every = config['validate_every']
+    save_every = config['save_every']
+
+    eval_every = 1000
+    validate_every = 1000
+    save_every = 1000
+
+    set_seed(seed)
+    #make_policy ?를 함
+    policy = make_policy(policy_class, policy_config)
+    #쓰지 않는 듯, 모델을 로드해서 상태를 가져옴
+    print(config['load_pretrain'], config['resume_ckpt_path'])
+    if config['load_pretrain']:
+        loading_status = policy.deserialize(torch.load(os.path.join('/home/zfu/interbotix_ws/src/act/ckpts/pretrain_all', 'policy_step_50000_seed_0.ckpt')))
+        print(f'loaded! {loading_status}')
+    if config['resume_ckpt_path'] is not None:
+        loading_status = policy.deserialize(torch.load(config['resume_ckpt_path']))
+        print(f'Resume policy from: {config["resume_ckpt_path"]}, Status: {loading_status}')
+    
+    policy.cuda()
+    #옵티마이저 설정
+    optimizer = make_optimizer(policy_class, policy)
+    #초기값은 무한대
+    min_val_loss = np.inf
+    best_ckpt_info = None
+    #계속 값을 가져올 이터레이터 생성
+    train_dataloader = repeater(train_dataloader)
+    #num_step만큼 반복하며 진행 상황을 표시
+    for step in tqdm(range(num_steps+1)):
+        #validate_every마다 검증함
+        # validation
+
+
+        if step % validate_every == 0:
+            print('validating')
+
+            with torch.inference_mode(): #연산을 추론 모드 설정
+                policy.eval() #모델을 평가모드로
+                validation_dicts = []
+                for batch_idx, data in enumerate(val_dataloader):
+                    # print("imitate_episodes 684line data : ", type(data), data[2].size()) #<class 'list'> torch.Size([8, 100, 8])
+                    forward_dict = forward_pass(data, policy)
+                    validation_dicts.append(forward_dict)
+                    #50개 넘어가면 멈춤, 너무 많이 다 돌리지 않음!
+                    if batch_idx > 50:
+                        break
+                #compute_dict_mean ?를 함
+                validation_summary = compute_dict_mean(validation_dicts)
+
+                #epoch_val_loss값이 min_val_loss값보다 작아질 때마다 갱신하고 모델 정보 기록
+                epoch_val_loss = validation_summary['loss']
+                if epoch_val_loss < min_val_loss:
+                    min_val_loss = epoch_val_loss
+                    best_ckpt_info = (step, min_val_loss, deepcopy(policy.serialize())) #모델 상태를 직렬화? 함
+            
+            #계산되어 모든 값 저장하는 듯?
+            print("\n\nvalidation_summary.keys() :",validation_summary.keys())
+            for k in list(validation_summary.keys()):
+                validation_summary[f'val_{k}'] = validation_summary.pop(k)            
+            wandb.log(validation_summary, step=step)
+            print(f'Val loss:   {epoch_val_loss:.5f}')
+            summary_string = ''
+            for k, v in validation_summary.items():
+                summary_string += f'{k}: {v.item():.3f} '
+            print(summary_string)
+            #
+
+        #중간평가는 실제라 위험함
+        # #모델을 저장하고, 평가시켜 성공률을 출력
+        # # evaluation
+        # if (step > 0) and (step % eval_every == 0):
+        #     # first save then eval
+        #     ckpt_name = f'policy_step_{step}_seed_{seed}.ckpt'
+        #     ckpt_path = os.path.join(ckpt_dir, ckpt_name)
+        #     torch.save(policy.serialize(), ckpt_path)
+        #     success, _ = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=10, dir_step=step)
+        #     wandb.log({'success': success}, step=step)
+
+
+        # training
+        policy.train() #모델 학습 모드 설정
+        optimizer.zero_grad() #모든 파라미터의 그래디언트를 0으로 초기화
+        data = next(train_dataloader) #데이터 가져옴
+        forward_dict = forward_pass(data, policy) #ACT의 __call__ ?를 실행
+        # backward
+        loss = forward_dict['loss'] #loss만 가져와
+        loss.backward() #역전파
+        optimizer.step() #optimizer로 모델 업데이트
+        wandb.log(forward_dict, step=step) # not great, make training 1-2% slower
+
+        #save_every마다 모델 저장
+        if step % save_every == 0:
+            ckpt_path = os.path.join(ckpt_dir, f'policy_step_{step}_seed_{seed}.ckpt')
+            torch.save(policy.serialize(), ckpt_path)
+
+            best_step, min_val_loss, best_state_dict = best_ckpt_info
+            ckpt_path = os.path.join(ckpt_dir, f'best_policy_step_{best_step}_seed_{seed}.ckpt')
+            torch.save(best_state_dict, ckpt_path)
+
+    #마지막 모델 저장
+    ckpt_path = os.path.join(ckpt_dir, f'policy_last.ckpt')
+    torch.save(policy.serialize(), ckpt_path)
+
+    #가장 loss가 낮은 상태, 저장
+    best_step, min_val_loss, best_state_dict = best_ckpt_info
+    ckpt_path = os.path.join(ckpt_dir, f'best_policy_step_{best_step}_seed_{seed}.ckpt')
+    torch.save(best_state_dict, ckpt_path)
+    print(f'Training finished:\nSeed {seed}, val loss {min_val_loss:.6f} at step {best_step}')
+
+    return best_ckpt_info
 
 #data_loader을 계속 호출하며 한 번 거기서 데이터를 다 출력시 epoch 정보를 출력하고 증가시킴
 def repeater(data_loader):

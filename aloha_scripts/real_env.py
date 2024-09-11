@@ -40,8 +40,26 @@ class RealEnv:
 
     def __init__(self, init_node, setup_robots=True, setup_base=False):
         
-        self.cap = cv2.VideoCapture(1)
+        self.cap0 = cv2.VideoCapture(0)        
+        while True:
+            _, frame = self.cap0.read()
+            
+            cv2.imshow("right_wrist", frame)
+            key = cv2.waitKey(10)
+            if key == ord("q"):
+                break
         
+        
+        self.cap1 = cv2.VideoCapture(1)        
+        while True:
+            _, frame = self.cap1.read()
+            
+            cv2.imshow("top", frame)
+            key = cv2.waitKey(10)
+            if key == ord("q"):
+                break
+
+
         self.mycobot = MyCobot('COM7', 115200) #('/dev/ttyACM0',115200)
         start_time = time.time()
         self.mycobot.set_gripper_mode(0)
@@ -54,19 +72,32 @@ class RealEnv:
 
         self._reset_joints()
         self._reset_gripper()
+
+        self.cnt = 0
+        self.gripper_value = [70]*40+list(np.linspace(70, 25, 10))+[25]*85+list(np.linspace(25,70,10))+[70]*100
+
         
 
     def get_qpos(self):
-        print(self.mycobot.get_angles(), self.mycobot.get_gripper_value())
-        return np.concatenate([self.mycobot.get_angles(), [self.mycobot.get_gripper_value()]])
+        print(self.cnt, "qpos :", self.mycobot.get_angles(), self.mycobot.get_gripper_value(), self.gripper_value[self.cnt])
+        gripper = self.mycobot.get_gripper_value()
+        if self.mycobot.get_gripper_value() == 255:
+            # if 41<= self.cnt <= 50 or 135<= self.cnt:
+            gripper = self.gripper_value[self.cnt]
+        self.cnt += 1
+        return np.concatenate([self.mycobot.get_angles(), [gripper]])
 
     def get_qvel(self):
         return np.concatenate([[20]*6,[10]*1])
 
     def get_images(self):
-        _, cur_frame = self.cap.read()
-        print(np.array(cur_frame).shape)
-        return np.array(cur_frame)
+        image_dict = dict()
+        _, cur_frame0 = self.cap1.read()
+        image_dict["top"] = cur_frame0
+        _, cur_frame1 = self.cap0.read()
+        image_dict["right_wrist"] = cur_frame1
+        print(self.cnt, "cur_frame", np.array(cur_frame0).shape, np.array(cur_frame1).shape)
+        return image_dict
 
     def _reset_joints(self):
         self.mycobot.send_angles([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 20)
@@ -97,9 +128,9 @@ class RealEnv:
             observation=self.get_observation())
 
     def step(self, action, base_action=None, get_tracer_vel=False, get_obs=True):
-        print("action.shape", action.shape)
+        # print("action.shape", action.shape)
         action = list(action)
-        print("action", action)
+        print(self.cnt, "action", action)
         state_len = 6
         self.mycobot.send_angles(action[:state_len], 20)
         self.mycobot.set_gripper_value(int(action[-1]), 20, 1)

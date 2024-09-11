@@ -55,21 +55,21 @@ SIM_TASK_CONFIGS = {
     },
 
 
-    
-    # 'sim_move_cube_scripted':{
-    #     'dataset_dir': DATA_DIR + '/sim_move_cube_scripted',
-    #     'num_episodes': 50,
-    #     'episode_len': 400,
-    #     'camera_names': ['top']#, 'right_wrist']#, 'left_wrist', 'right_wrist']
-    # },
-    
     #수정
-    'sim_move_cube_scripted':{
-        'dataset_dir': DATA_DIR + '/sim_move_cube_scripted',
+    'sim_mycobot320':{
+        'dataset_dir': DATA_DIR + '/sim_mycobot_320',
         'num_episodes': 10,
         'episode_len': 145,
-        'camera_names': ['right_wrist']#, 'left_wrist', 'right_wrist']
+        'camera_names': ['right_wrist', 'top']#, 'left_wrist', 'right_wrist']
     },
+    
+    'sim_move_cube_scripted':{
+        'dataset_dir': DATA_DIR + '/sim_move_cube_scripted',
+        'num_episodes': 50,
+        'episode_len': 400,
+        'camera_names': ['top']#, 'right_wrist']#, 'left_wrist', 'right_wrist']
+    },
+    
 
     'sim_move_cube_human':{
         'dataset_dir': DATA_DIR + '/sim_move_cube_human',

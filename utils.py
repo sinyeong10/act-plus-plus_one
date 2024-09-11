@@ -342,7 +342,7 @@ def get_norm_stats_one(dataset_path_list):
                     dummy_base_action = np.zeros([action.shape[0], 1]) #수정
                     action = np.concatenate([action, dummy_base_action], axis=-1)
         except Exception as e:
-            print(f'Error loading {dataset_path} in get_norm_stats')
+            print(f'345 Error loading {dataset_path} in get_norm_stats')
             print(e)
             quit()
         all_qpos_data.append(torch.from_numpy(qpos))
