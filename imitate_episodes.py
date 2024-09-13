@@ -402,7 +402,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
             BOX_POSE[0] = sample_box_pose() # used in sim reset
         elif 'sim_insertion' in task_name:
             BOX_POSE[0] = np.concatenate(sample_insertion_pose()) # used in sim reset
-        elif 'sim_move' in task_name:
+        elif 'sim_move' in task_name or 'mycobot320' in task_name:
             BOX_POSE[0] = sample_box_pose() # used in sim reset
         #환경 초기화
         ts = env.reset()
@@ -669,7 +669,7 @@ def train_bc(train_dataloader, val_dataloader, config):
     #쓰지 않는 듯, 모델을 로드해서 상태를 가져옴
     print(config['load_pretrain'], config['resume_ckpt_path'])
     if config['load_pretrain']:
-        loading_status = policy.deserialize(torch.load(os.path.join('/home/zfu/interbotix_ws/src/act/ckpts/pretrain_all', 'policy_step_50000_seed_0.ckpt')))
+        loading_status = policy.deserialize(torch.load(os.path.join('/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/tmp', 'policy_step_10_seed_0.ckpt'))) #'/home/zfu/interbotix_ws/src/act/ckpts/pretrain_all', 
         print(f'loaded! {loading_status}')
     if config['resume_ckpt_path'] is not None:
         loading_status = policy.deserialize(torch.load(config['resume_ckpt_path']))
@@ -723,15 +723,16 @@ def train_bc(train_dataloader, val_dataloader, config):
             print(summary_string)
             #
 
-        #모델을 저장하고, 평가시켜 성공률을 출력
-        # evaluation
-        if (step > 0) and (step % eval_every == 0):
-            # first save then eval
-            ckpt_name = f'policy_step_{step}_seed_{seed}.ckpt'
-            ckpt_path = os.path.join(ckpt_dir, ckpt_name)
-            torch.save(policy.serialize(), ckpt_path)
-            success, _ = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=10, dir_step=step)
-            wandb.log({'success': success}, step=step)
+        #복원 필요
+        # #모델을 저장하고, 평가시켜 성공률을 출력
+        # # evaluation
+        # if (step > 0) and (step % eval_every == 0):
+        #     # first save then eval
+        #     ckpt_name = f'policy_step_{step}_seed_{seed}.ckpt'
+        #     ckpt_path = os.path.join(ckpt_dir, ckpt_name)
+        #     torch.save(policy.serialize(), ckpt_path)
+        #     success, _ = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=10, dir_step=step)
+        #     wandb.log({'success': success}, step=step)
 
 
         # training
