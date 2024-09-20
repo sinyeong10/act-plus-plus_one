@@ -212,7 +212,7 @@ def main(args):
     with open(config_path, 'wb') as f:
         pickle.dump(config, f)
     if is_eval: #평가모드 True로 값을 줬을 경우
-        ckpt_names = [f'policy_last.ckpt'] #마지막 체크포인트 파일을 의미
+        ckpt_names = [f'best_policy_step_27000_seed_0.ckpt'] #f'policy_last.ckpt',  #마지막 체크포인트 파일을 의미
         results = []
         for ckpt_name in ckpt_names: #하나만 있으니 하나에 대해서 실행함
             #eval_bc 함수를 통해 지정한 모델(ACT)을 가져와서 돌려보고 성공확률과 평균보상을 반환 함
@@ -608,6 +608,8 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
         
         print("그리퍼 열고 종료")
         env.mycobot.set_gripper_value(100,20,1)
+        
+        env.save("twocam_mycobot320_chunk20", 0)
 
         #반환된 보상의 총합, 최대 보상, 성공 여부 계산해서 출력
         rewards = np.array(rewards)

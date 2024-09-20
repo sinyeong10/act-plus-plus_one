@@ -58,8 +58,8 @@ SIM_TASK_CONFIGS = {
     #수정
     'sim_mycobot320':{
         'dataset_dir': DATA_DIR + '/sim_mycobot_320',
-        'num_episodes': 10,
-        'episode_len': 145,
+        'num_episodes': 50,
+        'episode_len': 115,
         'camera_names': ['right_wrist', 'top']#, 'left_wrist', 'right_wrist']
     },
     

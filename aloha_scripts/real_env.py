@@ -60,7 +60,7 @@ class RealEnv:
                 break
 
 
-        self.mycobot = MyCobot('COM7', 115200) #('/dev/ttyACM0',115200)
+        self.mycobot = MyCobot('COM11', 115200) #('/dev/ttyACM0',115200)
         start_time = time.time()
         self.mycobot.set_gripper_mode(0)
         print(self.mycobot.get_coords())
@@ -74,16 +74,40 @@ class RealEnv:
         self._reset_gripper()
 
         self.cnt = 0
+        self.prev_gripper = 70
         self.gripper_value = [70]*40+list(np.linspace(70, 25, 10))+[25]*85+list(np.linspace(25,70,10))+[70]*100
 
+        self.backupdata = {"top":[], "right_wrist":[]}
+
+    def save(self, path, idx):
+        print("\n\nsave\n\n")
+        max_timesteps = len(self.backupdata["right_wrist"])
+        import os
+        import h5py
+        t0 = time.time()
+        dataset_dir = path
+        dataset_path = os.path.join(dataset_dir, f'mycobot320_model_run_image_{idx}')
+        # if task_name == 'sim_move_cube_scripted': #one arm
+        with h5py.File(dataset_path + '.hdf5', 'w', rdcc_nbytes=1024 ** 2 * 2) as root:
+            root.attrs['sim'] = True
+            obs = root.create_group('observations')
+            image = obs.create_group('images')
+            for cam_name in ["top", "right_wrist"]:
+                _ = image.create_dataset(cam_name, (max_timesteps, 480, 640, 3), dtype='uint8',
+                                        chunks=(1, 480, 640, 3), )
         
+            for name, array in self.backupdata.items():
+                name = f"/observations/images/"+name
+                print(name)
+                root[name][...] = array
 
     def get_qpos(self):
-        print(self.cnt, "qpos :", self.mycobot.get_angles(), self.mycobot.get_gripper_value(), self.gripper_value[self.cnt])
+        print(self.cnt, "qpos :", self.mycobot.get_angles(), self.mycobot.get_gripper_value(), self.prev_gripper)#self.gripper_value[self.cnt])
         gripper = self.mycobot.get_gripper_value()
         if self.mycobot.get_gripper_value() == 255:
             # if 41<= self.cnt <= 50 or 135<= self.cnt:
-            gripper = self.gripper_value[self.cnt]
+            # gripper = self.gripper_value[self.cnt] #명령순서 정확하게
+            gripper = self.prev_gripper #이전 action기준으로 계산된 값
         self.cnt += 1
         return np.concatenate([self.mycobot.get_angles(), [gripper]])
 
@@ -97,10 +121,13 @@ class RealEnv:
         _, cur_frame1 = self.cap0.read()
         image_dict["right_wrist"] = cur_frame1
         print(self.cnt, "cur_frame", np.array(cur_frame0).shape, np.array(cur_frame1).shape)
+
+        self.backupdata["top"].append(cur_frame0)
+        self.backupdata["right_wrist"].append(cur_frame1)
         return image_dict
 
     def _reset_joints(self):
-        self.mycobot.send_angles([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 20)
+        self.mycobot.send_angles([(-3.07), 33.39, 32.78, 6.94, (-88.33), (-1.58)], 20)#[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 20)
         time.sleep(5)
 
     def _reset_gripper(self):
@@ -130,10 +157,12 @@ class RealEnv:
     def step(self, action, base_action=None, get_tracer_vel=False, get_obs=True):
         # print("action.shape", action.shape)
         action = list(action)
-        print(self.cnt, "action", action)
+        print(self.cnt, "action :", action, "이전 값 :", self.prev_gripper)
         state_len = 6
         self.mycobot.send_angles(action[:state_len], 20)
         self.mycobot.set_gripper_value(int(action[-1]), 20, 1)
+        diff = int(action[-1])-self.prev_gripper
+        self.prev_gripper = self.prev_gripper+min(5, abs(diff)) if diff > 0 else self.prev_gripper-min(5, abs(diff))
         if get_obs:
             obs = self.get_observation(get_tracer_vel)
         else:

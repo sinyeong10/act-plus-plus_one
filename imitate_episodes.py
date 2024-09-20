@@ -78,6 +78,7 @@ def main(args):
     state_dim = 14
     if task_name == 'sim_move_cube_scripted' or task_name == 'sim_mycobot320': #one arm
         state_dim = 7
+    print("state_dim", state_dim)
     lr_backbone = 1e-5
     backbone = 'resnet18'
     if policy_class == 'ACT':
@@ -225,9 +226,10 @@ def main(args):
     #utils.load_data ?를 함
     if "sim_move_cube" in task_name or "sim_mycobot320" in task_name:
         train_dataloader, val_dataloader, stats, _ = load_data_one(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
+        print("한팔만 사용")
     else:
         train_dataloader, val_dataloader, stats, _ = load_data(dataset_dir, name_filter, camera_names, batch_size_train, batch_size_val, args['chunk_size'], args['skip_mirrored_data'], config['load_pretrain'], policy_class, stats_dir_l=stats_dir, sample_weights=sample_weights, train_ratio=train_ratio)
-
+        print("두팔 사용")
     #['action_mean', 'action_std', 'action_min', 'action_max', 'qpos_mean', 'qpos_std', 'example_qpos']가 들어가 있는 stats변수를 저장함
     # save dataset stats
     stats_path = os.path.join(ckpt_dir, f'dataset_stats.pkl')
