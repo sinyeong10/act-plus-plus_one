@@ -49,11 +49,10 @@ class RealEnv:
             if key == ord("q"):
                 break
         
-        
         self.cap1 = cv2.VideoCapture(1)        
         while True:
             _, frame = self.cap1.read()
-            
+                
             cv2.imshow("top", frame)
             key = cv2.waitKey(10)
             if key == ord("q"):
