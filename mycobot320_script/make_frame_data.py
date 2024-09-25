@@ -112,7 +112,8 @@ while episode_idx <= 0:
     mc.init_eletric_gripper()
     mc.set_gripper_calibration()
     # mc.set_eletric_gripper(0)
-    mc.send_angles([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 20)
+    # mc.send_angles([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 20)
+    mc.send_angles([(-3.07), 33.39, 32.78, 6.94, (-88.33), (-1.58)], 20)
     time.sleep(2)
     # time.sleep(5-(start_time-end_time))
     mc.set_gripper_value(70, 20, 1)
@@ -133,7 +134,8 @@ while episode_idx <= 0:
             mc.set_gripper_value(int(gripper_value), 20, 1)
         else:
             mc.send_angles(elem, 20)
-        # time.sleep(0.2)
+        time.sleep(2)
+        print(elem, gripper_value)
         _, cur_frame0=cap0.read()
         frame0.append(cur_frame0)
         _, cur_frame1=cap1.read()
@@ -162,17 +164,16 @@ while episode_idx <= 0:
     time.sleep(2)
 
 
-
-    with open(f'twocam/qpos_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/qpos_{episode_idx}.txt', 'w') as file:
         for line in qpos:
             file.write(str(line) + '\n')
-    # with open(f'twocam/action_{episode_idx}.txt', 'w') as file:
+    # with open(f'mycobot320_script/action_{episode_idx}.txt', 'w') as file:
     #     for line in action:
     #         file.write(str(line) + '\n')
-    with open(f'twocam/frame0_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/frame0_{episode_idx}.txt', 'w') as file:
         for line in frame0:
             file.write(str(line) + '\n')
-    with open(f'twocam/gripper_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/gripper_{episode_idx}.txt', 'w') as file:
         for line in gripper_state:
             file.write(str(line) + '\n')
     print(np.stack(frame0, axis=0).shape)
@@ -181,6 +182,7 @@ while episode_idx <= 0:
     # print(np.array(action).shape)
     print(np.array(gripper_state).shape)
 
+    break
 
     data_dict = {
         '/observations/qpos': [],

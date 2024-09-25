@@ -51,7 +51,7 @@ mc, cap0, cap1 = set_robot()
 angles_data = []
 gripper_data = []
 
-filename = "frame_base_action.txt"
+filename = "mycobot320_script/frame_base_action.txt"
 with open(filename, 'r') as f:
     for line in f:
         # 줄바꿈 문자 제거 후, 쉼표로 분리하고 부동소수점 숫자로 변환
@@ -105,7 +105,7 @@ while episode_idx <= 50:
             mc.set_gripper_value(int(gripper_value), 20, 1)
         else:
             mc.send_angles(elem, 20)
-        # time.sleep(0.2)
+        time.sleep(1)
         _, cur_frame0=cap0.read()
         frame0.append(cur_frame0)
         _, cur_frame1=cap1.read()
@@ -153,6 +153,7 @@ while episode_idx <= 50:
     # print(np.array(action).shape)
     print(np.array(gripper_state).shape)
 
+    break
 
     data_dict = {
         '/observations/qpos': [],

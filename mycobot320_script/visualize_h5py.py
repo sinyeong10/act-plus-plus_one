@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import cv2
 
 # HDF5 파일 경로 설정
-dataset_path = r"model_run_data\mycobot320_model_run_image_0.hdf5"
+dataset_path = r"scr\mycobot320_data\twocam_mycobot320_chunk20_1\mycobot320_model_run_image_0.hdf5"#r"model_run_data\mycobot320_model_run_image_0.hdf5"
 
 # HDF5 파일 열기
 with h5py.File(dataset_path, 'r') as file:
