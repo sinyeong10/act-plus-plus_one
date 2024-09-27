@@ -7,7 +7,7 @@ import sys
 
 episode_idx = 0
 
-def set_robot():
+def set_robot(check = False):
     mc = MyCobot('COM11', 115200) #('/dev/ttyACM0', 115200)
     mc.set_gripper_mode(0)
 
@@ -16,37 +16,38 @@ def set_robot():
     cap1 = cv2.VideoCapture(1)#("/dev/bus/usb/001/005")
     # cap2 = cv2.VideoCapture(2)
 
-    # 카메라 장치가 제대로 열렸는지 확인
-    if not cap0.isOpened():
-        print("cap0 카메라를 열 수 없습니다.")
-        exit()
-    if not cap1.isOpened():
-        print("cap1 카메라를 열 수 없습니다.")
-        exit()
+    if check:
+        # 카메라 장치가 제대로 열렸는지 확인
+        if not cap0.isOpened():
+            print("cap0 카메라를 열 수 없습니다.")
+            exit()
+        if not cap1.isOpened():
+            print("cap1 카메라를 열 수 없습니다.")
+            exit()
 
-        
-    while True:
-        _, frame = cap0.read()
-        
-        cv2.imshow("cap0", frame)
-        key = cv2.waitKey(10)
-        if key == ord("q"):
-            break
+            
+        while True:
+            _, frame = cap0.read()
+            
+            cv2.imshow("cap0", frame)
+            key = cv2.waitKey(10)
+            if key == ord("q"):
+                break
 
-    while True:
-        _, frame = cap1.read()
-        
-        cv2.imshow("cap1", frame)
-        key = cv2.waitKey(10)
-        if key == ord("q"):
-            break
-    cv2.destroyAllWindows()
+        while True:
+            _, frame = cap1.read()
+            
+            cv2.imshow("cap1", frame)
+            key = cv2.waitKey(10)
+            if key == ord("q"):
+                break
+        cv2.destroyAllWindows()
 
     end_time = time.time()
 
     return mc, cap0, cap1
 
-mc, cap0, cap1 = set_robot()
+mc, cap0, cap1 = set_robot(check=True)
 
 angles_data = []
 gripper_data = []
@@ -63,7 +64,7 @@ with open(filename, 'r') as f:
 print(len(angles_data), len(gripper_data))
 
 
-while episode_idx <= 50:
+while episode_idx <= 4:
     print(episode_idx)
     # a = time.time()
     print(mc.get_coords())
@@ -105,7 +106,7 @@ while episode_idx <= 50:
             mc.set_gripper_value(int(gripper_value), 20, 1)
         else:
             mc.send_angles(elem, 20)
-        time.sleep(1)
+        time.sleep(0.1)
         _, cur_frame0=cap0.read()
         frame0.append(cur_frame0)
         _, cur_frame1=cap1.read()
@@ -133,18 +134,16 @@ while episode_idx <= 50:
     mc.set_gripper_value(100, 20, 1)
     time.sleep(2)
 
-
-
-    with open(f'twocam/qpos_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/cur_data/qpos_{episode_idx}.txt', 'w') as file:
         for line in qpos:
             file.write(str(line) + '\n')
-    # with open(f'twocam/action_{episode_idx}.txt', 'w') as file:
+    # with open(f'mycobot320_script/cur_data/action_{episode_idx}.txt', 'w') as file:
     #     for line in action:
     #         file.write(str(line) + '\n')
-    with open(f'twocam/frame0_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/cur_data/frame0_{episode_idx}.txt', 'w') as file:
         for line in frame0:
             file.write(str(line) + '\n')
-    with open(f'twocam/gripper_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/cur_data/gripper_{episode_idx}.txt', 'w') as file:
         for line in gripper_state:
             file.write(str(line) + '\n')
     print(np.stack(frame0, axis=0).shape)
@@ -153,7 +152,7 @@ while episode_idx <= 50:
     # print(np.array(action).shape)
     print(np.array(gripper_state).shape)
 
-    break
+
 
     data_dict = {
         '/observations/qpos': [],
@@ -200,7 +199,7 @@ while episode_idx <= 50:
     import os
     import h5py
     t0 = time.time()
-    dataset_dir = r"C:/Users/cbrnt/OneDrive/문서/mycobot320/twocamtemp"
+    dataset_dir = r"mycobot320_script/cur_data"
     dataset_path = os.path.join(dataset_dir, f'two_cam_episode_{episode_idx}')
     # if task_name == 'sim_move_cube_scripted': #one arm
     with h5py.File(dataset_path + '.hdf5', 'w', rdcc_nbytes=1024 ** 2 * 2) as root:
