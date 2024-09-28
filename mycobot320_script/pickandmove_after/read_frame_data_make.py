@@ -134,16 +134,16 @@ while episode_idx <= 4:
     mc.set_gripper_value(100, 20, 1)
     time.sleep(2)
 
-    with open(f'mycobot320_script/cur_data/qpos_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/all_data/qpos_{episode_idx}.txt', 'w') as file:
         for line in qpos:
             file.write(str(line) + '\n')
-    # with open(f'mycobot320_script/cur_data/action_{episode_idx}.txt', 'w') as file:
+    # with open(f'mycobot320_script/all_data/action_{episode_idx}.txt', 'w') as file:
     #     for line in action:
     #         file.write(str(line) + '\n')
-    with open(f'mycobot320_script/cur_data/frame0_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/all_data/frame0_{episode_idx}.txt', 'w') as file:
         for line in frame0:
             file.write(str(line) + '\n')
-    with open(f'mycobot320_script/cur_data/gripper_{episode_idx}.txt', 'w') as file:
+    with open(f'mycobot320_script/all_data/gripper_{episode_idx}.txt', 'w') as file:
         for line in gripper_state:
             file.write(str(line) + '\n')
     print(np.stack(frame0, axis=0).shape)
@@ -199,7 +199,7 @@ while episode_idx <= 4:
     import os
     import h5py
     t0 = time.time()
-    dataset_dir = r"mycobot320_script/cur_data"
+    dataset_dir = r"mycobot320_script/all_data"
     dataset_path = os.path.join(dataset_dir, f'two_cam_episode_{episode_idx}')
     # if task_name == 'sim_move_cube_scripted': #one arm
     with h5py.File(dataset_path + '.hdf5', 'w', rdcc_nbytes=1024 ** 2 * 2) as root:

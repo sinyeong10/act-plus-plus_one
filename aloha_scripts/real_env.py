@@ -128,6 +128,9 @@ class RealEnv:
     def get_images(self):
         image_dict = dict()
         _, cur_frame0 = self.cap1.read()
+        # frame_height, frame_width, channels = cur_frame0.shape
+        # zero_frame = np.zeros((frame_height, frame_width, channels), dtype=np.uint8)
+        # print(zero_frame.shape, cur_frame0.shape)
         image_dict["top"] = cur_frame0
         _, cur_frame1 = self.cap0.read()
         image_dict["right_wrist"] = cur_frame1

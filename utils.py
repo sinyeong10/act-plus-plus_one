@@ -457,11 +457,25 @@ def load_data_one(dataset_dir_l, name_filter, camera_names, batch_size_train, ba
     dataset_path_list = [n for n in dataset_path_list if name_filter(n)]
     num_episodes_l = [len(dataset_path_list) for dataset_path_list in dataset_path_list_list]
     num_episodes_cumsum = np.cumsum(num_episodes_l)
+    print("num_episodes_l", num_episodes_l)
 
-    # obtain train test split on dataset_dir_l[0]
-    shuffled_episode_ids_0 = np.random.permutation(num_episodes_0)
-    train_episode_ids_0 = shuffled_episode_ids_0[:int(train_ratio * num_episodes_0)]
-    val_episode_ids_0 = shuffled_episode_ids_0[int(train_ratio * num_episodes_0):]
+    #랜덤으로 1개
+    # # obtain train test split on dataset_dir_l[0]
+    # shuffled_episode_ids_0 = np.random.permutation(num_episodes_0)
+    # train_episode_ids_0 = shuffled_episode_ids_0[:int(train_ratio * num_episodes_0)]
+    # val_episode_ids_0 = shuffled_episode_ids_0[int(train_ratio * num_episodes_0):]
+
+    #강제로 1개씩
+    shuffled_episode_ids_0 = np.random.permutation(num_episodes_0-2)
+    train_episode_ids_0 = shuffled_episode_ids_0
+    val_episode_ids_0 = np.array([num_episodes_0-2,num_episodes_0-1])
+
+    print(dataset_path_list)
+    # print(dataset_path_list[0])
+    # print("train_episode_ids_0", train_episode_ids_0)
+    print("val_episode_ids_0", val_episode_ids_0)
+    print(dataset_path_list[num_episodes_0-2], dataset_path_list[num_episodes_0-1])
+
     train_episode_ids_l = [train_episode_ids_0] + [np.arange(num_episodes) + num_episodes_cumsum[idx] for idx, num_episodes in enumerate(num_episodes_l[1:])]
     val_episode_ids_l = [val_episode_ids_0]
     train_episode_ids = np.concatenate(train_episode_ids_l)
