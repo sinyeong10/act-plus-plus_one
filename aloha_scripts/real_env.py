@@ -40,24 +40,27 @@ class RealEnv:
 
     def __init__(self, init_node, setup_robots=True, setup_base=False):
         
-        self.cap0 = cv2.VideoCapture(0)        
-        while True:
-            _, frame = self.cap0.read()
-            
-            cv2.imshow("right_wrist", frame)
-            key = cv2.waitKey(10)
-            if key == ord("q"):
-                break
+        self.cap0 = cv2.VideoCapture(0)
         
         self.cap1 = cv2.VideoCapture(1)        
-        while True:
-            _, frame = self.cap1.read()
-                
-            cv2.imshow("top", frame)
-            key = cv2.waitKey(10)
-            if key == ord("q"):
-                break
 
+        if setup_robots:        
+            while True:
+                _, frame = self.cap0.read()
+                
+                cv2.imshow("right_wrist", frame)
+                key = cv2.waitKey(10)
+                if key == ord("q"):
+                    break
+
+            while True:
+                _, frame = self.cap1.read()
+                    
+                cv2.imshow("top", frame)
+                key = cv2.waitKey(10)
+                if key == ord("q"):
+                    break
+        
 
         self.mycobot = MyCobot('COM11', 115200) #('/dev/ttyACM0',115200)
         start_time = time.time()

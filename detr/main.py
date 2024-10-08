@@ -79,6 +79,8 @@ def get_args_parser():
     parser.add_argument('--history_len', action='store', type=int)
     parser.add_argument('--future_len', action='store', type=int)
     parser.add_argument('--prediction_len', action='store', type=int)
+
+    parser.add_argument('--model', action='store', type=str, help='model', default='policy_last.ckpt')
     
     return parser
 

@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import cv2
 
 # HDF5 파일 경로 설정
-dataset_path = r"mycobot320_script\cur_data\two_cam_episode_14.hdf5"
+dataset_path = r"scr\tonyzhao\datasets\sim_mycobot_320\zval2.hdf5"
 
-# HDF5 파일 열기
+# HDF5 파일
 with h5py.File(dataset_path, 'r') as file:
     # 저장된 카메라 이름들 (여기서는 가정)
     camera_names = ['right_wrist', "top"]
