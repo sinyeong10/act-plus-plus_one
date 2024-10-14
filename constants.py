@@ -60,7 +60,7 @@ SIM_TASK_CONFIGS = {
         'dataset_dir': DATA_DIR + '/sim_mycobot_320',
         'num_episodes': 50,
         'episode_len': 115,
-        'camera_names': ['right_wrist', 'top']#, 'left_wrist', 'right_wrist']
+        'camera_names': ['right_wrist']#, 'top']#, 'left_wrist', 'right_wrist']
     },
     
     'sim_move_cube_scripted':{

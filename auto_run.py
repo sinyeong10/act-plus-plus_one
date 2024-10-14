@@ -400,7 +400,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
 
         ### evaluation loop
         if temporal_agg: #모든 타임스텝에 대한 작업 데이터 저장?
-            all_time_actions = torch.zeros([max_timesteps, max_timesteps+num_queries, 16]).cuda()
+            all_time_actions = torch.zeros([max_timesteps, max_timesteps+num_queries, 8]).cuda() #16
 
         #시뮬레이션이 끝난 후 각 스텝별 상태(위치 데이터)를 저장?
         # qpos_history = torch.zeros((1, max_timesteps, state_dim)).cuda()
@@ -480,6 +480,8 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
                             all_actions = torch.cat([all_actions[:, :-BASE_DELAY, :-2], all_actions[:, BASE_DELAY:, -2:]], dim=2)
                     #일단 패스?
                     if temporal_agg:
+                        print("t,num_queries,all_actions.shape", t,num_queries,all_actions.shape)
+                        #0, 20, [1,20,8]
                         all_time_actions[[t], t:t+num_queries] = all_actions
                         actions_for_curr_step = all_time_actions[:, t]
                         actions_populated = torch.all(actions_for_curr_step != 0, axis=1)
@@ -587,8 +589,9 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
         
         print("그리퍼 열고 종료")
         env.mycobot.set_gripper_value(100,20,1)
+        time.sleep(1)
         
-        env.save("scr/mycobot320_data/twocam_mycobot320_chunk20_1", 1)
+        # env.save("scr/mycobot320_data/twocam_mycobot320_chunk20_1", 1)
 
         #반환된 보상의 총합, 최대 보상, 성공 여부 계산해서 출력
         rewards = np.array(rewards)
@@ -664,11 +667,12 @@ if __name__ == '__main__':
 
     parser.add_argument('--model', action='store', type=str, help='model', default='policy_last.ckpt')
    
-    #2cam
+
+    #1cam
     import sys
     sys.argv = [
         'auto_run.py',
-        '--ckpt_dir', 'scr/mycobot320_data/twocam_mycobot320_chunk20_1',
+        '--ckpt_dir', 'scr/mycobot320_data/next_onecam_mycobot320_chunk20',
         '--policy_class', 'ACT',
         '--task_name', 'sim_mycobot320',
         '--batch_size', '8',
@@ -682,30 +686,57 @@ if __name__ == '__main__':
         '--chunk_size', '20',
         '--hidden_dim', '512',
         '--dim_feedforward', '3200',
-        '--model', 'best_policy_step_24000_seed_0.ckpt',
-        '--eval'
+        '--model', 'best_policy_step_107000_seed_0.ckpt',
+        '--eval'#,
+        # '--temporal_agg'
     ]
+    # ,
+    #     '--temporal_agg'
     main(vars(parser.parse_args()))
 
+
+    # #2cam
+    # import sys
+    # sys.argv = [
+    #     'auto_run.py',
+    #     '--ckpt_dir', 'scr/mycobot320_data/twocam_mycobot320_chunk20_1',
+    #     '--policy_class', 'ACT',
+    #     '--task_name', 'sim_mycobot320',
+    #     '--batch_size', '8',
+    #     '--seed', '0',
+    #     '--num_steps', '5',
+    #     '--lr', '1e-05',
+    #     '--eval_every', '500',
+    #     '--validate_every', '500',
+    #     '--save_every', '500',
+    #     '--kl_weight', '10',
+    #     '--chunk_size', '20',
+    #     '--hidden_dim', '512',
+    #     '--dim_feedforward', '3200',
+    #     '--model', 'best_policy_step_24000_seed_0.ckpt',
+    #     '--eval'
+    # ]
+    # main(vars(parser.parse_args()))
+
     
-    import sys
-    sys.argv = [
-        'auto_run.py',
-        '--ckpt_dir', 'scr/mycobot320_data/next_twocam_mycobot320_chunk20',
-        '--policy_class', 'ACT',
-        '--task_name', 'sim_mycobot320',
-        '--batch_size', '8',
-        '--seed', '0',
-        '--num_steps', '5',
-        '--lr', '1e-05',
-        '--eval_every', '500',
-        '--validate_every', '500',
-        '--save_every', '500',
-        '--kl_weight', '10',
-        '--chunk_size', '20',
-        '--hidden_dim', '512',
-        '--dim_feedforward', '3200',
-        '--model', 'best_policy_step_14000_seed_0.ckpt',
-        '--eval'
-    ]
-    main(vars(parser.parse_args()))
+    # import sys
+    # sys.argv = [
+    #     'auto_run.py',
+    #     '--ckpt_dir', 'scr/mycobot320_data/next_twocam_mycobot320_chunk20',
+    #     '--policy_class', 'ACT',
+    #     '--task_name', 'sim_mycobot320',
+    #     '--batch_size', '8',
+    #     '--seed', '0',
+    #     '--num_steps', '5',
+    #     '--lr', '1e-05',
+    #     '--eval_every', '500',
+    #     '--validate_every', '500',
+    #     '--save_every', '500',
+    #     '--kl_weight', '10',
+    #     '--chunk_size', '20',
+    #     '--hidden_dim', '512',
+    #     '--dim_feedforward', '3200',
+    #     '--model', 'best_policy_step_14000_seed_0.ckpt',
+    #     '--eval'
+    # ]
+    # main(vars(parser.parse_args()))

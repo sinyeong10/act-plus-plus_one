@@ -139,8 +139,8 @@ class RealEnv:
         image_dict["right_wrist"] = cur_frame1
         print(self.cnt, "cur_frame", np.array(cur_frame0).shape, np.array(cur_frame1).shape)
 
-        self.backupdata["top"].append(cur_frame0)
-        self.backupdata["right_wrist"].append(cur_frame1)
+        # self.backupdata["top"].append(cur_frame0)
+        # self.backupdata["right_wrist"].append(cur_frame1)
         return image_dict
 
     def _reset_joints(self):
@@ -182,14 +182,19 @@ class RealEnv:
         state_len = 6
         # print(action[:state_len], "이 들어감!!\n\n")
         self.mycobot.send_angles(action[:state_len], 20)
-        time.sleep(0.07)
-        self.mycobot.set_gripper_value(int(action[-1]), 20, 1)
+        # time.sleep(0.04)
+        # print("first :", action[-1], end=" // ")
         diff = int(action[-1])-self.prev_gripper
         self.prev_gripper = self.prev_gripper+min(5, abs(diff)) if  diff > 0 else self.prev_gripper-min(5, abs(diff))
         if get_obs:
             obs = self.get_observation(get_tracer_vel)
         else:
             obs = None
+        #뒤에서 처리하는 경우
+        self.mycobot.set_gripper_value(self.prev_gripper, 20, 1)
+        # print("back :", action[-1])
+        time.sleep(0.02)
+            
         return dm_env.TimeStep(
             step_type=dm_env.StepType.MID,
             reward=self.get_reward(),
