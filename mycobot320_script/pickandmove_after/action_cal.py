@@ -1,4 +1,4 @@
-
+#모터 값 넣기
 #수정
 base = [[(-3.07), 33.39, 32.78, 6.94, (-88.33), (-1.58)], \
         [(-3.95), 66.53, 8.17, 6.32, (-88.59), (-1.84)], [(-3.95), 66.53, 8.17, 6.32, (-88.59), (-1.84)],\
@@ -45,6 +45,7 @@ for cur_base, cur_time in zip(base[1:], framestep):
     pre_base = cur_base
 angles_data = list(np.concatenate(frame, axis=0))
 
+#그리퍼 값 넣기
 gripper_data = [70]*10+list(np.linspace(70, 20, 10))+[20]*85+list(np.linspace(20,70,10))
 print(len(gripper_data), len(angles_data)) #그리퍼가 한개 작음, qpos에서 끝난 값이 다음 값과 연동되어 겹치는 값을 삭제하고 처음에 값을 추가시켰기 때문
 

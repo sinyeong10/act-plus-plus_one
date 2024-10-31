@@ -85,7 +85,7 @@ while episode_idx <= 4:
     # mc.set_gripper_calibration()
     # mc.set_eletric_gripper(0)
     # mc.send_angles([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 20)
-    mc.send_angles([(-3.07), 33.39, 32.78, 6.94, (-88.33), (-1.58)], 20)
+    mc.send_angles([(-3.07), 33.39, 32.78, 6.94, (-88.33), (-1.58)], 20) #초기 위치
     time.sleep(5)
     # time.sleep(5-(start_time-end_time))
     mc.set_gripper_value(70, 20, 1)
@@ -101,7 +101,7 @@ while episode_idx <= 4:
     for elem, gripper_value in zip(angles_data, gripper_data):
         print(cnt)
         start_time = time.time()
-        if 10 <= cnt <= 20 or 105 <= cnt:
+        if 10 <= cnt <= 20 or 105 <= cnt: #
             print(cnt, "그리퍼 작동중 :", gripper_value)
             mc.set_gripper_value(int(gripper_value), 20, 1)
         else:
