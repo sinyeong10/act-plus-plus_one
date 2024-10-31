@@ -220,7 +220,7 @@ def main(args):
         results = []
         for ckpt_name in ckpt_names: #하나만 있으니 하나에 대해서 실행함
             #eval_bc 함수를 통해 지정한 모델(ACT)을 가져와서 돌려보고 성공확률과 평균보상을 반환 함
-            success_rate, avg_return = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=1)
+            success_rate, avg_return = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=2)
             # wandb.log({'success_rate': success_rate, 'avg_return': avg_return})
             results.append([ckpt_name, success_rate, avg_return])
         #결과 출력
@@ -366,7 +366,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
     #     env_max_reward = env.task.max_reward
 
     from aloha_scripts.real_env import make_real_env # requires aloha
-    env = make_real_env(init_node=True, setup_robots=False, setup_base=True)
+    env = make_real_env(init_node=True, setup_robots=True, setup_base=True)
     env_max_reward = 0
 
     #query의 빈도를 설정?
@@ -667,12 +667,11 @@ if __name__ == '__main__':
 
     parser.add_argument('--model', action='store', type=str, help='model', default='policy_last.ckpt')
    
-
-    #1cam
+   #test
     import sys
     sys.argv = [
         'auto_run.py',
-        '--ckpt_dir', 'scr/mycobot320_data/next_onecam_mycobot320_chunk20',
+        '--ckpt_dir', 'scr/mycobot320_data/next_twocam_mycobot320_chunk100_biased_first',
         '--policy_class', 'ACT',
         '--task_name', 'sim_mycobot320',
         '--batch_size', '8',
@@ -683,16 +682,43 @@ if __name__ == '__main__':
         '--validate_every', '500',
         '--save_every', '500',
         '--kl_weight', '10',
-        '--chunk_size', '20',
+        '--chunk_size', '100',
         '--hidden_dim', '512',
         '--dim_feedforward', '3200',
-        '--model', 'best_policy_step_107000_seed_0.ckpt',
-        '--eval'#,
-        # '--temporal_agg'
+        '--model', 'best_policy_step_50000_seed_0.ckpt',
+        '--eval',
+        '--temporal_agg'
     ]
     # ,
     #     '--temporal_agg'
     main(vars(parser.parse_args()))
+
+
+    # #1cam
+    # import sys
+    # sys.argv = [
+    #     'auto_run.py',
+    #     '--ckpt_dir', 'scr/mycobot320_data/next_onecam_mycobot320_chunk20',
+    #     '--policy_class', 'ACT',
+    #     '--task_name', 'sim_mycobot320',
+    #     '--batch_size', '8',
+    #     '--seed', '0',
+    #     '--num_steps', '5',
+    #     '--lr', '1e-05',
+    #     '--eval_every', '500',
+    #     '--validate_every', '500',
+    #     '--save_every', '500',
+    #     '--kl_weight', '10',
+    #     '--chunk_size', '20',
+    #     '--hidden_dim', '512',
+    #     '--dim_feedforward', '3200',
+    #     '--model', 'best_policy_step_107000_seed_0.ckpt',
+    #     '--eval'#,
+    #     # '--temporal_agg'
+    # ]
+    # # ,
+    # #     '--temporal_agg'
+    # main(vars(parser.parse_args()))
 
 
     # #2cam
