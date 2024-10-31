@@ -305,10 +305,169 @@ def build(args):
         vq_dim=args.vq_dim,
         action_dim=args.action_dim,
     )
-
+    #전체 원소의 수
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print("number of parameters: %.2fM" % (n_parameters/1e6,))
 
+    # print("\n\nmodel", model)
+    # 최종 반환 모델 DETRVAE(
+    # (transformer): Transformer(
+    #     (encoder): TransformerEncoder(
+    #     (layers): ModuleList(
+    #         (0-3): 4 x TransformerEncoderLayer(
+    #         (self_attn): MultiheadAttention(
+    #             (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+    #         )
+    #         (linear1): Linear(in_features=512, out_features=3200, bias=True)
+    #         (dropout): Dropout(p=0.1, inplace=False)
+    #         (linear2): Linear(in_features=3200, out_features=512, bias=True)
+    #         (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #         (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #         (dropout1): Dropout(p=0.1, inplace=False)
+    #         (dropout2): Dropout(p=0.1, inplace=False)
+    #         )
+    #     )
+    #     )
+    #     (decoder): TransformerDecoder(
+    #     (layers): ModuleList(
+    #         (0-6): 7 x TransformerDecoderLayer(
+    #         (self_attn): MultiheadAttention(
+    #             (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+    #         )
+    #         (multihead_attn): MultiheadAttention(
+    #             (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+    #         )
+    #         (linear1): Linear(in_features=512, out_features=3200, bias=True)
+    #         (dropout): Dropout(p=0.1, inplace=False)
+    #         (linear2): Linear(in_features=3200, out_features=512, bias=True)
+    #         (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #         (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #         (norm3): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #         (dropout1): Dropout(p=0.1, inplace=False)
+    #         (dropout2): Dropout(p=0.1, inplace=False)
+    #         (dropout3): Dropout(p=0.1, inplace=False)
+    #         )
+    #     )
+    #     (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #     )
+    # )
+    # (encoder): TransformerEncoder(
+    #     (layers): ModuleList(
+    #     (0-3): 4 x TransformerEncoderLayer(
+    #         (self_attn): MultiheadAttention(
+    #         (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+    #         )
+    #         (linear1): Linear(in_features=512, out_features=3200, bias=True)
+    #         (dropout): Dropout(p=0.1, inplace=False)
+    #         (linear2): Linear(in_features=3200, out_features=512, bias=True)
+    #         (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #         (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    #         (dropout1): Dropout(p=0.1, inplace=False)
+    #         (dropout2): Dropout(p=0.1, inplace=False)
+    #     )
+    #     )
+    # )
+    # (action_head): Linear(in_features=512, out_features=8, bias=True)
+    # (is_pad_head): Linear(in_features=512, out_features=1, bias=True)
+    # (query_embed): Embedding(100, 512)
+    # (input_proj): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+    # (backbones): ModuleList(
+    #     (0-1): 2 x Joiner(
+    #     (0): Backbone(
+    #         (body): IntermediateLayerGetter(
+    #         (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    #         (bn1): FrozenBatchNorm2d()
+    #         (relu): ReLU(inplace=True)
+    #         (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+    #         (layer1): Sequential(
+    #             (0): BasicBlock(
+    #             (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             )
+    #             (1): BasicBlock(
+    #             (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             )
+    #         )
+    #         (layer2): Sequential(
+    #             (0): BasicBlock(
+    #             (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             (downsample): Sequential(
+    #                 (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+    #                 (1): FrozenBatchNorm2d()
+    #             )
+    #             )
+    #             (1): BasicBlock(
+    #             (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             )
+    #         )
+    #         (layer3): Sequential(
+    #             (0): BasicBlock(
+    #             (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             (downsample): Sequential(
+    #                 (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+    #                 (1): FrozenBatchNorm2d()
+    #             )
+    #             )
+    #             (1): BasicBlock(
+    #             (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             )
+    #         )
+    #         (layer4): Sequential(
+    #             (0): BasicBlock(
+    #             (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             (downsample): Sequential(
+    #                 (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+    #                 (1): FrozenBatchNorm2d()
+    #             )
+    #             )
+    #             (1): BasicBlock(
+    #             (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn1): FrozenBatchNorm2d()
+    #             (relu): ReLU(inplace=True)
+    #             (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    #             (bn2): FrozenBatchNorm2d()
+    #             )
+    #         )
+    #         )
+    #     )
+    #     (1): PositionEmbeddingSine()
+    #     )
+    # )
+    # (input_proj_robot_state): Linear(in_features=7, out_features=512, bias=True)
+    # (cls_embed): Embedding(1, 512)
+    # (encoder_action_proj): Linear(in_features=8, out_features=512, bias=True)
+    # (encoder_joint_proj): Linear(in_features=7, out_features=512, bias=True)
+    # (latent_proj): Linear(in_features=512, out_features=64, bias=True)
+    # (latent_out_proj): Linear(in_features=32, out_features=512, bias=True)
+    # (additional_pos_embed): Embedding(2, 512)
+    # )
     return model
 
 def build_cnnmlp(args):

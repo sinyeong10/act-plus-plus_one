@@ -81,12 +81,14 @@ class PositionEmbeddingLearned(nn.Module):
 
 
 def build_position_encoding(args):
-    N_steps = args.hidden_dim // 2
+    N_steps = args.hidden_dim // 2 #위치 임베딩의 차원 크기
     if args.position_embedding in ('v2', 'sine'):
         # TODO find a better way of exposing other arguments
         position_embedding = PositionEmbeddingSine(N_steps, normalize=True)
+        #sine 함수를 사용하여 위치 임베딩을 생성, 입력 데이터의 공간적 위치 정보를 인코딩
     elif args.position_embedding in ('v3', 'learned'):
         position_embedding = PositionEmbeddingLearned(N_steps)
+        #학습가능한 임베딩을 사용하여 위치 정보를 인코딩
     else:
         raise ValueError(f"not supported {args.position_embedding}")
 

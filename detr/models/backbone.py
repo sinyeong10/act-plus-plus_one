@@ -68,18 +68,61 @@ class BackboneBase(nn.Module):
 
     def __init__(self, backbone: nn.Module, train_backbone: bool, num_channels: int, return_interm_layers: bool):
         super().__init__()
+        #기본적으로 backbone.named_parameters()는 True임
+        
+        # conv1.weight torch.Size([64, 3, 7, 7]) True
+        # layer1.0.conv1.weight torch.Size([64, 64, 3, 3]) True
+        # layer1.0.conv2.weight torch.Size([64, 64, 3, 3]) True
+        # layer1.1.conv1.weight torch.Size([64, 64, 3, 3]) True
+        # layer1.1.conv2.weight torch.Size([64, 64, 3, 3]) True
+        # layer2.0.conv1.weight torch.Size([128, 64, 3, 3]) True
+        # layer2.0.conv2.weight torch.Size([128, 128, 3, 3]) True
+        # layer2.0.downsample.0.weight torch.Size([128, 64, 1, 1]) True
+        # layer2.1.conv1.weight torch.Size([128, 128, 3, 3]) True
+        # layer2.1.conv2.weight torch.Size([128, 128, 3, 3]) True
+        # layer3.0.conv1.weight torch.Size([256, 128, 3, 3]) True
+        # layer3.0.conv2.weight torch.Size([256, 256, 3, 3]) True
+        # layer3.0.downsample.0.weight torch.Size([256, 128, 1, 1]) True
+        # layer3.1.conv1.weight torch.Size([256, 256, 3, 3]) True
+        # layer3.1.conv2.weight torch.Size([256, 256, 3, 3]) True
+        # layer4.0.conv1.weight torch.Size([512, 256, 3, 3]) True
+        # layer4.0.conv2.weight torch.Size([512, 512, 3, 3]) True
+        # layer4.0.downsample.0.weight torch.Size([512, 256, 1, 1]) True
+        # layer4.1.conv1.weight torch.Size([512, 512, 3, 3]) True
+        # layer4.1.conv2.weight torch.Size([512, 512, 3, 3]) True
+        # fc.weight torch.Size([1000, 512]) True
+        # fc.bias torch.Size([1000]) True
+        
+        #처음부터 주석처리 되어 있었음
         # for name, parameter in backbone.named_parameters(): # only train later layers # TODO do we want this?
+        #     print(name, parameter.shape, parameter.requires_grad)
         #     if not train_backbone or 'layer2' not in name and 'layer3' not in name and 'layer4' not in name:
         #         parameter.requires_grad_(False)
         if return_interm_layers:
             return_layers = {"layer1": "0", "layer2": "1", "layer3": "2", "layer4": "3"}
         else:
-            return_layers = {'layer4': "0"}
+            return_layers = {'layer4': "0"} #숫자는 출력에 접근하기 위한 키값
+        # print(return_interm_layers, return_layers) #False
+        #backbone은 resnet18임
         self.body = IntermediateLayerGetter(backbone, return_layers=return_layers)
+        # print("self.body", self.body) #backbone에서 layer4까지만 계산하여 전달함
         self.num_channels = num_channels
 
+        #featuremap 분석을 위함 나중에 주석처리해야함
+        self.featuremap = IntermediateLayerGetter(backbone, return_layers={"layer1": "0", "layer2": "1", "layer3": "2", "layer4": "3"})
+
     def forward(self, tensor):
+        featruemap = self.featuremap(tensor)
+        for a,b in featruemap.items():
+            print(a, b.shape)
+
+        # print("\n\ntensor")
+        # print(tensor.shape) #torch.Size([8, 3, 480, 640])
+        #self.body는 resnet18에서 layer4까지만 계산한 것
         xs = self.body(tensor)
+        # print("\n\nxs")
+        # for a, b in xs.items():
+        #     print(a,b.shape) #0 torch.Size([8, 512, 15, 20])
         return xs
         # out: Dict[str, NestedTensor] = {}
         # for name, x in xs.items():
@@ -96,6 +139,7 @@ class Backbone(BackboneBase):
                  train_backbone: bool,
                  return_interm_layers: bool,
                  dilation: bool):
+        #torchvision.models 모듈에서 name으로 지정된 ResNet 모델을 동적으로 가져옴
         backbone = getattr(torchvision.models, name)(
             replace_stride_with_dilation=[False, False, dilation],
             pretrained=is_main_process(), norm_layer=FrozenBatchNorm2d) # pretrained # TODO do we want frozen batch_norm??
@@ -106,15 +150,23 @@ class Backbone(BackboneBase):
 class Joiner(nn.Sequential):
     def __init__(self, backbone, position_embedding):
         super().__init__(backbone, position_embedding)
+        #주어진 모듈의 순차적 실행
 
     def forward(self, tensor_list: NestedTensor):
-        xs = self[0](tensor_list)
-        out: List[NestedTensor] = []
+        # print(tensor_list.shape) #torch.Size([8, 3, 480, 640])
+        xs = self[0](tensor_list) 
+        # print("\n\nxs",type(xs)) #xs <class 'collections.OrderedDict'>
+        # for key, value in xs.items():
+        #     print(f"{key}: {value.shape}") #0: torch.Size([8, 512, 15, 20])
+        #0: torch.Size([8, 512, 15, 20]) : batchsize, num_channels, height, width
+        out: List[NestedTensor] = [] #자료형의 명시적 표현
         pos = []
         for name, x in xs.items():
             out.append(x)
             # position encoding
-            pos.append(self[1](x).to(x.dtype))
+            # print("\n\nposition encoding", type(self[1](x).to(x.dtype))) #<class 'torch.Tensor'>
+            # print(self[1](x).to(x.dtype).shape) #torch.Size([1, 512, 15, 20])
+            pos.append(self[1](x).to(x.dtype)) #torch.Size([1, 512, 15, 20])
 
         return out, pos
 
