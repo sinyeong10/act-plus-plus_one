@@ -29,6 +29,7 @@ e = IPython.embed
 
 FPS = 10
 PUPPET_GRIPPER_JOINT_OPEN = 100
+check_featuremap = False
 
 #dataset_dir 경로에서 함수내 max_idx 값까지 f"qpos_{i}.npy"파일이 있는 지 찾아보고 없으면 i를 반환함
 #인덱스를 순차적으로 생성하는 데 씀?
@@ -327,6 +328,11 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
     print("ckpt_path", ckpt_path)
     loading_status = policy.deserialize(torch.load(ckpt_path)) #ACT기준 ckpt_path 경로에서 상태 정보를 가져와 / 모델에 로드함
     print("loading_status",loading_status)
+    if check_featuremap:
+        print(policy.model.backbones[0][0].body) #2번 카메라 policy.model.backbones[1][0]
+        policy.model.backbones[0][0].featuremap = policy.model.backbones[0][0].body
+        policy.model.backbones[1][0].featuremap = policy.model.backbones[1][0].body
+        
     policy.cuda() #GPU로 옮김
     policy.eval() #평가모드 설정(학습과 다름!)
     if vq: #vq를 cmd에서 파일 실행시켰을 때 값을 준 경우 Latent_Model_Transformer ?을 로드함
