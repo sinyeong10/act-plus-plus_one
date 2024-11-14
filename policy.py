@@ -212,7 +212,11 @@ class ACTPolicy(nn.Module):
         #이미지 정규화함
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                          std=[0.229, 0.224, 0.225])
+        # print("prev policy :", image[0][0][0][0][:10])
         image = normalize(image)
+        # print("next policy :", image[0][0][0][0][:10])
+        # import sys
+        # sys.exit()
 
         #학습동안만 실행?
         if actions is not None: # training time

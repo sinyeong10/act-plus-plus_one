@@ -168,7 +168,7 @@ class EpisodicDataset_one(torch.utils.data.Dataset):
     # def __len__(self):
     #     return sum(self.episode_len)
 
-    def _locate_transition(self, index):
+    def _locate_transition(self, index): # 117 49 2이면 117-115해서 2가 나온 것임
         assert index < self.cumulative_len[-1]
         episode_index = np.argmax(self.cumulative_len > index) # argmax returns first True index
         start_ts = index - (self.cumulative_len[episode_index] - self.episode_len[episode_index])
@@ -179,6 +179,7 @@ class EpisodicDataset_one(torch.utils.data.Dataset):
         episode_id, start_ts = self._locate_transition(index)
         dataset_path = self.dataset_path_list[episode_id]
         # print("utils 51lines dataset_path : ", dataset_path)
+        # print("index, episode_id, start_ts, dataset_path", index, episode_id, start_ts, dataset_path)
         try:
             with h5py.File(dataset_path, 'r') as root:
                 try: # some legacy data does not have this attribute
@@ -208,6 +209,7 @@ class EpisodicDataset_one(torch.utils.data.Dataset):
                         decompressed_image = cv2.imdecode(image_dict[cam_name], 1)
                         image_dict[cam_name] = np.array(decompressed_image)
                 
+                # print("start_ts", start_ts)
                 # get all actions after and including start_ts
                 if is_sim:
                     action = action[start_ts:]
@@ -226,9 +228,17 @@ class EpisodicDataset_one(torch.utils.data.Dataset):
             is_pad = is_pad[:self.chunk_size]
 
             # new axis for different cameras
+            import matplotlib.pyplot as plt
             all_cam_images = []
             for cam_name in self.camera_names:
                 all_cam_images.append(image_dict[cam_name])
+                # rgb_image = cv2.cvtColor(image_dict[cam_name], cv2.COLOR_BGR2RGB)
+                # plt.imshow(rgb_image)
+                # plt.title(f"Camera: {cam_name}")
+                # plt.axis('off')
+                # print(image_dict[cam_name].shape) #(480, 640, 3)
+                # plt.savefig(f"tmp//{cam_name}_image_{start_ts}.png")
+                #여기까지는 정상 이미지 나옴! #RGB로만 변환해주면 됨
             all_cam_images = np.stack(all_cam_images, axis=0)
 
             # construct observations
@@ -253,11 +263,14 @@ class EpisodicDataset_one(torch.utils.data.Dataset):
                 ]
 
             if self.augment_images:
+                print("증강 처리 들어감")
                 for transform in self.transformations:
                     image_data = transform(image_data)
 
             # normalize image and change dtype to float
+            # print("prev", image_data[0][0][:10]) #prev tensor([[132, 132, 127,  ..., 204, 204, 204],
             image_data = image_data / 255.0
+            # print("next", image_data[0][0][:10]) #next tensor([[0.5176, 0.5176, 0.4980,  ..., 0.8000, 0.8000, 0.8000],
             #여기부터 문제 발생
             # print(action_data.size(), self.norm_stats)
             if self.policy_class == 'Diffusion':
@@ -272,6 +285,7 @@ class EpisodicDataset_one(torch.utils.data.Dataset):
             quit()
 
         # print(image_data.dtype, qpos_data.dtype, action_data.dtype, is_pad.dtype)
+        # print(image_data.shape) #2,3,480,640 #카메라 2개 3채널 480x640크기 반환!
         return image_data, qpos_data, action_data, is_pad
 
 
@@ -472,8 +486,8 @@ def load_data_one(dataset_dir_l, name_filter, camera_names, batch_size_train, ba
 
     print(dataset_path_list)
     # print(dataset_path_list[0])
-    # print("train_episode_ids_0", train_episode_ids_0)
-    print("val_episode_ids_0", val_episode_ids_0)
+    print("\n\ntrain_episode_ids_0", train_episode_ids_0)
+    print("\n\nval_episode_ids_0", val_episode_ids_0)
     print(dataset_path_list[num_episodes_0-2], dataset_path_list[num_episodes_0-1])
 
     train_episode_ids_l = [train_episode_ids_0] + [np.arange(num_episodes) + num_episodes_cumsum[idx] for idx, num_episodes in enumerate(num_episodes_l[1:])]

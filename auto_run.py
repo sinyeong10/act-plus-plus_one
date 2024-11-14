@@ -215,6 +215,7 @@ def main(args):
         if 'model' in args:
             ckpt_names = [args['model']]
         else:        
+            print("최종 모델 사용!!")
             ckpt_names = [f'policy_last.ckpt'] #f'policy_last.ckpt',  #마지막 체크포인트 파일을 의미
         print(ckpt_names)
         results = []
@@ -305,6 +306,11 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
     print("ckpt_path", ckpt_path)
     loading_status = policy.deserialize(torch.load(ckpt_path)) #ACT기준 ckpt_path 경로에서 상태 정보를 가져와 / 모델에 로드함
     print("loading_status",loading_status)
+    print(policy.model.backbones[0][0].body) #2번 카메라 policy.model.backbones[1][0]
+    policy.model.backbones[0][0].featuremap = policy.model.backbones[0][0].body
+    policy.model.backbones[1][0].featuremap = policy.model.backbones[1][0].body
+    
+    
     policy.cuda() #GPU로 옮김
     policy.eval() #평가모드 설정(학습과 다름!)
     if vq: #vq를 cmd에서 파일 실행시켰을 때 값을 준 경우 Latent_Model_Transformer ?을 로드함
@@ -667,11 +673,10 @@ if __name__ == '__main__':
 
     parser.add_argument('--model', action='store', type=str, help='model', default='policy_last.ckpt')
    
-   #test
     import sys
     sys.argv = [
         'auto_run.py',
-        '--ckpt_dir', 'scr/mycobot320_data/next_twocam_mycobot320_chunk100_biased_first',
+        '--ckpt_dir', 'scr\\mycobot320_data\\next_twocam_mycobot320_chunk20',
         '--policy_class', 'ACT',
         '--task_name', 'sim_mycobot320',
         '--batch_size', '8',
@@ -682,16 +687,44 @@ if __name__ == '__main__':
         '--validate_every', '500',
         '--save_every', '500',
         '--kl_weight', '10',
-        '--chunk_size', '100',
+        '--chunk_size', '20',
         '--hidden_dim', '512',
         '--dim_feedforward', '3200',
-        '--model', 'best_policy_step_50000_seed_0.ckpt',
+        '--model', 'best_policy_step_14000_seed_0.ckpt',
         '--eval',
         '--temporal_agg'
     ]
     # ,
+    +
     #     '--temporal_agg'
     main(vars(parser.parse_args()))
+    
+
+# #    #판단 test 카메라 가리면 1번, 그대로면 2번 행동 함
+#     import sys
+#     sys.argv = [
+#         'auto_run.py',
+#         '--ckpt_dir', 'scr/mycobot320_data/next_twocam_mycobot320_chunk100_biased_first',
+#         '--policy_class', 'ACT',
+#         '--task_name', 'sim_mycobot320',
+#         '--batch_size', '8',
+#         '--seed', '0',
+#         '--num_steps', '5',
+#         '--lr', '1e-05',
+#         '--eval_every', '500',
+#         '--validate_every', '500',
+#         '--save_every', '500',
+#         '--kl_weight', '10',
+#         '--chunk_size', '100',
+#         '--hidden_dim', '512',
+#         '--dim_feedforward', '3200',
+#         '--model', 'best_policy_step_50000_seed_0.ckpt',
+#         '--eval',
+#         '--temporal_agg'
+#     ]
+#     # ,
+#     #     '--temporal_agg'
+#     main(vars(parser.parse_args()))
 
 
     # #1cam

@@ -27,6 +27,8 @@ from sim_env import BOX_POSE
 import IPython
 e = IPython.embed
 
+check_featuremap = False
+
 #dataset_dir 경로에서 함수내 max_idx 값까지 f"qpos_{i}.npy"파일이 있는 지 찾아보고 없으면 i를 반환함
 #인덱스를 순차적으로 생성하는 데 씀?
 def get_auto_index(dataset_dir):
@@ -698,6 +700,32 @@ def train_bc(train_dataloader, val_dataloader, config):
                 policy.eval() #모델을 평가모드로
                 validation_dicts = []
                 for batch_idx, data in enumerate(val_dataloader):
+                    if check_featuremap:
+                        #2,3,480,640 #카메라 2개 3채널 480x640크기 반환!
+                        print("batch_idx, data", batch_idx, len(data), data[0].shape) #4, torch.Size([batch_size, 2, 3, 480, 640])
+                        print(data[0][0].shape) #torch.Size([2, 3, 480, 640])
+
+                                    
+                        import matplotlib.pyplot as plt
+                        import torchvision.transforms as transforms
+                        import cv2
+                        # print(type(data[0])) #<class 'torch.Tensor'>
+                        print("valid :", data[0][0][0][0][0][:10])
+                        first_image_tensor = data[0][0][0][[2, 1, 0], :, :]  #torch.Size([3, 480, 640])
+                        # print("valid :", first_image_tensor.shape) #valid : torch.Size([3, 480, 640])
+                        to_pil = transforms.ToPILImage() #[C, H, W] 형태(채널, 높이, 너비)의 3차원 텐서를 [H, W, C] 형태의 PIL 이미지로 변환
+                        image = to_pil(first_image_tensor.cpu())  # GPU에 있으면 CPU로 옮긴 후 변환
+
+                        # 이미지 시각화
+                        plt.imshow(image)
+                        plt.axis('off')
+                        # plt.show()
+                        plt.savefig(f"tmp//valid_image_{batch_idx}_0.png")
+                        plt.close()
+                        # import sys
+                        # sys.exit()
+
+
                     # print("imitate_episodes 684line data : ", type(data), data[2].size()) #<class 'list'> torch.Size([8, 100, 8])
                     forward_dict = forward_pass(data, policy)
                     validation_dicts.append(forward_dict)
@@ -741,6 +769,7 @@ def train_bc(train_dataloader, val_dataloader, config):
         policy.train() #모델 학습 모드 설정
         optimizer.zero_grad() #모든 파라미터의 그래디언트를 0으로 초기화
         data = next(train_dataloader) #데이터 가져옴
+        # print("data", len(data), data[0].shape) #data 4 torch.Size([8, 2, 3, 480, 640])   
         forward_dict = forward_pass(data, policy) #ACT의 __call__ ?를 실행
         # backward
         loss = forward_dict['loss'] #loss만 가져와

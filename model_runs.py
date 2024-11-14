@@ -213,7 +213,7 @@ def main(args):
         pickle.dump(config, f)
     if is_eval: #평가모드 True로 값을 줬을 경우
         
-        ckpt_names = [f'best_policy_step_5000_seed_0.ckpt'] #f'policy_last.ckpt',  #마지막 체크포인트 파일을 의미
+        ckpt_names = [f'best_policy_step_0_seed_0.ckpt'] #f'policy_last.ckpt',  #마지막 체크포인트 파일을 의미
         results = []
         for ckpt_name in ckpt_names: #하나만 있으니 하나에 대해서 실행함
             #eval_bc 함수를 통해 지정한 모델(ACT)을 가져와서 돌려보고 성공확률과 평균보상을 반환 함

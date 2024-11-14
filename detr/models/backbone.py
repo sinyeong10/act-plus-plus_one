@@ -25,6 +25,8 @@ from .position_encoding import build_position_encoding
 import IPython
 e = IPython.embed
 
+check_featuremap = False #True
+
 class FrozenBatchNorm2d(torch.nn.Module):
     """
     BatchNorm2d where the batch statistics and the affine parameters are fixed.
@@ -108,16 +110,93 @@ class BackboneBase(nn.Module):
         # print("self.body", self.body) #backbone에서 layer4까지만 계산하여 전달함
         self.num_channels = num_channels
 
-        #featuremap 분석을 위함 나중에 주석처리해야함
-        self.featuremap = IntermediateLayerGetter(backbone, return_layers={"layer1": "0", "layer2": "1", "layer3": "2", "layer4": "3"})
+        # self.a = backbone
+        #주요 포인트!!
+        # #featuremap 분석을 위함 나중에 주석처리해야함
+        if check_featuremap:
+        #     import copy
+        #     a = copy.deepcopy(backbone)
+        #     self.featuremap = IntermediateLayerGetter(a, return_layers={'layer4': "1"})#{"layer1": "4", "layer2": "5", "layer3": "6", "layer4": "7"})
+            self.key = 0
 
     def forward(self, tensor):
-        featruemap = self.featuremap(tensor)
-        for a,b in featruemap.items():
-            print(a, b.shape)
+        #주요 포인트!!
+        # #featuremap 분석을 위함 나중에 주석처리해야함
+        if check_featuremap:
+            # print(tensor.shape) #torch.Size([1, 3, 480, 640])
 
-        # print("\n\ntensor")
-        # print(tensor.shape) #torch.Size([8, 3, 480, 640])
+            def denormalize(tensor, mean, std):
+                device = tensor.device
+                # print(device) #cuda:0
+                mean = torch.tensor(mean, device=device).view(3, 1, 1)
+                std = torch.tensor(std, device=device).view(3, 1, 1)
+                return tensor * std + mean
+            
+            # 예제 값
+            mean = [0.485, 0.456, 0.406]
+            std = [0.229, 0.224, 0.225]
+
+            # 정규화된 텐서를 비정규화
+            print("prev backbone forward :",tensor[0][0][0][:10])
+            first_image_tensor = denormalize(tensor, mean, std)
+            print("next backbone forward :",first_image_tensor[0][0][0][:10])
+
+            import matplotlib.pyplot as plt
+            import torchvision.transforms as transforms
+            print(first_image_tensor.shape, first_image_tensor.shape[0])
+
+            for idx in range(first_image_tensor.shape[0]):
+                rgb_tensor = first_image_tensor[idx][[2, 1, 0], :, :]  #.permute(1, 2, 0)  # [3, 480, 640] -> [480, 640, 3]
+                to_pil = transforms.ToPILImage() #[C, H, W] 형태(채널, 높이, 너비)의 3차원 텐서를 [H, W, C] 형태의 PIL 이미지로 변환
+                image = to_pil(rgb_tensor.cpu())  # GPU에 있으면 CPU로 옮긴 후 변환
+
+                # 이미지 시각화
+                plt.imshow(image)
+                plt.axis('off')
+                # plt.show()
+                plt.savefig(f"tmp//first_image_{self.key}_{idx}.png", bbox_inches='tight')
+                plt.close()
+            self.key += 1
+
+            outputs = []
+            names = []
+            featuremap = self.featuremap(tensor)
+            for a,b in featuremap.items():
+                print(a, b.shape)
+                outputs.append(b)
+                names.append(str(a))
+
+            print(len(outputs)) #17개
+            #print feature_maps
+            for feature_map in outputs:
+                print(feature_map.shape)
+
+            for idx in range(feature_map.shape[0]):
+                processed = []
+                for feature_map in outputs:
+                    feature_map = feature_map[idx].squeeze(0)
+                    feature_map = feature_map[[2, 1, 0], :, :]
+                    gray_scale = torch.sum(feature_map,0)
+                    gray_scale = gray_scale / feature_map.shape[0]
+                    processed.append(gray_scale.data.cpu().numpy())
+                for fm in processed:
+                    print(fm.shape)
+
+                fig = plt.figure(figsize=(30, 50))
+                for i in range(len(processed)):
+                    a = fig.add_subplot(5, 4, i+1)
+                    imgplot = plt.imshow(processed[i])
+                    a.axis("off")
+                    a.set_title(names[i].split('(')[0], fontsize=10)
+                plt.savefig(f"tmp//featuremap_{self.key}_{idx}.png", bbox_inches='tight')
+
+                # plt.show()
+                plt.close()
+
+            # if self.key >= 5:
+            #     sys.exit()
+            # print("\n\ntensor")
+            # print(tensor.shape) #torch.Size([8, 3, 480, 640])
         #self.body는 resnet18에서 layer4까지만 계산한 것
         xs = self.body(tensor)
         # print("\n\nxs")

@@ -16,6 +16,8 @@ import numpy as np
 import IPython
 e = IPython.embed
 
+check_featuremap = False
+
 class RealEnv:
     """
     Environment for real robot bi-manual manipulation
@@ -55,8 +57,20 @@ class RealEnv:
 
             while True:
                 _, frame = self.cap1.read()
+
+                if check_featuremap:
+                    x1, y1 = 230, 350
+                    x2, y2 = 412, 400
+                    zero_image = frame.copy()
+                    zero_image[:,:] = 0
+                    x1, x2 = max(0, min(x1, x2)), max(x1, x2)
+                    y1, y2 = max(0, min(y1, y2)), max(y1, y2)
+                    print(x1,y1, "\\", x2, y2)
+                    zero_image[y1:y2+1, x1:x2+1] = frame[y1:y2+1, x1:x2+1]
+                    cv2.imshow("top", zero_image)
+                else:
+                    cv2.imshow("top", frame)
                     
-                cv2.imshow("top", frame)
                 key = cv2.waitKey(10)
                 if key == ord("q"):
                     break
@@ -131,11 +145,27 @@ class RealEnv:
     def get_images(self):
         image_dict = dict()
         _, cur_frame0 = self.cap1.read()
+        image_dict["top"] = cur_frame0
         # frame_height, frame_width, channels = cur_frame0.shape
         # zero_frame = np.zeros((frame_height, frame_width, channels), dtype=np.uint8)
         # print(zero_frame.shape, cur_frame0.shape)
-        image_dict["top"] = cur_frame0
+        #강제 마스킹
+        # cur_frame0 = np.zeros(cur_frame0.shape, dtype=np.uint8)
+
+        if check_featuremap:
+            x1, y1 = 230, 350
+            x2, y2 = 412, 400
+            zero_image = cur_frame0.copy()
+            zero_image[:,:] = 0
+            x1, x2 = max(0, min(x1, x2)), max(x1, x2)
+            y1, y2 = max(0, min(y1, y2)), max(y1, y2)
+            print(x1,y1, "\\", x2, y2)
+            zero_image[y1:y2+1, x1:x2+1] = cur_frame0[y1:y2+1, x1:x2+1]
+            image_dict["top"] = zero_image
+
         _, cur_frame1 = self.cap0.read()
+        #강제 마스킹
+        # cur_frame1 = np.zeros(cur_frame1.shape, dtype=np.uint8)
         image_dict["right_wrist"] = cur_frame1
         print(self.cnt, "cur_frame", np.array(cur_frame0).shape, np.array(cur_frame1).shape)
 
