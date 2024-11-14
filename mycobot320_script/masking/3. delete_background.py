@@ -1,8 +1,10 @@
 import cv2
 
-filename = "right_wrist_frame_0"
+
+filename = "two_cam_episode_1_image"
+framename = "right_wrist_frame_0"
 # 이미지 파일 경로
-image_path = f"scr\\mask_data\\two_cam_episode_1_image\\{filename}.jpg"
+image_path = f"scr\\mask_data\\{filename}\\{framename}.jpg"
 
 # 이미지 로드
 image = cv2.imread(image_path)
@@ -75,5 +77,5 @@ while True:
         break
 
 # 결과 이미지 저장 및 표시
-cv2.imwrite(f"scr\\mask_data\\two_cam_episode_1_image_mask\\{filename}.jpg", image)
+cv2.imwrite(f"scr\\mask_data\\{filename}_mask\\{filename}.jpg", image)
 cv2.destroyAllWindows()

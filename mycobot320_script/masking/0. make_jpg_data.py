@@ -2,9 +2,9 @@ import h5py
 import numpy as np
 import cv2
 import os
-
-for k in range(1, 48+1):
-    filename = f"two_cam_episode_{k}" #1~48
+#scr\tonyzhao\datasets\next_sim_mycobot_320\zval1.hdf5
+for k in range(1, 2+1):
+    filename = f"zval{k}" #f"two_cam_episode_{k}" #1~48
     # HDF5 파일 경로 설정
     dataset_path = f"scr\\tonyzhao\\datasets\\next_sim_mycobot_320\\{filename}.hdf5"
 

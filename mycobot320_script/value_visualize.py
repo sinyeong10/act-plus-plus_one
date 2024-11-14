@@ -45,7 +45,7 @@ def write_all_data(hdf5_object, file=None):
 # dataset_path = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\scr\tonyzhao\datasets\sim_transfer_cube_scripted\episode_5.hdf5'
 # output_file_path = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\scr\tonyzhao\datasets\sim_transfer_cube_scripted\structure5.txt'
 dataset_path = r"scr\tonyzhao\datasets\next_sim_mycobot_320\two_cam_episode_17.hdf5" #r"scr\mycobot320_data\twocam_mycobot320_chunk20_1\mycobot320_model_run_image_0.hdf5"#r"mycobot320_script\all_data\cur\twocamtemp\two_cam_episode_0.hdf5"#r"twocam/two_cam_episode_0.hdf5"
-output_file_path = r"base_c.txt"#r"mycobot320_script\all_data\cur\twocamtemp\two_cam_episode_0.txt"#r"twocam/two_cam_episode_0.txt"
+output_file_path = r"base_d.txt"#r"mycobot320_script\all_data\cur\twocamtemp\two_cam_episode_0.txt"#r"twocam/two_cam_episode_0.txt"
 # 파일 열기 및 구조 출력
 try:
     with h5py.File(dataset_path, 'r') as file:

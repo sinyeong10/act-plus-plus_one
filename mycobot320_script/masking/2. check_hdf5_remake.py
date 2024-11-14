@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import cv2
 
 # HDF5 파일 경로 설정
-episode_name = "two_cam_episode_29"
-dataset_path = f"scr\\tonyzhao\\datasets\\next_sim_mycobot_320\\{episode_name}.hdf5"
+episode_name = "two_cam_episode_19"
+dataset_path = f"scr\\tonyzhao\\datasets\\next_sim_mycobot_320_action_mask\\{episode_name}.hdf5"
 
 remake_path = f"scr\\mask_data\\{episode_name}_image_mask"
 
