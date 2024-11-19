@@ -69,6 +69,8 @@ for idx in range(9,10):
         print(feature_map.shape)
 
 
+
+
     processed = []
     for feature_map in outputs:
         feature_map = feature_map.squeeze(0)
@@ -77,6 +79,45 @@ for idx in range(9,10):
         processed.append(gray_scale.data.cpu().numpy())
     for fm in processed:
         print(fm.shape)
+
+#[1,3,480,640]
+
+# torch.Size([1, 64, 240, 320])
+# torch.Size([1, 64, 240, 320])
+# torch.Size([1, 64, 240, 320])
+# torch.Size([1, 64, 240, 320])
+# torch.Size([1, 64, 240, 320])
+# torch.Size([1, 128, 120, 160])
+# torch.Size([1, 128, 120, 160])
+# torch.Size([1, 128, 120, 160])
+# torch.Size([1, 128, 120, 160])
+# torch.Size([1, 256, 60, 80])
+# torch.Size([1, 256, 60, 80])
+# torch.Size([1, 256, 60, 80])
+# torch.Size([1, 256, 60, 80])
+# torch.Size([1, 512, 30, 40])
+# torch.Size([1, 512, 30, 40])
+# torch.Size([1, 512, 30, 40])
+# torch.Size([1, 512, 30, 40])
+# (240, 320)
+# (240, 320)
+# (240, 320)
+# (240, 320)
+# (240, 320)
+# (120, 160)
+# (120, 160)
+# (120, 160)
+# (120, 160)
+# (60, 80)
+# (60, 80)
+# (60, 80)
+# (60, 80)
+# (30, 40)
+# (30, 40)
+# (30, 40)
+# (30, 40)
+
+
 
     fig = plt.figure(figsize=(30, 50))
     for i in range(len(processed)):

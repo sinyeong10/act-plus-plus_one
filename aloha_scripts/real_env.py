@@ -16,7 +16,7 @@ import numpy as np
 import IPython
 e = IPython.embed
 
-check_featuremap = False
+check_featuremap = True #False #True
 
 class RealEnv:
     """

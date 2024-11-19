@@ -25,7 +25,7 @@ from .position_encoding import build_position_encoding
 import IPython
 e = IPython.embed
 
-check_featuremap = False #True
+check_featuremap = True#False #True
 
 class FrozenBatchNorm2d(torch.nn.Module):
     """
