@@ -84,6 +84,103 @@ Please refer to [tuning tips](https://docs.google.com/document/d/1FVIZfoALXg_ZkY
 ### [ACT tuning tips](https://docs.google.com/document/d/1FVIZfoALXg_ZkYKaYVh-qOlaXveq5CtvJHXkY25eYhs/edit?usp=sharing)
 TL;DR: if your ACT policy is jerky or pauses in the middle of an episode, just train for longer! Success rate and smoothness can improve way after loss plateaus.
 
+<br>
+
+aloha 오픈 소스에 코드가 바로 돌아가지 않음, 따라서 깃허브 이슈를 통해 해결해야 함
+
+dm_control이 리눅스 환경에서만 지원됨 따라서 리눅스 환경에서 코드를 실행해야하며 WSL 환경에서 돌릴 경우 backbone.py에서 utils.py와 detr의 파일 import 주소를 못찾아서 강제로 할당해줘야 함
+
+데이터 셋을 살펴보면 script는 80~90%의 성공률을 보이고, human_data는 10%의 성공률을 보임
+
+단, human_data는 실패 과정을 포함하여 모두 다르게 움직이기 때문에 성공하는 것에 대한 의미가 있음!
+
+여러 데이터 중 성공 시점을 기준으로 잡아 시간축을 보정하고 성공하는 위치 값을 찾아낼 수 있게 한다면 더 높은 성공율을 보일 것 같음..
+
+<br>
+
+constants.py에서 데이터와 관련된 변수 설정, 특히 카메라 이름의 갯수가 중요
+
+sim_env.py에서 기존의 형태를 기준으로 새로운 에피소드 설정, scripted_policy.py에서 x,y,z의 기준으로 이동할 값을 설정, record_sim_episodes.py에서 scripted_policy에서 실행할 클래스 지정
+
+가상환경에서 동작시킨 후 프레임마다 평가 기준을 설정함
+
+기존의 xml 파일을 수정해서 박스 객체를 추가함
+
+기존의 xml 파일을 수정해서 팔하나를 제거함
+
+카메라가 많아지면 더 빠른 epoch만에 성공을 확인할 수 있으나 학습 시간이 10배 더 걸림!
+
+chunk_size가 커질 수록 모델 학습 시간이 더 걸림
+
+chunk_size가 커질 수록 현재 입력 이미지를 기준으로 더 많은 프레임의 이동 위치를 계산
+
+중간에 물체를 놓는 경우가 발생하면 시간적 앙상블을 적용하여 매 프레임마다 계산하면 미세한 오차를 다른 시점에서의 예측 값이 보정할 수 있음!
+
+단, 중간 시점에 예측할 때 오차가 크다면 그로 인한 영향이 전체 동작에 영향을 미칠 수 있음!
+
+랜덤 위치인 A1, A2, A3...에서 B로 성공함
+
+<br>
+
+실제 환경에서 모델을 동작시키기 위해 aloha_script 폴더에서 make_real_env클래스의 동작을 정의해줘야함
+
+imitete_episodes.py를 기준으로 mycobot320 로봇암을 돌리기 위한 model_runs.py를 작성함
+
+데이터 생성을 위해 로봇암의 기준 값을 계산함, 이후 다음 값까지 이동할 프레임을 할당하고 선형보간으로 각 프레임당 위치를 계산함
+
+실제로 script로 로봇암을 동작시키며 동시에 쓰레딩으로 현재 모터의 값과 카메라의 값을 가져옴
+
+그리퍼의 값을 읽을 때 에러가 나는 오류가 발생했기 때문에 이전에 명령 내린 값을 현재 읽는 값으로 가져옴
+
+mycobot320은 비동기적 프로그래밍 방식으로 작동하며, 그리퍼와 구동부가 서로 다른 모터로 작동하나 동시에 명령이 주어질 경우 혼선이 일어나 값이 바껴 신호 전달 시간이 보장되어야 함!
+
+이 때 모델이 매 프레임마다 계산하고 명령을 줄 수 있는 시간이 지연되지 않도록 FPS를 조정해야 함, 여기서는 처음에 50이었지만 10까지 떨어짐
+
+이렇게 A에서 B로 동작 재현이 성공함
+
+<br>
+
+이후 imitation learning의 script 데이터의 특성상 물체가 없이 동작시키고 그 때의 데이터를 생성할 수 있음
+
+따라서 박스만 남기고 다 마스킹하고 학습하니 위치 정보를 판단하기가 어려워 잘 동작하지 못하는 것으로 보임..
+
+이미지에서 1~2%의 부분을 기준으로 상태를 판단해야 함, 따라서 crop을 통해 놓는 위치를 제외하고 모두 마스킹
+
+카메라 하나로도 정상 작동을 확인할 수 있고, 하나의 카메라를 상태를 파악하는 용도로 사용해도 판단하고 정상 작동을 할 수 있음
+
+단, chunk_size가 20은 실패했으며 첫번째 카메라도 상태를 인식하는 초기 시점을 기준으로 잡은 75의 경우 성공했으며 행동이 교차되는 곳에서 지연과 급격한 움직임이 보임
+
+A에서 B1으로, B1에 물건이 있다면 B2로 판단하여 성공함
+
+"Residual Attention Network for Image Classification"논문을 기준으로 전체 이미지를 대상으로 attention으로 처리할 수 있는 지 시도 중
+
+모델 크기가 resnet152X2, resnet50+residualattention92는 180MB가 넘어 전용 GPU 메모리 4GB로는 부족함
+
+따라서 resnet18을 바탕으로 attention module를 넣어 모델 경량화하여 모델 학습 중
+
+<br>
+
+imitation을 실제 환경에서 하고 싶다면!
+
+1. script data로 원하는 기능을 할 수 있어야 함
+
+2. 설정한 프레임마다 모터의 위치 값 등을 알 수 있어야 함
+
+3. 다시 같은 값으로 입력했을 때 정상 동작을 확인해야 함
+
+4. 혹시 모를 모델의 판단 오류로 인한 문제를 예방하기 위해 상한, 하한 값을 통해 동작하게 해야하며, 프레임당 최대 동작 각도 등을 알면 검증하기 편리
+
+5. 모델을 넣고 학습할 수 있는 컴퓨터 성능이 보장되어야 함
+
+6. 학습 후 결과 확인, 프레임 지연 시 조정 등
+
+7. 입력 이미지가 어떻게 전달되는 지 backbone의 feature map을 확인
+
+8. 가상 환경으로 디지털 트윈을 할 수 있다면 모델이 판단하여 이동한 궤적을 생성하여 검증
+
+9. 점점 더 어려운 목표를 시도해보기
+
+<br>
 
 ### 8. [진행중] 2024년 mycobot320을 이용한 imitation learning
 #### 목표 : mycobot320을 imitation learning으로 동작
