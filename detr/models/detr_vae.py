@@ -6,7 +6,7 @@ import torch
 from torch import nn
 from torch.autograd import Variable
 import torch.nn.functional as F
-from .backbone import build_backbone
+from .backbone import build_backbone, build_background_backbone
 from .transformer import build_transformer, TransformerEncoder, TransformerEncoderLayer
 
 import numpy as np
@@ -282,9 +282,16 @@ def build(args):
     # backbone = None # from state for now, no need for conv nets
     # From image
     backbones = []
-    for _ in args.camera_names:
-        backbone = build_backbone(args)
-        backbones.append(backbone)
+
+    # print("\n\nlen(args.camera_names)", args.camera_names)    
+    for camera_name in args.camera_names:
+        if camera_name == 'right_wrist':
+            backbone = build_backbone(args)
+            backbones.append(backbone)
+        else:
+            print("\n\n오른 팔 카메라가 아님!!")
+            backbone = build_backbone(args) #build_background_backbone(args)
+            backbones.append(backbone)
 
     transformer = build_transformer(args)
 
@@ -309,7 +316,7 @@ def build(args):
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print("number of parameters: %.2fM" % (n_parameters/1e6,))
 
-    # print("\n\nmodel", model)
+    print("\n\nmodel", model)
     # 최종 반환 모델 DETRVAE(
     # (transformer): Transformer(
     #     (encoder): TransformerEncoder(

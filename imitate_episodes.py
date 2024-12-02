@@ -27,7 +27,7 @@ from sim_env import BOX_POSE
 import IPython
 e = IPython.embed
 
-check_featuremap = True #False
+check_featuremap = False #True #False
 
 #dataset_dir 경로에서 함수내 max_idx 값까지 f"qpos_{i}.npy"파일이 있는 지 찾아보고 없으면 i를 반환함
 #인덱스를 순차적으로 생성하는 데 씀?

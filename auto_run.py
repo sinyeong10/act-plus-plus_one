@@ -29,7 +29,7 @@ e = IPython.embed
 
 FPS = 10
 PUPPET_GRIPPER_JOINT_OPEN = 100
-check_featuremap = False #True
+check_featuremap = False #True #False #True
 
 #dataset_dir 경로에서 함수내 max_idx 값까지 f"qpos_{i}.npy"파일이 있는 지 찾아보고 없으면 i를 반환함
 #인덱스를 순차적으로 생성하는 데 씀?
@@ -678,7 +678,7 @@ if __name__ == '__main__':
     import sys
     sys.argv = [
         'auto_run.py',
-        '--ckpt_dir', '2action_see_putarea_75',
+        '--ckpt_dir', 'scr\\mycobot320_data\\2action_see_putarea_20',
         '--policy_class', 'ACT',
         '--task_name', 'sim_mycobot320',
         '--batch_size', '8',
@@ -689,7 +689,7 @@ if __name__ == '__main__':
         '--validate_every', '500',
         '--save_every', '500',
         '--kl_weight', '10',
-        '--chunk_size', '75',
+        '--chunk_size', '20',
         '--hidden_dim', '512',
         '--dim_feedforward', '3200',
         '--model', 'best_policy_step_10000_seed_0.ckpt',
@@ -699,6 +699,59 @@ if __name__ == '__main__':
     # ,
     #     '--temporal_agg'
     main(vars(parser.parse_args()))
+
+
+    # #새로운 backbone 모델...
+    # import sys
+    # sys.argv = [
+    #     'auto_run.py',
+    #     '--ckpt_dir', 'resnet18_attention_75',
+    #     '--policy_class', 'ACT',
+    #     '--task_name', 'sim_mycobot320',
+    #     '--batch_size', '8',
+    #     '--seed', '0',
+    #     '--num_steps', '5',
+    #     '--lr', '1e-05',
+    #     '--eval_every', '500',
+    #     '--validate_every', '500',
+    #     '--save_every', '500',
+    #     '--kl_weight', '10',
+    #     '--chunk_size', '75',
+    #     '--hidden_dim', '512',
+    #     '--dim_feedforward', '3200',
+    #     '--model', 'best_policy_step_9000_seed_0.ckpt',
+    #     '--eval'#,
+    #     # '--temporal_agg'
+    # ]
+    # # ,
+    # #     '--temporal_agg'
+    # main(vars(parser.parse_args()))
+    
+
+    # import sys
+    # sys.argv = [
+    #     'auto_run.py',
+    #     '--ckpt_dir', '2action_see_putarea_75',
+    #     '--policy_class', 'ACT',
+    #     '--task_name', 'sim_mycobot320',
+    #     '--batch_size', '8',
+    #     '--seed', '0',
+    #     '--num_steps', '5',
+    #     '--lr', '1e-05',
+    #     '--eval_every', '500',
+    #     '--validate_every', '500',
+    #     '--save_every', '500',
+    #     '--kl_weight', '10',
+    #     '--chunk_size', '75',
+    #     '--hidden_dim', '512',
+    #     '--dim_feedforward', '3200',
+    #     '--model', 'best_policy_step_10000_seed_0.ckpt',
+    #     '--eval',
+    #     '--temporal_agg'
+    # ]
+    # # ,
+    # #     '--temporal_agg'
+    # main(vars(parser.parse_args()))
     
 
 # #    #판단 test 카메라 가리면 1번, 그대로면 2번 행동 함

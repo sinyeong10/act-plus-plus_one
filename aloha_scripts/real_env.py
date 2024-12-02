@@ -16,7 +16,7 @@ import numpy as np
 import IPython
 e = IPython.embed
 
-check_featuremap = True #False #True
+masking_input = True #False #True
 
 class RealEnv:
     """
@@ -58,7 +58,7 @@ class RealEnv:
             while True:
                 _, frame = self.cap1.read()
 
-                if check_featuremap:
+                if masking_input:
                     x1, y1 = 230, 350
                     x2, y2 = 412, 400
                     zero_image = frame.copy()
@@ -152,7 +152,7 @@ class RealEnv:
         #강제 마스킹
         # cur_frame0 = np.zeros(cur_frame0.shape, dtype=np.uint8)
 
-        if check_featuremap:
+        if masking_input:
             x1, y1 = 230, 350
             x2, y2 = 412, 400
             zero_image = cur_frame0.copy()
@@ -221,6 +221,9 @@ class RealEnv:
         else:
             obs = None
         #뒤에서 처리하는 경우
+        if self.prev_gripper > 100:
+            print("\n\n\n그리퍼 100이상의 값이 계산됨..")
+            self.prev_gripper = 100
         self.mycobot.set_gripper_value(self.prev_gripper, 20, 1)
         # print("back :", action[-1])
         time.sleep(0.02)

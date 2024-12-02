@@ -18,6 +18,8 @@ project_dir = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\detr\models'
 sys.path.append(project_dir)
 print(sys.path)
 
+from .residual_attention_network import Residual18_AttentionModel as ResidualAttentionModel
+        
 from util.misc import NestedTensor, is_main_process
 
 from .position_encoding import build_position_encoding
@@ -25,7 +27,7 @@ from .position_encoding import build_position_encoding
 import IPython
 e = IPython.embed
 
-check_featuremap = True#False #True
+check_featuremap = False #True #False #True
 
 class FrozenBatchNorm2d(torch.nn.Module):
     """
@@ -154,7 +156,7 @@ class BackboneBase(nn.Module):
                 plt.imshow(image)
                 plt.axis('off')
                 # plt.show()
-                plt.savefig(f"tmp//first_image_{self.key}_{idx}.png", bbox_inches='tight')
+                plt.savefig(f"tmp//1cam_first_image_{self.key}_{idx}.png", bbox_inches='tight')
                 plt.close()
             self.key += 1
 
@@ -188,7 +190,7 @@ class BackboneBase(nn.Module):
                     imgplot = plt.imshow(processed[i])
                     a.axis("off")
                     a.set_title(names[i].split('(')[0], fontsize=10)
-                plt.savefig(f"tmp//featuremap_{self.key}_{idx}.png", bbox_inches='tight')
+                plt.savefig(f"tmp//1cam_featuremap_{self.key}_{idx}.png", bbox_inches='tight')
 
                 # plt.show()
                 plt.close()
@@ -254,7 +256,30 @@ def build_backbone(args):
     position_embedding = build_position_encoding(args)
     train_backbone = args.lr_backbone > 0
     return_interm_layers = args.masks
+    print("\n\nargs.backbone", args.backbone)
     backbone = Backbone(args.backbone, train_backbone, return_interm_layers, args.dilation)
+    model = Joiner(backbone, position_embedding)
+    model.num_channels = backbone.num_channels
+    return model
+
+class background_Backbone(BackboneBase):
+    """ResNet backbone with frozen BatchNorm."""
+    def __init__(self, name: str,
+                 train_backbone: bool,
+                 return_interm_layers: bool,
+                 dilation: bool):
+        backbone = ResidualAttentionModel()
+        # getattr(torchvision.models, name)(
+        #     replace_stride_with_dilation=[False, False, dilation],
+        #     pretrained=is_main_process(), norm_layer=FrozenBatchNorm2d) # pretrained # TODO do we want frozen batch_norm??
+        num_channels = 512 #512 if name in ('resnet18', 'resnet34') else 2048
+        super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
+
+def build_background_backbone(args):
+    position_embedding = build_position_encoding(args)
+    train_backbone = args.lr_backbone > 0
+    return_interm_layers = args.masks
+    backbone = background_Backbone(args.backbone, train_backbone, return_interm_layers, args.dilation)
     model = Joiner(backbone, position_embedding)
     model.num_channels = backbone.num_channels
     return model
