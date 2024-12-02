@@ -1,0 +1,155 @@
+/home/imitation/.local/lib/python3.10/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/imitation/.local/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/model_runs.py:328: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  loading_status = policy.deserialize(torch.load(ckpt_path)) #ACT기준 ckpt_path 경로에서 상태 정보를 가져와 / 모델에 로드함
+['/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '/home/imitation/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages', 'C:\\Users\\cbrnt\\OneDrive\\문서\\act-plus-plus\\detr', 'C:\\Users\\cbrnt\\OneDrive\\문서\\act-plus-plus\\detr\\models']
+next_onecam_mycobot320_chunk20
+Namespace(lr=1e-05, lr_backbone=1e-05, batch_size=8, weight_decay=0.0001, epochs=300, lr_drop=200, clip_max_norm=0.1, backbone='resnet18', dilation=False, position_embedding='sine', camera_names=['right_wrist'], enc_layers=4, dec_layers=7, dim_feedforward=3200, hidden_dim=512, dropout=0.1, nheads=8, num_queries=20, pre_norm=False, masks=False, eval=True, onscreen_render=False, ckpt_dir='/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/mycobot320_data/next_onecam_mycobot320_chunk20', policy_class='ACT', task_name='sim_mycobot320', seed=0, num_steps=500000, kl_weight=10, chunk_size=20, temporal_agg=False, use_vq=False, vq_class=None, vq_dim=None, load_pretrain=False, action_dim=8, eval_every=500, validate_every=500, save_every=500, resume_ckpt_path=None, no_encoder=False, skip_mirrored_data=False, actuator_network_dir=None, history_len=None, future_len=None, prediction_len=None, vq=False, one_arm_policy_config=True)
+Use VQ: False, None, None
+number of parameters: 83.87M
+KL Weight 10
+ckpt_path /mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/mycobot320_data/next_onecam_mycobot320_chunk20/best_policy_step_107000_seed_0.ckpt
+loading_status <All keys matched successfully>
+Loaded: /mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/mycobot320_data/next_onecam_mycobot320_chunk20/best_policy_step_107000_seed_0.ckpt
+stats {'action_mean': array([  7.202391,  50.429565,  11.540696,   9.621565, -85.3697  ,
+       -39.42574 ,  28.626087,   0.      ], dtype=float32), 'action_std': array([1.4098420e+01, 1.0913841e+01, 1.0766412e+01, 1.0970808e+01,
+       8.3752661e+00, 2.9194494e+01, 1.7098352e+01, 9.9999998e-03],
+      dtype=float32), 'action_min': array([-4.6501002e+00,  2.9439901e+01, -1.5730100e+01, -7.4700999e+00,
+       -9.1400101e+01, -8.4810097e+01,  1.9999901e+01, -9.9999997e-05],
+      dtype=float32), 'action_max': array([ 3.4080101e+01,  6.6530098e+01,  3.2780098e+01,  3.5500099e+01,
+       -6.5029900e+01, -1.5799000e+00,  7.0000099e+01,  9.9999997e-05],
+      dtype=float32), 'qpos_mean': array([  6.2691164,  49.322956 ,  14.047164 ,  10.150666 , -85.42274  ,
+       -38.040592 ,  28.626087 ], dtype=float32), 'qpos_std': array([13.791206, 10.553959, 10.55187 , 10.644778,  8.06046 , 29.323074,
+       17.098352], dtype=float32), 'example_qpos': array([[ -3.16,  34.18,  34.01,   7.55, -87.89,  -1.84,  70.  ],
+       [ -3.16,  34.18,  34.01,   7.55, -87.89,  -1.84,  70.  ],
+       [ -3.16,  34.36,  32.87,   7.55, -87.97,  -1.84,  70.  ],
+       [ -3.16,  36.38,  30.67,   7.55, -87.97,  -1.84,  70.  ],
+       [ -3.25,  39.99,  28.65,   7.55, -87.97,  -1.84,  70.  ],
+       [ -3.33,  43.59,  25.66,   7.47, -88.06,  -1.84,  70.  ],
+       [ -3.33,  46.23,  23.73,   7.47, -88.06,  -1.84,  70.  ],
+       [ -3.42,  49.74,  21.09,   7.29, -88.06,  -1.84,  70.  ],
+       [ -3.51,  53.52,  18.45,   7.29, -88.06,  -1.84,  70.  ],
+       [ -3.51,  56.95,  15.73,   7.29, -88.06,  -1.84,  70.  ],
+       [ -3.51,  59.76,  13.79,   7.11, -88.15,  -1.84,  70.  ],
+       [ -3.51,  61.96,  12.83,   7.11, -88.15,  -1.84,  64.  ],
+       [ -3.51,  62.31,  12.83,   7.11, -88.15,  -1.84,  58.  ],
+       [ -3.51,  62.31,  12.56,   7.11, -88.15,  -1.84,  53.  ],
+       [ -3.51,  62.31,  12.56,   7.11, -88.15,  -1.84,  47.  ],
+       [ -3.51,  62.31,  12.48,   7.11, -88.15,  -1.84,  42.  ],
+       [ -3.51,  62.31,  12.48,   7.11, -88.15,  -1.84,  36.  ],
+       [ -3.51,  62.4 ,  12.48,   7.11, -88.15,  -1.84,  31.  ],
+       [ -3.51,  62.49,  12.48,   7.11, -88.15,  -1.84,  25.  ],
+       [ -3.51,  62.49,  12.39,   7.11, -88.15,  -1.84,  20.  ],
+       [ -3.51,  62.49,  12.39,   7.11, -88.15,  -1.84,  20.  ],
+       [ -3.6 ,  62.84,  12.12,   6.85, -88.33,  -1.84,  20.  ],
+       [ -3.6 ,  64.16,  10.81,   6.24, -88.41,  -1.84,  20.  ],
+       [ -3.69,  64.86,  10.72,   5.27, -88.5 ,  -1.84,  20.  ],
+       [ -3.69,  64.86,  10.98,   4.39, -88.76,  -1.84,  20.  ],
+       [ -3.77,  64.86,  11.68,   3.51, -88.94,  -2.02,  20.  ],
+       [ -3.86,  64.42,  12.12,   2.54, -89.12,  -2.1 ,  20.  ],
+       [ -3.95,  63.8 ,  12.65,   1.66, -89.38,  -2.28,  20.  ],
+       [ -3.95,  63.1 ,  13.18,   0.61, -89.56,  -2.46,  20.  ],
+       [ -4.04,  62.22,  13.71,  -0.17, -89.64,  -2.54,  20.  ],
+       [ -4.04,  61.96,  14.15,  -0.96, -89.91,  -2.72,  20.  ],
+       [ -4.04,  61.17,  14.85,  -1.84, -90.08,  -2.9 ,  20.  ],
+       [ -4.13,  60.11,  15.2 ,  -2.98, -90.35,  -3.07,  20.  ],
+       [ -4.21,  60.11,  15.99,  -3.69, -90.52,  -3.16,  20.  ],
+       [ -4.3 ,  58.88,  16.52,  -4.65, -90.7 ,  -3.25,  20.  ],
+       [ -4.3 ,  58.09,  16.69,  -5.8 , -90.79,  -3.51,  20.  ],
+       [ -4.3 ,  57.65,  17.49,  -6.41, -90.96,  -3.6 ,  20.  ],
+       [ -4.3 ,  56.6 ,  17.66,  -5.8 , -90.96,  -5.36,  20.  ],
+       [ -4.39,  55.98,  17.92,  -5.  , -90.96,  -7.47,  20.  ],
+       [ -4.57,  55.01,  18.1 ,  -4.21, -90.96, -10.37,  20.  ],
+       [ -4.57,  53.78,  18.45,  -3.42, -90.96, -13.18,  20.  ],
+       [ -4.57,  52.99,  18.72,  -2.37, -90.96, -15.9 ,  20.  ],
+       [ -4.57,  52.2 ,  18.8 ,  -1.66, -90.96, -18.1 ,  20.  ],
+       [ -4.57,  50.97,  19.33,  -0.7 , -90.87, -21.09,  20.  ],
+       [ -4.57,  50.09,  19.42,   0.17, -90.79, -23.9 ,  20.  ],
+       [ -4.57,  49.39,  19.68,   0.79, -90.7 , -26.01,  20.  ],
+       [ -4.57,  48.51,  20.03,   1.75, -90.61, -28.74,  20.  ],
+       [ -4.57,  47.19,  20.21,   2.54, -90.43, -31.81,  20.  ],
+       [ -4.57,  46.31,  20.65,   3.69, -90.35, -34.89,  20.  ],
+       [ -4.57,  45.52,  20.74,   4.21, -90.26, -37.08,  20.  ],
+       [ -4.57,  45.17,  20.91,   5.09, -90.17, -39.72,  20.  ],
+       [ -4.57,  43.41,  21.35,   5.97, -90.08, -42.71,  20.  ],
+       [ -4.57,  42.97,  21.53,   6.85, -90.  , -45.52,  20.  ],
+       [ -4.57,  41.57,  21.79,   7.82, -89.82, -48.16,  20.  ],
+       [ -4.48,  40.78,  22.06,   8.43, -89.73, -50.36,  20.  ],
+       [ -4.39,  40.07,  22.32,   9.31, -89.56, -53.34,  20.  ],
+       [ -4.3 ,  38.84,  22.32,  10.19, -89.47, -56.16,  20.  ],
+       [ -4.21,  38.23,  22.85,  11.07, -89.47, -58.97,  20.  ],
+       [ -4.21,  37.26,  23.02,  11.77, -89.47, -60.99,  20.  ],
+       [ -4.04,  36.29,  23.11,  12.65, -89.12, -63.8 ,  20.  ],
+       [ -3.86,  34.89,  23.55,  13.88, -89.03, -67.5 ,  20.  ],
+       [ -3.77,  34.36,  23.73,  14.41, -88.94, -69.6 ,  20.  ],
+       [ -3.69,  33.39,  23.99,  15.29, -88.85, -72.42,  20.  ],
+       [ -3.6 ,  32.43,  24.43,  16.17, -88.76, -75.14,  20.  ],
+       [ -3.42,  31.28,  24.69,  17.22, -88.59, -78.04,  20.  ],
+       [ -3.33,  30.58,  24.78,  17.92, -88.5 , -80.24,  20.  ],
+       [ -3.16,  29.88,  25.04,  18.54, -88.33, -82.96,  20.  ],
+       [ -2.28,  29.79,  24.96,  17.92, -87.53, -83.93,  20.  ],
+       [ -0.35,  29.97,  23.81,  17.05, -86.39, -82.61,  20.  ],
+       [  0.87,  30.49,  23.46,  16.69, -85.69, -80.85,  20.  ],
+       [  1.49,  31.28,  22.85,  15.99, -84.81, -79.45,  20.  ],
+       [  2.54,  31.99,  22.06,  15.38, -83.84, -78.22,  20.  ],
+       [  3.95,  32.78,  21.35,  14.58, -82.88, -76.64,  20.  ],
+       [  5.36,  33.48,  20.65,  13.88, -82.  , -75.23,  20.  ],
+       [  6.85,  34.36,  19.95,  13.27, -81.12, -73.82,  20.  ],
+       [  7.99,  34.98,  19.24,  12.56, -80.33, -72.59,  20.  ],
+       [  9.66,  35.77,  18.45,  11.77, -79.27, -71.01,  20.  ],
+       [ 11.25,  36.47,  17.84,  11.25, -78.39, -69.6 ,  20.  ],
+       [ 12.83,  37.26,  17.05,  10.45, -77.43, -68.2 ,  20.  ],
+       [ 13.97,  38.05,  16.43,   9.84, -76.64, -66.97,  20.  ],
+       [ 15.55,  38.84,  15.55,   9.14, -75.67, -65.47,  20.  ],
+       [ 16.78,  39.37,  14.85,   8.52, -74.88, -64.33,  20.  ],
+       [ 18.36,  40.34,  13.97,   7.73, -73.91, -62.92,  20.  ],
+       [ 19.95,  41.04,  13.53,   7.03, -72.86, -61.25,  20.  ],
+       [ 21.62,  41.92,  12.48,   6.41, -71.98, -59.85,  20.  ],
+       [ 22.76,  42.45,  12.12,   5.71, -71.27, -58.71,  20.  ],
+       [ 24.25,  43.24,  11.33,   4.92, -70.22, -57.3 ,  20.  ],
+       [ 25.48,  43.94,  10.81,   4.3 , -69.43, -56.07,  20.  ],
+       [ 27.07,  44.82,   9.58,   3.6 , -68.46, -54.4 ,  20.  ],
+       [ 28.65,  45.52,   8.78,   2.81, -67.41, -52.91,  20.  ],
+       [ 30.32,  46.4 ,   8.34,   2.19, -66.44, -51.41,  20.  ],
+       [ 31.72,  46.93,   7.47,   1.58, -65.65, -50.18,  20.  ],
+       [ 32.51,  47.63,   7.47,   1.66, -65.56, -50.18,  20.  ],
+       [ 32.6 ,  47.9 ,   7.82,   1.66, -65.56, -50.36,  20.  ],
+       [ 32.69,  48.69,   8.52,   2.1 , -65.56, -51.24,  20.  ],
+       [ 32.69,  49.39,   8.96,   2.19, -65.56, -51.59,  20.  ],
+       [ 32.69,  49.83,   9.49,   2.37, -65.47, -52.11,  20.  ],
+       [ 32.69,  50.44,  10.1 ,   2.54, -65.47, -52.64,  20.  ],
+       [ 32.69,  50.97,  10.72,   2.81, -65.47, -53.17,  20.  ],
+       [ 32.69,  51.5 ,  11.16,   2.98, -65.47, -53.78,  20.  ],
+       [ 32.69,  51.76,  11.68,   3.07, -65.47, -54.14,  20.  ],
+       [ 32.6 ,  52.47,  12.12,   3.33, -65.47, -54.75,  20.  ],
+       [ 32.43,  53.08,  12.91,   3.51, -65.47, -55.19,  20.  ],
+       [ 32.16,  53.52,  13.18,   3.69, -65.47, -55.89,  20.  ],
+       [ 31.9 ,  54.22,  13.88,   3.95, -65.47, -56.42,  20.  ],
+       [ 31.72,  54.31,  14.32,   3.95, -65.47, -56.86,  20.  ],
+       [ 31.72,  54.49,  14.32,   3.95, -65.3 , -57.04,  25.  ],
+       [ 31.64,  54.49,  14.32,   3.95, -65.3 , -56.86,  31.  ],
+       [ 31.55,  54.58,  14.41,   4.04, -65.3 , -56.86,  36.  ],
+       [ 31.46,  54.58,  14.41,   4.04, -65.3 , -56.86,  42.  ],
+       [ 31.37,  54.58,  14.41,   4.04, -65.3 , -56.86,  47.  ],
+       [ 31.28,  54.58,  14.41,   4.04, -65.3 , -56.86,  53.  ],
+       [ 31.2 ,  54.58,  14.41,   4.04, -65.3 , -56.86,  58.  ],
+       [ 31.2 ,  54.58,  14.41,   4.04, -65.3 , -56.95,  64.  ],
+       [ 31.11,  54.58,  14.41,   4.04, -65.3 , -56.95,  70.  ]],
+      dtype=float32)}[ WARN:0@6.236] global cap_v4l.cpp:999 open VIDEOIO(V4L2:/dev/video0): can't open camera by index
+[ERROR:0@6.236] global obsensor_uvc_stream_channel.cpp:158 getStreamChannelGroup Camera index out of range
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/model_runs.py", line 821, in <module>
+    main(vars(parser.parse_args())) #명령줄의 인자를 파싱해서 main함수에 전달
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/model_runs.py", line 220, in main
+    success_rate, avg_return = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=1)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/model_runs.py", line 391, in eval_bc
+    env = make_real_env(init_node=True, setup_robots=True, setup_base=True)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/aloha_scripts/real_env.py", line 194, in make_real_env
+    env = RealEnv(init_node, setup_robots, setup_base)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/aloha_scripts/real_env.py", line 47, in __init__
+    cv2.imshow("right_wrist", frame)
+cv2.error: OpenCV(4.10.0) /io/opencv/modules/highgui/src/window.cpp:973: error: (-215:Assertion failed) size.width>0 && size.height>0 in function 'imshow'
+

@@ -1,0 +1,938 @@
+wandb: Currently logged in as: cbrnt1210. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.5
+wandb: Run data is saved locally in /mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/wandb/run-20241119_154834-7386bvwo
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run temp_test_model
+wandb: ⭐️ View project at https://wandb.ai/cbrnt1210/mobile-aloha2
+wandb: 🚀 View run at https://wandb.ai/cbrnt1210/mobile-aloha2/runs/7386bvwo
+['/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr', '/usr/lib/python310.zip', '/usr/lib/python3.10', '/usr/lib/python3.10/lib-dynload', '/home/imitation/.local/lib/python3.10/site-packages', '/usr/local/lib/python3.10/dist-packages', '/usr/lib/python3/dist-packages', 'C:\\Users\\cbrnt\\OneDrive\\문서\\act-plus-plus\\detr', 'C:\\Users\\cbrnt\\OneDrive\\문서\\act-plus-plus\\detr\\models']
+state_dim 7
+temp_test_model
+Found 50 hdf5 files
+num_episodes_l [50]
+['/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_1.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_10.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_11.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_12.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_13.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_14.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_15.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_16.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_17.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_18.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_19.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_2.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_20.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_21.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_22.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_23.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_24.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_25.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_26.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_27.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_28.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_29.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_3.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_30.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_31.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_32.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_33.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_34.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_35.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_36.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_37.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_38.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_39.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_4.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_40.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_41.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_42.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_43.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_44.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_45.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_46.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_47.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_48.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_5.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_6.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_7.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_8.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_9.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/zval1.hdf5', '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/zval2.hdf5']
+
+
+train_episode_ids_0 [33 23 38 36  2  3 31 26 44 27 28 47 21 34 19 40 35 24 22 13 39 17 46  4
+ 29 14 10 42 32 18 41 30 20 25  6  7 45  1 16  0 15  5 11  9  8 12 43 37]
+
+
+val_episode_ids_0 [48 49]
+/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/zval1.hdf5 /mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320/zval2.hdf5
+
+
+Data from: ['/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320']
+- Train on [48] episodes
+- Test on [2] episodes
+
+
+Found 50 hdf5 files
+Norm stats from: ['/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets/next_sim_mycobot_320']
+Initializing transformations
+Initializing transformations
+Augment images: False, train_num_workers: 2, val_num_workers: 2
+한팔만 사용
+/home/imitation/.local/lib/python3.10/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/imitation/.local/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Namespace(lr=1e-05, lr_backbone=1e-05, batch_size=8, weight_decay=0.0001, epochs=300, lr_drop=200, clip_max_norm=0.1, backbone='resnet18', dilation=False, position_embedding='sine', camera_names=['right_wrist', 'top'], enc_layers=4, dec_layers=7, dim_feedforward=3200, hidden_dim=512, dropout=0.1, nheads=8, num_queries=20, pre_norm=False, masks=False, eval=False, onscreen_render=False, ckpt_dir='temp_test_model', policy_class='ACT', task_name='sim_mycobot320', seed=0, num_steps=1, kl_weight=10, chunk_size=20, temporal_agg=False, use_vq=False, vq_class=None, vq_dim=None, load_pretrain=False, action_dim=8, eval_every=500, validate_every=500, save_every=500, resume_ckpt_path=None, no_encoder=False, skip_mirrored_data=False, actuator_network_dir=None, history_len=None, future_len=None, prediction_len=None, model='policy_last.ckpt', vq=False, one_arm_policy_config=True)
+Use VQ: False, None, None
+number of parameters: 95.04M
+KL Weight 10
+False None
+IntermediateLayerGetter(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): FrozenBatchNorm2d()
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): FrozenBatchNorm2d()
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): FrozenBatchNorm2d()
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): FrozenBatchNorm2d()
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+    )
+  )
+)
+  0%|          | 0/2 [00:00<?, ?it/s]validating
+batch_idx, data 0 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.5176, 0.5176, 0.5137, 0.5059, 0.4980, 0.4980, 0.5020, 0.5059, 0.4980,
+        0.5020])
+prev backbone forward : tensor([0.1426, 0.1426, 0.1254, 0.0912, 0.0569, 0.0569, 0.0741, 0.0912, 0.0569,
+        0.0741], device='cuda:0')
+next backbone forward : tensor([0.5176, 0.5176, 0.5137, 0.5059, 0.4980, 0.4980, 0.5020, 0.5059, 0.4980,
+        0.5020], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 1 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7686,
+        0.7686])
+prev backbone forward : tensor([1.2728, 1.2728, 1.2728, 1.2728, 1.2728, 1.2728, 1.2728, 1.2728, 1.2385,
+        1.2385], device='cuda:0')
+next backbone forward : tensor([0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7765, 0.7686,
+        0.7686], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 2 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.4980, 0.5059, 0.5020, 0.4902, 0.4902, 0.4980, 0.4980, 0.4902, 0.4941,
+        0.4941])
+prev backbone forward : tensor([0.0569, 0.0912, 0.0741, 0.0227, 0.0227, 0.0569, 0.0569, 0.0227, 0.0398,
+        0.0398], device='cuda:0')
+next backbone forward : tensor([0.4980, 0.5059, 0.5020, 0.4902, 0.4902, 0.4980, 0.4980, 0.4902, 0.4941,
+        0.4941], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 3 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7765, 0.7804, 0.7843, 0.7843, 0.7843, 0.7804, 0.7765, 0.7765, 0.7843,
+        0.7843])
+prev backbone forward : tensor([1.2728, 1.2899, 1.3070, 1.3070, 1.3070, 1.2899, 1.2728, 1.2728, 1.3070,
+        1.3070], device='cuda:0')
+next backbone forward : tensor([0.7765, 0.7804, 0.7843, 0.7843, 0.7843, 0.7804, 0.7765, 0.7765, 0.7843,
+        0.7843], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 4 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7686, 0.7686, 0.7647, 0.7647, 0.7608, 0.7608, 0.7647, 0.7647, 0.7686,
+        0.7686])
+prev backbone forward : tensor([1.2385, 1.2385, 1.2214, 1.2214, 1.2043, 1.2043, 1.2214, 1.2214, 1.2385,
+        1.2385], device='cuda:0')
+next backbone forward : tensor([0.7686, 0.7686, 0.7647, 0.7647, 0.7608, 0.7608, 0.7647, 0.7647, 0.7686,
+        0.7686], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 5 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7647, 0.7686, 0.7725, 0.7686, 0.7647, 0.7608, 0.7647, 0.7686, 0.7686,
+        0.7686])
+prev backbone forward : tensor([1.2214, 1.2385, 1.2557, 1.2385, 1.2214, 1.2043, 1.2214, 1.2385, 1.2385,
+        1.2385], device='cuda:0')
+next backbone forward : tensor([0.7647, 0.7686, 0.7725, 0.7686, 0.7647, 0.7608, 0.7647, 0.7686, 0.7686,
+        0.7686], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 6 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7843, 0.7843, 0.7804, 0.7804, 0.7804, 0.7843, 0.7882, 0.7882, 0.7725,
+        0.7686])
+prev backbone forward : tensor([1.3070, 1.3070, 1.2899, 1.2899, 1.2899, 1.3070, 1.3242, 1.3242, 1.2557,
+        1.2385], device='cuda:0')
+next backbone forward : tensor([0.7843, 0.7843, 0.7804, 0.7804, 0.7804, 0.7843, 0.7882, 0.7882, 0.7725,
+        0.7686], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 7 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.6235, 0.5882, 0.6157, 0.5725, 0.3020, 0.2353, 0.1059, 0.1490, 0.1961,
+        0.1765])
+prev backbone forward : tensor([ 0.6049,  0.4508,  0.5707,  0.3823, -0.7993, -1.0904, -1.6555, -1.4672,
+        -1.2617, -1.3473], device='cuda:0')
+next backbone forward : tensor([0.6235, 0.5882, 0.6157, 0.5725, 0.3020, 0.2353, 0.1059, 0.1490, 0.1961,
+        0.1765], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 8 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7569, 0.7569, 0.7569, 0.7569, 0.7608, 0.7608, 0.7608, 0.7608, 0.7451,
+        0.7451])
+prev backbone forward : tensor([1.1872, 1.1872, 1.1872, 1.1872, 1.2043, 1.2043, 1.2043, 1.2043, 1.1358,
+        1.1358], device='cuda:0')
+next backbone forward : tensor([0.7569, 0.7569, 0.7569, 0.7569, 0.7608, 0.7608, 0.7608, 0.7608, 0.7451,
+        0.7451], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 9 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7725, 0.7725, 0.7725, 0.7725, 0.7686, 0.7686, 0.7647, 0.7647, 0.7569,
+        0.7608])
+prev backbone forward : tensor([1.2557, 1.2557, 1.2557, 1.2557, 1.2385, 1.2385, 1.2214, 1.2214, 1.1872,
+        1.2043], device='cuda:0')
+next backbone forward : tensor([0.7725, 0.7725, 0.7725, 0.7725, 0.7686, 0.7686, 0.7647, 0.7647, 0.7569,
+        0.7608], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 10 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7725, 0.7725, 0.7765, 0.7765, 0.7765, 0.7765, 0.7725, 0.7725, 0.7765,
+        0.7765])
+prev backbone forward : tensor([1.2557, 1.2557, 1.2728, 1.2728, 1.2728, 1.2728, 1.2557, 1.2557, 1.2728,
+        1.2728], device='cuda:0')
+next backbone forward : tensor([0.7725, 0.7725, 0.7765, 0.7765, 0.7765, 0.7765, 0.7725, 0.7725, 0.7765,
+        0.7765], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 11 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7647, 0.7647, 0.7686, 0.7725, 0.7725, 0.7686, 0.7686, 0.7686, 0.7686,
+        0.7686])
+prev backbone forward : tensor([1.2214, 1.2214, 1.2385, 1.2557, 1.2557, 1.2385, 1.2385, 1.2385, 1.2385,
+        1.2385], device='cuda:0')
+next backbone forward : tensor([0.7647, 0.7647, 0.7686, 0.7725, 0.7725, 0.7686, 0.7686, 0.7686, 0.7686,
+        0.7686], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 12 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.5176, 0.5176, 0.4980, 0.5647, 0.6549, 0.6706, 0.7020, 0.7490, 0.7608,
+        0.7725])
+prev backbone forward : tensor([0.1426, 0.1426, 0.0569, 0.3481, 0.7419, 0.8104, 0.9474, 1.1529, 1.2043,
+        1.2557], device='cuda:0')
+next backbone forward : tensor([0.5176, 0.5176, 0.4980, 0.5647, 0.6549, 0.6706, 0.7020, 0.7490, 0.7608,
+        0.7725], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 13 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7686, 0.7686, 0.7686, 0.7686, 0.7647, 0.7647, 0.7647, 0.7647, 0.7608,
+        0.7608])
+prev backbone forward : tensor([1.2385, 1.2385, 1.2385, 1.2385, 1.2214, 1.2214, 1.2214, 1.2214, 1.2043,
+        1.2043], device='cuda:0')
+next backbone forward : tensor([0.7686, 0.7686, 0.7686, 0.7686, 0.7647, 0.7647, 0.7647, 0.7647, 0.7608,
+        0.7608], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 14 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.2235, 0.2706, 0.2118, 0.2353, 0.2902, 0.2196, 0.1647, 0.4000, 0.5490,
+        0.5294])
+prev backbone forward : tensor([-1.1418, -0.9363, -1.1932, -1.0904, -0.8507, -1.1589, -1.3987, -0.3712,
+         0.2796,  0.1939], device='cuda:0')
+next backbone forward : tensor([0.2235, 0.2706, 0.2118, 0.2353, 0.2902, 0.2196, 0.1647, 0.4000, 0.5490,
+        0.5294], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 15 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.8196, 0.8196, 0.8196, 0.8196, 0.8157, 0.8157, 0.8157, 0.8157, 0.8157,
+        0.8157])
+prev backbone forward : tensor([1.4612, 1.4612, 1.4612, 1.4612, 1.4440, 1.4440, 1.4440, 1.4440, 1.4440,
+        1.4440], device='cuda:0')
+next backbone forward : tensor([0.8196, 0.8196, 0.8196, 0.8196, 0.8157, 0.8157, 0.8157, 0.8157, 0.8157,
+        0.8157], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0   0%|          | 0/2 [01:06<?, ?it/s]
+torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 16 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7725, 0.7725, 0.7725, 0.7725, 0.7686, 0.7686, 0.7686, 0.7686, 0.7725,
+        0.7686])
+prev backbone forward : tensor([1.2557, 1.2557, 1.2557, 1.2557, 1.2385, 1.2385, 1.2385, 1.2385, 1.2557,
+        1.2385], device='cuda:0')
+next backbone forward : tensor([0.7725, 0.7725, 0.7725, 0.7725, 0.7686, 0.7686, 0.7686, 0.7686, 0.7725,
+        0.7686], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 17 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7647, 0.7647, 0.7647, 0.7647, 0.7608, 0.7608, 0.7569, 0.7569, 0.7608,
+        0.7608])
+prev backbone forward : tensor([1.2214, 1.2214, 1.2214, 1.2214, 1.2043, 1.2043, 1.1872, 1.1872, 1.2043,
+        1.2043], device='cuda:0')
+next backbone forward : tensor([0.7647, 0.7647, 0.7647, 0.7647, 0.7608, 0.7608, 0.7569, 0.7569, 0.7608,
+        0.7608], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 18 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7725, 0.7725, 0.7686, 0.7686, 0.7686, 0.7686, 0.7686, 0.7686, 0.7686,
+        0.7686])
+prev backbone forward : tensor([1.2557, 1.2557, 1.2385, 1.2385, 1.2385, 1.2385, 1.2385, 1.2385, 1.2385,
+        1.2385], device='cuda:0')
+next backbone forward : tensor([0.7725, 0.7725, 0.7686, 0.7686, 0.7686, 0.7686, 0.7686, 0.7686, 0.7686,
+        0.7686], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+prev backbone forward : tensor([-2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179, -2.1179,
+        -2.1179, -2.1179], device='cuda:0')
+next backbone forward : tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+(15, 20)
+batch_idx, data 19 4 torch.Size([8, 2, 3, 480, 640])
+torch.Size([2, 3, 480, 640])
+valid : tensor([0.7843, 0.7843, 0.7804, 0.7804, 0.7804, 0.7804, 0.7843, 0.7843, 0.7843,
+        0.7843])
+prev backbone forward : tensor([1.3070, 1.3070, 1.2899, 1.2899, 1.2899, 1.2899, 1.3070, 1.3070, 1.3070,
+        1.3070], device='cuda:0')
+next backbone forward : tensor([0.7843, 0.7843, 0.7804, 0.7804, 0.7804, 0.7804, 0.7843, 0.7843, 0.7843,
+        0.7843], device='cuda:0')
+torch.Size([8, 3, 480, 640]) 8
+0 torch.Size([8, 512, 15, 20])
+1
+torch.Size([8, 512, 15, 20])
+(15, 20)
+(15, 20)
+(15, 20)
+Traceback (most recent call last):
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 858, in <module>
+    main(vars(parser.parse_args())) #명령줄의 인자를 파싱해서 main함수에 전달
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 242, in main
+    best_ckpt_info = train_bc(train_dataloader, val_dataloader, config)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 741, in train_bc
+    forward_dict = forward_pass(data, policy)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 659, in forward_pass
+    return policy(qpos_data, image_data, action_data, is_pad) # TODO remove None
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/policy.py", line 231, in __call__
+    a_hat, is_pad_hat, (mu, logvar), probs, binaries = self.model(qpos, image, env_state, actions, is_pad, vq_sample)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr/models/detr_vae.py", line 167, in forward
+    features, pos = self.backbones[cam_id](image[:, cam_id])
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr/models/backbone.py", line 236, in forward
+    xs = self[0](tensor_list)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr/models/backbone.py", line 191, in forward
+    plt.savefig(f"tmp//featuremap_{self.key}_{idx}.png", bbox_inches='tight')
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/pyplot.py", line 1228, in savefig
+    res = fig.savefig(*args, **kwargs)  # type: ignore[func-returns-value]
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/figure.py", line 3395, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/backend_bases.py", line 2175, in print_figure
+    self.figure.draw(renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 95, in draw_wrapper
+    result = draw(artist, renderer, *args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 72, in draw_wrapper
+    return draw(artist, renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/figure.py", line 3162, in draw
+    mimage._draw_list_compositing_images(
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 132, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 72, in draw_wrapper
+    return draw(artist, renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/axes/_base.py", line 3143, in draw
+    mimage._draw_list_compositing_images(
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 132, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 72, in draw_wrapper
+    return draw(artist, renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 653, in draw
+    im, l, b, trans = self.make_image(
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 952, in make_image
+    return self._make_image(self._A, bbox, transformed_bbox, clip,
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 553, in _make_image
+    output = self.norm(resampled_masked)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/colors.py", line 1405, in __call__
+    result = np.ma.array(resdat, mask=result.mask, copy=False)
+  File "/home/imitation/.local/lib/python3.10/site-packages/numpy/ma/core.py", line 3543, in mask
+    @property
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 858, in <module>
+    main(vars(parser.parse_args())) #명령줄의 인자를 파싱해서 main함수에 전달
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 242, in main
+    best_ckpt_info = train_bc(train_dataloader, val_dataloader, config)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 741, in train_bc
+    forward_dict = forward_pass(data, policy)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/imitate_episodes.py", line 659, in forward_pass
+    return policy(qpos_data, image_data, action_data, is_pad) # TODO remove None
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/policy.py", line 231, in __call__
+    a_hat, is_pad_hat, (mu, logvar), probs, binaries = self.model(qpos, image, env_state, actions, is_pad, vq_sample)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr/models/detr_vae.py", line 167, in forward
+    features, pos = self.backbones[cam_id](image[:, cam_id])
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr/models/backbone.py", line 236, in forward
+    xs = self[0](tensor_list)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/detr/models/backbone.py", line 191, in forward
+    plt.savefig(f"tmp//featuremap_{self.key}_{idx}.png", bbox_inches='tight')
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/pyplot.py", line 1228, in savefig
+    res = fig.savefig(*args, **kwargs)  # type: ignore[func-returns-value]
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/figure.py", line 3395, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/backend_bases.py", line 2175, in print_figure
+    self.figure.draw(renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 95, in draw_wrapper
+    result = draw(artist, renderer, *args, **kwargs)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 72, in draw_wrapper
+    return draw(artist, renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/figure.py", line 3162, in draw
+    mimage._draw_list_compositing_images(
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 132, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 72, in draw_wrapper
+    return draw(artist, renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/axes/_base.py", line 3143, in draw
+    mimage._draw_list_compositing_images(
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 132, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/artist.py", line 72, in draw_wrapper
+    return draw(artist, renderer)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 653, in draw
+    im, l, b, trans = self.make_image(
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 952, in make_image
+    return self._make_image(self._A, bbox, transformed_bbox, clip,
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/image.py", line 553, in _make_image
+    output = self.norm(resampled_masked)
+  File "/home/imitation/.local/lib/python3.10/site-packages/matplotlib/colors.py", line 1405, in __call__
+    result = np.ma.array(resdat, mask=result.mask, copy=False)
+  File "/home/imitation/.local/lib/python3.10/site-packages/numpy/ma/core.py", line 3543, in mask
+    @property
+KeyboardInterrupt
+wandb: - 0.003 MB of 0.003 MB uploadedwandb: \ 0.003 MB of 0.003 MB uploadedwandb: | 0.003 MB of 0.047 MB uploadedwandb: / 0.004 MB of 0.047 MB uploadedwandb: - 0.047 MB of 0.047 MB uploadedwandb: 🚀 View run temp_test_model at: https://wandb.ai/cbrnt1210/mobile-aloha2/runs/7386bvwo
+wandb: ⭐️ View project at: https://wandb.ai/cbrnt1210/mobile-aloha2
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241119_154834-7386bvwo/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
