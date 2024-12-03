@@ -274,6 +274,19 @@ class background_Backbone(BackboneBase):
         #     pretrained=is_main_process(), norm_layer=FrozenBatchNorm2d) # pretrained # TODO do we want frozen batch_norm??
         num_channels = 512 #512 if name in ('resnet18', 'resnet34') else 2048
         super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
+        return_layers = {'layer4': "0", "residual_block1": "1", "attention_module1": "2", "residual_block2": "3", "attention_module2": "4"} #숫자는 출력에 접근하기 위한 키값
+        print(return_interm_layers, return_layers) #False
+        #backbone은 resnet18임
+        self.body = IntermediateLayerGetter(backbone, return_layers=return_layers)
+
+        dummy_input = torch.randn(1, 3, 480, 640)
+        output = self.body(dummy_input)
+        for key, value in output.items():
+            print(f"{key}: {value.shape}")
+
+        print("\n\n\nself.body",self.body)
+
+
 
 def build_background_backbone(args):
     position_embedding = build_position_encoding(args)

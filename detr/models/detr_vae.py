@@ -165,8 +165,14 @@ class DETRVAE(nn.Module):
             all_cam_pos = []
             for cam_id, cam_name in enumerate(self.camera_names):
                 features, pos = self.backbones[cam_id](image[:, cam_id])
-                features = features[0] # take the last layer feature
-                pos = pos[0]
+                # print("pos.shape", len(pos))
+                # print(pos[0].shape)
+                # print("features.shape", len(features))
+                # for zxcv in range(len(features)):
+                    # print(zxcv, features[zxcv].shape)
+                features = features[-1] #[0] #마지막으로 해야함 # take the last layer feature
+                # print("features.shape", features.shape)
+                pos = pos[-1] #[0] #마지막으로 해야함
                 all_cam_features.append(self.input_proj(features))
                 all_cam_pos.append(pos)
             # proprioception features
@@ -290,7 +296,7 @@ def build(args):
             backbones.append(backbone)
         else:
             print("\n\n오른 팔 카메라가 아님!!")
-            backbone = build_backbone(args) #build_background_backbone(args)
+            backbone = build_background_backbone(args)
             backbones.append(backbone)
 
     transformer = build_transformer(args)
