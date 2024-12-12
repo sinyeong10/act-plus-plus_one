@@ -1,0 +1,68 @@
+/home/aloha/.local/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/aloha/.local/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main', '/usr/local/lib/python39.zip', '/usr/local/lib/python3.9', '/usr/local/lib/python3.9/lib-dynload', '/home/aloha/.local/lib/python3.9/site-packages', '/usr/local/lib/python3.9/site-packages', '/tmp/tmp9oxltwfq', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/util']
+state_dim 7
+2action_see_putarea_125_10000
+Found 50 hdf5 files
+num_episodes_l [50]
+['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_1.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_10.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_11.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_12.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_13.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_14.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_15.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_16.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_17.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_18.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_19.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_2.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_20.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_21.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_22.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_23.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_24.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_25.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_26.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_27.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_28.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_29.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_3.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_30.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_31.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_32.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_33.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_34.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_35.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_36.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_37.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_38.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_39.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_4.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_40.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_41.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_42.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_43.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_44.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_45.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_46.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_47.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_48.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_5.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_6.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_7.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_8.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/two_cam_episode_9.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/valid/zval1.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/valid/zval2.hdf5']
+val_episode_ids_0 [48 49]
+/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/valid/zval1.hdf5 /mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/valid/zval2.hdf5
+
+
+Data from: ['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320']
+- Train on [48] episodes
+- Test on [2] episodes
+
+
+Found 50 hdf5 files
+Norm stats from: ['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320']
+Initializing transformations
+Initializing transformations
+Augment images: False, train_num_workers: 2, val_num_workers: 2
+한팔만 사용
+Namespace(lr=1e-05, lr_backbone=1e-05, batch_size=8, weight_decay=0.0001, epochs=300, lr_drop=200, clip_max_norm=0.1, backbone='resnet18', dilation=False, position_embedding='sine', camera_names=['right_wrist', 'top'], enc_layers=4, dec_layers=7, dim_feedforward=3200, hidden_dim=512, dropout=0.1, nheads=8, num_queries=120, pre_norm=False, masks=False, eval=False, onscreen_render=False, ckpt_dir='2action_see_putarea_125_10000', policy_class='ACT', task_name='sim_mycobot320', seed=0, num_steps=10000, kl_weight=10, chunk_size=120, temporal_agg=False, use_vq=False, vq_class=None, vq_dim=None, load_pretrain=False, action_dim=8, eval_every=500, validate_every=500, save_every=500, resume_ckpt_path=None, no_encoder=False, skip_mirrored_data=False, actuator_network_dir=None, history_len=None, future_len=None, prediction_len=None, model='policy_last.ckpt', vq=False, one_arm_policy_config=True)
+Use VQ: False, None, None
+number of parameters: 95.09M
+KL Weight 10
+False None
+  0%|          | 0/10001 [00:00<?, ?it/s]validating
+  0%|          | 0/10001 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 818, in <module>
+    main(vars(parser.parse_args())) #명령줄의 인자를 파싱해서 main함수에 전달
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 240, in main
+    best_ckpt_info = train_bc(train_dataloader, val_dataloader, config)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 702, in train_bc
+    forward_dict = forward_pass(data, policy)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 651, in forward_pass
+    return policy(qpos_data, image_data, action_data, is_pad) # TODO remove None
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/policy.py", line 227, in __call__
+    a_hat, is_pad_hat, (mu, logvar), probs, binaries = self.model(qpos, image, env_state, actions, is_pad, vq_sample)
+  File "/home/aloha/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/aloha/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/detr_vae.py", line 159, in forward
+    latent_input, probs, binaries, mu, logvar = self.encode(qpos, actions, is_pad, vq_sample)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/detr_vae.py", line 118, in encode
+    encoder_output = self.encoder(encoder_input, pos=pos_embed, src_key_padding_mask=is_pad)
+  File "/home/aloha/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/aloha/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/transformer.py", line 95, in forward
+    output = layer(output, src_mask=mask,
+  File "/home/aloha/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/aloha/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/transformer.py", line 202, in forward
+    return self.forward_post(src, src_mask, src_key_padding_mask, pos)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/transformer.py", line 172, in forward_post
+    q = k = self.with_pos_embed(src, pos)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/transformer.py", line 165, in with_pos_embed
+    return tensor if pos is None else tensor + pos
+RuntimeError: The size of tensor a (117) must match the size of tensor b (122) at non-singleton dimension 0

@@ -1,0 +1,224 @@
+['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main', '/usr/local/lib/python39.zip', '/usr/local/lib/python3.9', '/usr/local/lib/python3.9/lib-dynload', '/home/aloha/.local/lib/python3.9/site-packages', '/usr/local/lib/python3.9/site-packages', '/tmp/tmp1kor00_v', 'C:\\Users\\chaoc\\Music\\act-plus-plus_one-main\\detr', 'C:\\Users\\chaoc\\Music\\act-plus-plus_one-main\\detr\\models']
+state_dim 7
+1_2_mask_end_110
+Found 60 hdf5 files
+num_episodes_l [60]
+['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_1.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_10.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_11.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_12.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_13.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_14.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_2.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_3.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_4.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_5.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_6.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_7.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_8.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action1/two_cam_episode_9.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_1.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_10.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_11.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_12.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_13.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_14.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_2.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_3.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_4.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_5.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_6.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_7.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_8.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action2/two_cam_episode_9.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_1.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_10.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_11.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_12.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_13.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_14.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_2.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_3.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_4.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_5.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_6.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_7.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_8.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action3/two_cam_episode_9.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_1.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_10.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_11.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_12.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_13.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_14.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_2.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_3.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_4.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_5.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_6.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_7.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_8.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/action4/two_cam_episode_9.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval1.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval2.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval3.hdf5', '/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval4.hdf5']
+
+
+train_episode_ids_0 [44  2 46 19 32 33 36 39 49 42 48 21 38 41 10  3 24 52 35 26 45 54 27 34
+ 13 22 47 30 17 51 31 23  4 14 29 28 50 40 18 55 20 25  6  7 53  1 16  0
+ 15  5 11  9  8 12 43 37]
+
+
+val_episode_ids_0 [56 57 58 59]
+/home/aloha/.local/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/aloha/.local/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval1.hdf5 /mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval2.hdf5 /mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval3.hdf5 /mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320/val/zval4.hdf5
+
+
+Data from: ['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320']
+- Train on [56] episodes
+- Test on [4] episodes
+
+
+Found 60 hdf5 files
+Norm stats from: ['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/scr/tonyzhao/datasets/next_sim_mycobot_320']
+Initializing transformations
+Initializing transformations
+Augment images: False, train_num_workers: 2, val_num_workers: 2
+한팔만 사용
+Namespace(lr=1e-05, lr_backbone=1e-05, batch_size=8, weight_decay=0.0001, epochs=300, lr_drop=200, clip_max_norm=0.1, backbone='resnet18', dilation=False, position_embedding='sine', camera_names=['right_wrist', 'top'], enc_layers=4, dec_layers=7, dim_feedforward=3200, hidden_dim=512, dropout=0.1, nheads=8, num_queries=110, pre_norm=False, masks=False, eval=False, onscreen_render=False, ckpt_dir='1_2_mask_end_110', policy_class='ACT', task_name='sim_mycobot320', seed=0, num_steps=10000, kl_weight=10, chunk_size=110, temporal_agg=False, use_vq=False, vq_class=None, vq_dim=None, load_pretrain=False, action_dim=8, eval_every=500, validate_every=500, save_every=500, resume_ckpt_path=None, no_encoder=False, skip_mirrored_data=False, actuator_network_dir=None, history_len=None, future_len=None, prediction_len=None, model='policy_last.ckpt', vq=False, one_arm_policy_config=True)
+
+
+args.backbone resnet18
+
+
+오른 팔 카메라가 아님!!
+
+
+args.backbone resnet18
+Use VQ: False, None, None
+number of parameters: 95.08M
+
+
+model DETRVAE(
+  (transformer): Transformer(
+    (encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-3): 4 x TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (linear1): Linear(in_features=512, out_features=3200, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=3200, out_features=512, bias=True)
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout1): Dropout(p=0.1, inplace=False)
+          (dropout2): Dropout(p=0.1, inplace=False)
+        )
+      )
+    )
+    (decoder): TransformerDecoder(
+      (layers): ModuleList(
+        (0-6): 7 x TransformerDecoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (multihead_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (linear1): Linear(in_features=512, out_features=3200, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=3200, out_features=512, bias=True)
+          (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (norm3): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (dropout1): Dropout(p=0.1, inplace=False)
+          (dropout2): Dropout(p=0.1, inplace=False)
+          (dropout3): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+    )
+  )
+  (encoder): TransformerEncoder(
+    (layers): ModuleList(
+      (0-3): 4 x TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+        )
+        (linear1): Linear(in_features=512, out_features=3200, bias=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+        (linear2): Linear(in_features=3200, out_features=512, bias=True)
+        (norm1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        (dropout1): Dropout(p=0.1, inplace=False)
+        (dropout2): Dropout(p=0.1, inplace=False)
+      )
+    )
+  )
+  (action_head): Linear(in_features=512, out_features=8, bias=True)
+  (is_pad_head): Linear(in_features=512, out_features=1, bias=True)
+  (query_embed): Embedding(110, 512)
+  (input_proj): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+  (backbones): ModuleList(
+    (0-1): 2 x Joiner(
+      (0): Backbone(
+        (body): IntermediateLayerGetter(
+          (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+          (bn1): FrozenBatchNorm2d()
+          (relu): ReLU(inplace=True)
+          (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+          (layer1): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+            )
+          )
+          (layer2): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+              (downsample): Sequential(
+                (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                (1): FrozenBatchNorm2d()
+              )
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+            )
+          )
+          (layer3): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+              (downsample): Sequential(
+                (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                (1): FrozenBatchNorm2d()
+              )
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+            )
+          )
+          (layer4): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+              (downsample): Sequential(
+                (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+                (1): FrozenBatchNorm2d()
+              )
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): FrozenBatchNorm2d()
+              (relu): ReLU(inplace=True)
+              (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): FrozenBatchNorm2d()
+            )
+          )
+        )
+      )
+      (1): PositionEmbeddingSine()
+    )
+  )
+  (input_proj_robot_state): Linear(in_features=7, out_features=512, bias=True)
+  (cls_embed): Embedding(1, 512)
+  (encoder_action_proj): Linear(in_features=8, out_features=512, bias=True)
+  (encoder_joint_proj): Linear(in_features=7, out_features=512, bias=True)
+  (latent_proj): Linear(in_features=512, out_features=64, bias=True)
+  (latent_out_proj): Linear(in_features=32, out_features=512, bias=True)
+  (additional_pos_embed): Embedding(2, 512)
+)
+KL Weight 10
+False None
+  0%|          | 0/10001 [00:00<?, ?it/s]validating
+
+
+validation_summary.keys() : dict_keys(['l1', 'kl', 'loss'])
+Val loss:   93.24887
+val_l1: 0.592 val_kl: 9.266 val_loss: 93.249 
+  0%|          | 1/10001 [00:40<113:37:01, 40.90s/it]  0%|          | 2/10001 [00:47<57:26:08, 20.68s/it]   0%|          | 3/10001 [00:59<46:03:48, 16.59s/it]  0%|          | 4/10001 [01:13<43:40:14, 15.73s/it]  0%|          | 5/10001 [01:28<42:26:15, 15.28s/it]  0%|          | 6/10001 [01:42<41:39:26, 15.00s/it]  0%|          | 7/10001 [01:57<41:11:52, 14.84s/it]  0%|          | 8/10001 [02:11<41:01:38, 14.78s/it]  0%|          | 9/10001 [02:26<40:46:24, 14.69s/it]  0%|          | 10/10001 [02:40<40:30:29, 14.60s/it]  0%|          | 11/10001 [02:55<40:25:45, 14.57s/it]  0%|          | 12/10001 [03:09<40:21:25, 14.54s/it]  0%|          | 13/10001 [03:23<40:13:02, 14.50s/it]  0%|          | 14/10001 [03:38<40:11:33, 14.49s/it]  0%|          | 15/10001 [03:52<40:09:24, 14.48s/it]  0%|          | 16/10001 [04:07<40:08:50, 14.47s/it]  0%|          | 17/10001 [04:21<40:09:52, 14.48s/it]  0%|          | 18/10001 [04:36<40:10:12, 14.49s/it]  0%|          | 19/10001 [04:50<40:05:41, 14.46s/it]  0%|          | 20/10001 [05:05<40:07:44, 14.47s/it]  0%|          | 21/10001 [05:19<40:07:59, 14.48s/it]  0%|          | 22/10001 [05:34<40:01:48, 14.44s/it]  0%|          | 23/10001 [05:48<40:03:35, 14.45s/it]  0%|          | 24/10001 [06:03<40:05:30, 14.47s/it]  0%|          | 25/10001 [06:17<40:06:03, 14.47s/it]  0%|          | 26/10001 [06:32<40:07:20, 14.48s/it]  0%|          | 27/10001 [06:46<40:06:41, 14.48s/it]  0%|          | 28/10001 [07:00<40:02:36, 14.45s/it]  0%|          | 29/10001 [07:15<40:06:59, 14.48s/it]  0%|          | 30/10001 [07:29<40:07:56, 14.49s/it]  0%|          | 31/10001 [07:44<40:03:56, 14.47s/it]  0%|          | 32/10001 [07:58<40:04:14, 14.47s/it]  0%|          | 33/10001 [08:13<40:04:07, 14.47s/it]  0%|          | 34/10001 [08:27<40:03:58, 14.47s/it]  0%|          | 35/10001 [08:42<40:04:27, 14.48s/it]  0%|          | 36/10001 [08:56<40:04:37, 14.48s/it]  0%|          | 37/10001 [09:11<40:00:12, 14.45s/it]  0%|          | 38/10001 [09:25<40:01:46, 14.46s/it]  0%|          | 39/10001 [09:40<40:00:34, 14.46s/it]  0%|          | 40/10001 [09:54<39:57:12, 14.44s/it]  0%|          | 41/10001 [10:08<39:58:44, 14.45s/it]  0%|          | 42/10001 [10:23<40:00:34, 14.46s/it]  0%|          | 43/10001 [10:37<40:02:33, 14.48s/it]  0%|          | 44/10001 [10:52<40:01:48, 14.47s/it]  0%|          | 45/10001 [11:06<40:01:38, 14.47s/it]  0%|          | 46/10001 [11:21<39:56:46, 14.45s/it]  0%|          | 47/10001 [11:35<39:58:53, 14.46s/it]  0%|          | 48/10001 [11:50<40:01:21, 14.48s/it]  0%|          | 49/10001 [12:04<39:56:25, 14.45s/it]  0%|          | 50/10001 [12:19<39:56:30, 14.45s/it]  1%|          | 51/10001 [12:33<39:58:38, 14.46s/it]  1%|          | 52/10001 [12:48<39:59:03, 14.47s/it]  1%|          | 53/10001 [13:02<40:00:31, 14.48s/it]  1%|          | 54/10001 [13:17<39:59:29, 14.47s/it]  1%|          | 55/10001 [13:31<39:54:32, 14.45s/it]  1%|          | 56/10001 [13:45<39:57:38, 14.47s/it]  1%|          | 57/10001 [14:00<39:57:53, 14.47s/it]  1%|          | 58/10001 [14:14<39:53:44, 14.44s/it]  1%|          | 59/10001 [14:29<39:53:33, 14.45s/it]  1%|          | 60/10001 [14:43<39:56:06, 14.46s/it]  1%|          | 61/10001 [14:58<39:57:27, 14.47s/it]  1%|          | 62/10001 [15:12<40:02:26, 14.50s/it]  1%|          | 63/10001 [15:27<40:03:07, 14.51s/it]  1%|          | 64/10001 [15:41<39:57:26, 14.48s/it]  1%|          | 65/10001 [15:56<39:58:11, 14.48s/it]  1%|          | 66/10001 [16:10<39:58:14, 14.48s/it]  1%|          | 67/10001 [16:25<39:52:05, 14.45s/it]  1%|          | 68/10001 [16:39<39:52:13, 14.45s/it]  1%|          | 69/10001 [16:54<39:54:31, 14.47s/it]  1%|          | 70/10001 [17:08<39:55:40, 14.47s/it]  1%|          | 71/10001 [17:23<39:57:54, 14.49s/it]  1%|          | 72/10001 [17:37<39:57:15, 14.49s/it]  1%|          | 73/10001 [17:51<39:52:29, 14.46s/it]  1%|          | 74/10001 [18:06<39:53:19, 14.47s/it]  1%|          | 75/10001 [18:20<39:53:10, 14.47s/it]  1%|          | 76/10001 [18:35<39:48:11, 14.44s/it]  1%|          | 77/10001 [18:49<39:49:48, 14.45s/it]  1%|          | 78/10001 [19:04<39:52:36, 14.47s/it]  1%|          | 79/10001 [19:18<39:52:30, 14.47s/it]  1%|          | 80/10001 [19:33<39:53:18, 14.47s/it]  1%|          | 81/10001 [19:47<39:53:29, 14.48s/it]  1%|          | 82/10001 [20:02<39:50:13, 14.46s/it]  1%|          | 83/10001 [20:16<39:50:46, 14.46s/it]  1%|          | 84/10001 [20:31<39:50:54, 14.47s/it]  1%|          | 85/10001 [20:45<39:46:43, 14.44s/it]  1%|          | 86/10001 [20:59<39:48:44, 14.46s/it]  1%|          | 87/10001 [21:14<39:49:41, 14.46s/it]  1%|          | 88/10001 [21:28<39:50:31, 14.47s/it]  1%|          | 89/10001 [21:43<39:50:51, 14.47s/it]  1%|          | 90/10001 [21:57<39:51:14, 14.48s/it]  1%|          | 91/10001 [22:12<39:46:41, 14.45s/it]  1%|          | 92/10001 [22:26<39:50:49, 14.48s/it]  1%|          | 93/10001 [22:41<39:49:12, 14.47s/it]  1%|          | 94/10001 [22:55<39:45:32, 14.45s/it]  1%|          | 95/10001 [23:10<39:47:19, 14.46s/it]  1%|          | 96/10001 [23:24<39:47:42, 14.46s/it]  1%|          | 97/10001 [23:39<39:50:04, 14.48s/it]  1%|          | 98/10001 [23:53<39:51:44, 14.49s/it]  1%|          | 99/10001 [24:08<39:50:33, 14.49s/it]  1%|          | 100/10001 [24:22<39:45:06, 14.45s/it]  1%|          | 101/10001 [24:36<39:46:57, 14.47s/it]  1%|          | 102/10001 [24:51<39:47:31, 14.47s/it]  1%|          | 103/10001 [25:05<39:41:47, 14.44s/it]  1%|          | 104/10001 [25:20<39:42:47, 14.45s/it]  1%|          | 105/10001 [25:34<39:45:27, 14.46s/it]  1%|          | 106/10001 [25:49<39:47:27, 14.48s/it]  1%|          | 107/10001 [26:03<39:47:38, 14.48s/it]  1%|          | 108/10001 [26:18<39:47:58, 14.48s/it]  1%|          | 109/10001 [26:32<39:43:24, 14.46s/it]  1%|          | 110/10001 [26:47<39:44:10, 14.46s/it]  1%|          | 111/10001 [27:01<39:45:22, 14.47s/it]  1%|          | 112/10001 [27:16<39:40:19, 14.44s/it]  1%|          | 113/10001 [27:30<39:41:16, 14.45s/it]  1%|          | 114/10001 [27:44<39:42:45, 14.46s/it]  1%|          | 115/10001 [27:59<39:43:03, 14.46s/it]  1%|          | 116/10001 [28:13<39:44:42, 14.47s/it]  1%|          | 117/10001 [28:28<39:43:31, 14.47s/it]  1%|          | 118/10001 [28:42<39:39:07, 14.44s/it]  1%|          | 119/10001 [28:57<39:40:04, 14.45s/it]  1%|          | 120/10001 [29:11<39:44:31, 14.48s/it]  1%|          | 120/10001 [29:20<40:16:30, 14.67s/it]
+0 tensor(93.2489, device='cuda:0')
+Traceback (most recent call last):
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 859, in <module>
+    main(vars(parser.parse_args())) #명령줄의 인자를 파싱해서 main함수에 전달
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 243, in main
+    best_ckpt_info = train_bc(train_dataloader, val_dataloader, config)
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 785, in train_bc
+    forward_dict = forward_pass(data, policy) #ACT의 __call__ ?를 실행
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 659, in forward_pass
+    image_data, qpos_data, action_data, is_pad = image_data.cuda(), qpos_data.cuda(), action_data.cuda(), is_pad.cuda()
+KeyboardInterrupt

@@ -1,0 +1,15 @@
+['/mnt/c/Users/chaoc/Music/act-plus-plus_one-main', '/usr/local/lib/python39.zip', '/usr/local/lib/python3.9', '/usr/local/lib/python3.9/lib-dynload', '/home/aloha/.local/lib/python3.9/site-packages', '/usr/local/lib/python3.9/site-packages', '/tmp/tmpnp118jwx', 'C:\\Users\\chaoc\\Music\\act-plus-plus_one-main\\detr', 'C:\\Users\\chaoc\\Music\\act-plus-plus_one-main\\detr\\models']
+Traceback (most recent call last):
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/imitate_episodes.py", line 20, in <module>
+    from policy import ACTPolicy, CNNMLPPolicy, DiffusionPolicy
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/policy.py", line 6, in <module>
+    from detr.main import build_ACT_model_and_optimizer, build_CNNMLP_model_and_optimizer
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/main.py", line 7, in <module>
+    from .models import build_ACT_model, build_CNNMLP_model
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/__init__.py", line 2, in <module>
+    from .detr_vae import build as build_vae
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/detr_vae.py", line 9, in <module>
+    from .backbone import build_backbone, build_background_backbone
+  File "/mnt/c/Users/chaoc/Music/act-plus-plus_one-main/detr/models/backbone.py", line 23, in <module>
+    from util.misc import NestedTensor, is_main_process
+ModuleNotFoundError: No module named 'util'
