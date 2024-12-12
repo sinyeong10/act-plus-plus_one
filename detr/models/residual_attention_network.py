@@ -374,6 +374,7 @@ class Residual18_AttentionModel(nn.Module):
         self.fc = nn.Linear(512, 10)
 
     def forward(self, x):
+
         out = self.conv1(x)
         out = self.mpool1(out)
         # print(out.data)

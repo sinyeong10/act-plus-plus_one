@@ -29,7 +29,7 @@ e = IPython.embed
 
 FPS = 10
 PUPPET_GRIPPER_JOINT_OPEN = 100
-check_featuremap = True #False
+check_featuremap = True#False #True #False
 
 #dataset_dir 경로에서 함수내 max_idx 값까지 f"qpos_{i}.npy"파일이 있는 지 찾아보고 없으면 i를 반환함
 #인덱스를 순차적으로 생성하는 데 씀?
@@ -214,11 +214,11 @@ def main(args):
         pickle.dump(config, f)
     if is_eval: #평가모드 True로 값을 줬을 경우
         
-        ckpt_names = [f'best_policy_step_0_seed_0.ckpt'] #f'policy_last.ckpt',  #마지막 체크포인트 파일을 의미
+        ckpt_names = [f'best_policy_step_5000_seed_0.ckpt'] #f'policy_last.ckpt',  #마지막 체크포인트 파일을 의미
         results = []
         for ckpt_name in ckpt_names: #하나만 있으니 하나에 대해서 실행함
             #eval_bc 함수를 통해 지정한 모델(ACT)을 가져와서 돌려보고 성공확률과 평균보상을 반환 함
-            success_rate, avg_return = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=3)
+            success_rate, avg_return = eval_bc(config, ckpt_name, save_episode=True, num_rollouts=2)
             # wandb.log({'success_rate': success_rate, 'avg_return': avg_return})
             results.append([ckpt_name, success_rate, avg_return])
         #결과 출력
@@ -428,7 +428,7 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
 
         ### evaluation loop
         if temporal_agg: #모든 타임스텝에 대한 작업 데이터 저장?
-            all_time_actions = torch.zeros([max_timesteps, max_timesteps+num_queries, 16]).cuda()
+            all_time_actions = torch.zeros([max_timesteps, max_timesteps+num_queries, 8]).cuda() #16
 
         #시뮬레이션이 끝난 후 각 스텝별 상태(위치 데이터)를 저장?
         # qpos_history = torch.zeros((1, max_timesteps, state_dim)).cuda()
@@ -615,8 +615,9 @@ def eval_bc(config, ckpt_name, save_episode=True, num_rollouts=50, dir_step = 0)
         
         print("그리퍼 열고 종료")
         env.mycobot.set_gripper_value(100,20,1)
+        time.sleep(2)
         
-        env.save("scr/mycobot320_data/twocam_mycobot320_chunk20_1", 1)
+        # env.save("scr/mycobot320_data/twocam_mycobot320_chunk20_1", 1)
 
         #반환된 보상의 총합, 최대 보상, 성공 여부 계산해서 출력
         rewards = np.array(rewards)

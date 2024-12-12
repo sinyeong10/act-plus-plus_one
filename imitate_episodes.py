@@ -711,7 +711,7 @@ def train_bc(train_dataloader, val_dataloader, config):
                 policy.eval() #모델을 평가모드로
                 validation_dicts = []
                 for batch_idx, data in enumerate(val_dataloader):
-                    if check_featuremap:
+                    if check_featuremap: 
                         #2,3,480,640 #카메라 2개 3채널 480x640크기 반환!
                         print("batch_idx, data", batch_idx, len(data), data[0].shape) #4, torch.Size([batch_size, 2, 3, 480, 640])
                         print(data[0][0].shape) #torch.Size([2, 3, 480, 640])

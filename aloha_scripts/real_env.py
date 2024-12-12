@@ -16,7 +16,7 @@ import numpy as np
 import IPython
 e = IPython.embed
 
-masking_input = True #False #True
+masking_input = False #True #False #True
 
 class RealEnv:
     """
@@ -58,7 +58,7 @@ class RealEnv:
             while True:
                 _, frame = self.cap1.read()
 
-                if masking_input:
+                if True: #masking_input:
                     x1, y1 = 230, 350
                     x2, y2 = 412, 400
                     zero_image = frame.copy()
@@ -192,9 +192,11 @@ class RealEnv:
         return 0
 
     def reset(self, fake=False):
+        print("환경 초기화")
         if not fake:
             self._reset_joints()
             self._reset_gripper()
+            self.prev_gripper = 70
         return dm_env.TimeStep(
             step_type=dm_env.StepType.FIRST,
             reward=self.get_reward(),
@@ -224,6 +226,9 @@ class RealEnv:
         if self.prev_gripper > 100:
             print("\n\n\n그리퍼 100이상의 값이 계산됨..")
             self.prev_gripper = 100
+        if self.prev_gripper < 0:
+            print("\n\n\n그리퍼 0이하의 값이 계산됨..")
+            self.prev_gripper = 0
         self.mycobot.set_gripper_value(self.prev_gripper, 20, 1)
         # print("back :", action[-1])
         time.sleep(0.02)
