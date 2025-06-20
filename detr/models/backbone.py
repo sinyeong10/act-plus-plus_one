@@ -12,9 +12,9 @@ from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
 
 import sys
-project_dir = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\detr'
+project_dir = r'/home/robo/workspace/act-plus-plus_one/detr'
 sys.path.append(project_dir)
-project_dir = r'C:\Users\cbrnt\OneDrive\문서\act-plus-plus\detr\models'
+project_dir = r'/home/robo/workspace/act-plus-plus_one/detr/models'
 sys.path.append(project_dir)
 print(sys.path)
 
@@ -27,7 +27,7 @@ from .position_encoding import build_position_encoding
 import IPython
 e = IPython.embed
 
-check_featuremap = True #False #True #False #True #False #True
+check_featuremap = False #True #False #True #False #True
 
 class FrozenBatchNorm2d(torch.nn.Module):
     """
@@ -116,9 +116,9 @@ class BackboneBase(nn.Module):
         #주요 포인트!!
         # #featuremap 분석을 위함 나중에 주석처리해야함
         if check_featuremap:
-        #     import copy
-        #     a = copy.deepcopy(backbone)
-        #     self.featuremap = IntermediateLayerGetter(a, return_layers={'layer4': "1"})#{"layer1": "4", "layer2": "5", "layer3": "6", "layer4": "7"})
+            import copy
+            a = copy.deepcopy(backbone)
+            self.featuremap = IntermediateLayerGetter(a, return_layers={'layer4': "1"})#{"layer1": "4", "layer2": "5", "layer3": "6", "layer4": "7"})
             self.key = 0
 
     def forward(self, tensor):

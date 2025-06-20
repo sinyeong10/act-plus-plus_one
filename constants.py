@@ -2,7 +2,7 @@ import pathlib
 import os
 
 ### Task parameters
-DATA_DIR = '/mnt/c/Users/cbrnt/OneDrive/문서/act-plus-plus/scr/tonyzhao/datasets'#'/home/zfu/interbotix_ws/src/act/data' if os.getlogin() == 'zfu' else '/scr/tonyzhao/datasets'
+DATA_DIR = '/home/robo/workspace/act-plus-plus_one/scr/tonyzhao/datasets'
 # print(os.getlogin(), DATA_DIR)
 SIM_TASK_CONFIGS = {
     'sim_transfer_cube_scripted':{
