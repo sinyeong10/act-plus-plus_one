@@ -292,6 +292,7 @@ def build(args):
 
     # print("\n\nlen(args.camera_names)", args.camera_names)    
     #카메라마다 다른 객체 인식 모델을 가져와서 사용함
+    #모델 인자 설정 필요
     for camera_name in args.camera_names:
         if camera_name == 'right_wrist':
             backbone = build_backbone(args)

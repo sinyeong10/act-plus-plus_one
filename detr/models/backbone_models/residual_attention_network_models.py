@@ -1,7 +1,9 @@
+import torch
 import torch.nn as nn
 from .basic_layers import ResidualBlock
 from .attention_module import AttentionModuleStage0, AttentionModuleStage1, AttentionModuleStage2, AttentionModuleStage3
 from .attention_module import AttentionModuleStage1Cifar, AttentionModuleStage2Cifar, AttentionModuleStage3Cifar
+from torchvision.models._utils import IntermediateLayerGetter
 
 
 class ResidualAttentionModel448(nn.Module):
@@ -427,6 +429,12 @@ class residual_attention_Backbone(BackboneBase):
         return_layers = {'layer4': "0", "residual_block1": "1", "attention_module1": "2", "residual_block2": "3", "attention_module2": "4", "residual_block3": "5", "attention_module3": "6"} #숫자는 출력에 접근하기 위한 키값
         print(return_interm_layers, return_layers) #False
         #backbone은 resnet18임
+
+        #todo 아래 에러 발생함
+#           File "/home/robo/workspace/act-plus-plus_one/detr/models/backbone_models/residual_attention_network_models.py", line 430, in __init__
+#     self.body = IntermediateLayerGetter(backbone, return_layers=return_layers)
+# NameError: name 'IntermediateLayerGetter' is not defined
+
         self.body = IntermediateLayerGetter(backbone, return_layers=return_layers)
 
         dummy_input = torch.randn(1, 3, 480, 640)
@@ -449,7 +457,7 @@ class residual_attention_Backbone(BackboneBase):
         # print("\n\nlast tensor.shape",tensor.shape, tensor[0][0][0][0])
         #주요 포인트!!
         # #featuremap 분석을 위함 나중에 주석처리해야함
-        if check_featuremap:
+        if self.check_featuremap:
             # print(tensor.shape) #torch.Size([1, 3, 480, 640])
 
             def denormalize(tensor, mean, std):

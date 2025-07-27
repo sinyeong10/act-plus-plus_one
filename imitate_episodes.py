@@ -82,7 +82,10 @@ def main(args):
         state_dim = 7
     print("state_dim", state_dim)
     lr_backbone = 1e-5
-    backbone = 'resnet18'
+    #todo
+    #backbone의 모델 선정을 카메라 마다 설정할 수 있게
+    #json 파일을 읽어서 처리하거나, 인자에서 할당할 수 있게 하기
+    backbone = 'residual_attention_18'
     if policy_class == 'ACT':
         enc_layers = 4
         dec_layers = 7
