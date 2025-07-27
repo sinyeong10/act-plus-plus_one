@@ -18,6 +18,7 @@ project_dir = r'/home/robo/workspace/act-plus-plus_one/detr/models'
 sys.path.append(project_dir)
 print(sys.path)
 
+#새로 가져와서 설정한 모델의 import
 from .residual_attention_network import Residual18_AttentionModel as ResidualAttentionModel
         
 from util.misc import NestedTensor, is_main_process
@@ -70,7 +71,7 @@ class FrozenBatchNorm2d(torch.nn.Module):
 
 class BackboneBase(nn.Module):
 
-    def __init__(self, backbone: nn.Module, train_backbone: bool, num_channels: int, return_interm_layers: bool):
+    def __init__(self, backbone: nn.Module, train_backbone: bool, num_channels: int, return_interm_layers: bool, check_featuremap: bool = False):
         super().__init__()
         #기본적으로 backbone.named_parameters()는 True임
         
@@ -286,6 +287,7 @@ class background_Backbone(BackboneBase):
 
         print("\n\n\nself.body",self.body)
         
+        #고정된 카메라로 인해 ROI의 특정 영역에 가중치 부여
         self.weights = torch.full((3, 480, 640), 0.5).to('cuda')
         x1, y1 = 230, 350
         x2, y2 = 412, 400

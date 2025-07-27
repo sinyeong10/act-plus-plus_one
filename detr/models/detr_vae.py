@@ -6,7 +6,8 @@ import torch
 from torch import nn
 from torch.autograd import Variable
 import torch.nn.functional as F
-from .backbone import build_backbone, build_background_backbone
+# from .backbone import build_backbone, build_background_backbone
+from .deco_backbone import build_backbone
 from .transformer import build_transformer, TransformerEncoder, TransformerEncoderLayer
 
 import numpy as np
@@ -280,7 +281,7 @@ def build_encoder(args):
 
 def build(args):
     state_dim = 14 # TODO hardcode
-    print(args)
+    print("\n\nargs", args)
     if args.one_arm_policy_config:
         state_dim = 7
 
@@ -290,13 +291,14 @@ def build(args):
     backbones = []
 
     # print("\n\nlen(args.camera_names)", args.camera_names)    
+    #카메라마다 다른 객체 인식 모델을 가져와서 사용함
     for camera_name in args.camera_names:
         if camera_name == 'right_wrist':
             backbone = build_backbone(args)
             backbones.append(backbone)
         else:
             print("\n\n오른 팔 카메라가 아님!!")
-            backbone = build_background_backbone(args)
+            backbone = build_backbone(args)
             backbones.append(backbone)
 
     transformer = build_transformer(args)
