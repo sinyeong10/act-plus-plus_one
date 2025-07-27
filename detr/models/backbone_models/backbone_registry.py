@@ -1,6 +1,6 @@
 from torchvision.models._utils import IntermediateLayerGetter
 from torch import nn
-
+import torch
 
 backbone_registry = {}
 
@@ -65,18 +65,15 @@ class BackboneBase(nn.Module):
         self.num_channels = num_channels
 
         # self.a = backbone
-        #주요 포인트!!
-        # #featuremap 분석을 위함 나중에 주석처리해야함
-        if check_featuremap:
+        self.check_featuremap = check_featuremap
+        if self.check_featuremap:
             import copy
             a = copy.deepcopy(backbone)
             self.featuremap = IntermediateLayerGetter(a, return_layers={'layer4': "1"})#{"layer1": "4", "layer2": "5", "layer3": "6", "layer4": "7"})
             self.key = 0
 
     def forward(self, tensor):
-        #주요 포인트!!
-        # #featuremap 분석을 위함 나중에 주석처리해야함
-        if check_featuremap:
+        if self.check_featuremap:
             # print(tensor.shape) #torch.Size([1, 3, 480, 640])
 
             def denormalize(tensor, mean, std):

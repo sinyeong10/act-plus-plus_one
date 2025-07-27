@@ -1,7 +1,9 @@
+from . import backbone_models
 from .backbone_models.backbone_registry import backbone_registry
 from util.misc import NestedTensor, is_main_process
 
 from torch import nn
+from .position_encoding import build_position_encoding
 
 class Joiner(nn.Sequential):
     def __init__(self, backbone, position_embedding):
@@ -36,6 +38,10 @@ def build_backbone(args):
     if getattr(BackboneClass, "_is_experimental", False):
         print(f"[WARNING] Using experimental backbone: {args.backbone}")
 
+    position_embedding = build_position_encoding(args)
+    train_backbone = args.lr_backbone > 0
+    return_interm_layers = args.masks
+
     backbone = BackboneClass(
             name=args.backbone,
             train_backbone=train_backbone,
@@ -44,10 +50,6 @@ def build_backbone(args):
             check_featuremap=args.feature_map
         )
 
-
-    position_embedding = build_position_encoding(args)
-    train_backbone = args.lr_backbone > 0
-    return_interm_layers = args.masks
     model = Joiner(backbone, position_embedding)
     model.num_channels = backbone.num_channels
     return model

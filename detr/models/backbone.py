@@ -11,12 +11,6 @@ from torch import nn
 from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
 
-import sys
-project_dir = r'/home/robo/workspace/act-plus-plus_one/detr'
-sys.path.append(project_dir)
-project_dir = r'/home/robo/workspace/act-plus-plus_one/detr/models'
-sys.path.append(project_dir)
-print(sys.path)
 
 #새로 가져와서 설정한 모델의 import
 from .residual_attention_network import Residual18_AttentionModel as ResidualAttentionModel

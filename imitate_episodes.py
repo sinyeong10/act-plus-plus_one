@@ -824,6 +824,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     #action='store_true'는 --eval 옵션이 명령줄에 포함되지 않으면 args['eval']을 False로 설정
     #action='store'은 저장
+    parser.add_argument('--feature_map', action='store_true')
     parser.add_argument('--eval', action='store_true')
     parser.add_argument('--onscreen_render', action='store_true')
     parser.add_argument('--ckpt_dir', action='store', type=str, help='ckpt_dir', required=True)
